@@ -2,24 +2,29 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-sm-10"><h1>Add Student</h1></div>
+        <div class="col-sm-10"><h1>New Admission</h1></div>
     </div>
     <div class="row">
 
         <div class="container">
-            <ul class="nav nav-tabs  nav-fill" role="tablist">
+            <ul class="nav nav-tabs  nav-fill bl" role="tablist">
+
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#student">Student</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#father">Father</a>
+                    <a class="nav-link" data-toggle="tab" href="#parents">Parents</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#mother">Mother</a>
+                    <a class="nav-link" data-toggle="tab" href="#gyankriti">Gyankriti</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#fees">Fees</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#overview">Overview</a>
                 </li>
@@ -31,81 +36,221 @@
 
                 <div id="student" class="container tab-pane active"><br>
                     <h3>STUDENT</h3>
-                    <br>
-                    <div class="flex-container">
+                    <hr>
 
 
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputAddress">Address</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputAddress2">Address 2</label>
-                                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputCity">City</label>
-                                    <input type="text" class="form-control" id="inputCity">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="inputState">State</label>
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label for="inputZip">Zip</label>
-                                    <input type="text" class="form-control" id="inputZip">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                                    <label class="form-check-label" for="gridCheck">
-                                        Check me out
-                                    </label>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Sign in</button>
-                        </form>
+                    <form>
 
-                    </div>
 
-                <div id="father" class="container tab-pane fade"><br>
-                    <h3>Menu 1</h3>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.</p>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputstu_fname">First Name</label>
+                                <input type="text" class="form-control" id="inputstu_fname"
+                                       placeholder=" John" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputstu_lname">Last Name</label>
+                                <input type="text" class="form-control" id="inputstu_lname"
+                                       placeholder=" Doe" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputstu_dob">Date Of Birth</label>
+                                <input type="date" class="form-control" id="inputstu_dob"
+                                       placeholder="mm/dd/yyyy"
+                                       required>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="inputstu_city">City</label>
+                                <input type="text" class="form-control" id="inputstu_city"
+                                       placeholder=" Indore"
+                                       required>
+                            </div>
+
+                            <!--needs to  be checked-->
+                            <div class="form-group col-md-4 text-center">
+                                <label>Gender</label>
+
+                                <div class="form-row justify-content-center">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio"
+                                                   name="inputstu_gender"
+                                                  value="male" required> <strong>Male</strong>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio"
+                                                   name="inputstu_gender"
+                                                  value="female"> <strong>Female</strong>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputstu_address">Residential Address</label>
+                            <input type="text" class="form-control" id="inputstu_address"
+                                   placeholder=" 1234 Main St">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="inputstu_addressline2">Address Line 2</label>
+                            <input type="text" class="form-control" id="inputstu_addressline2"
+                                   placeholder=" Apartment, studio, or floor">
+                        </div>
+
+                        <!--<button type="submit" class="btn btn-primary">Sign in</button>-->
+                    </form>
+                    <hr>
                 </div>
 
-                <div id="mother" class="container tab-pane fade"><br>
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                        laudantium, totam rem aperiam.</p>
+                <div id="parents" class="container tab-pane active"><br>
+                    <h3>PARENTS</h3>
+                    <hr>
+
+                    <form>
+
+
+                        <h4>Father's Detail</h4>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputfather_name">Name</label>
+                                <input type="text" class="form-control" id="inputfather_name"
+                                       placeholder=" John Doe" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputfather_mob">Mobile No.</label>
+                                <input type="text" class="form-control" id="inputfather_mob"
+                                       placeholder=" 0123456789" required>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="inputfather_email">Email</label>
+                                <input type="email" class="form-control" id="inputfather_email"
+                                       placeholder=" johndoe@example.com">
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <h4>Mother's Detail</h4>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputmother_name">Name</label>
+                                <input type="text" class="form-control" id="inputmother_name"
+                                       placeholder=" Jessica Doe" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputmother_mob">Mobile No.</label>
+                                <input type="text" class="form-control" id="inputmother_mob"
+                                       placeholder=" 0123456789" required>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="inputmother_email">Email</label>
+                                <input type="email" class="form-control" id="inputmother_email"
+                                       placeholder=" jessicadoe@example.com">
+                            </div>
+                        </div>
+
+
+                        <!--<button type="submit" class="btn btn-primary">Sign in</button>-->
+                    </form>
+                    <hr>
+                </div>
+
+
+                <div id="gyankriti" class="container tab-pane fade"><br>
+                    <h3>GYANKRITI</h3>
+                    <hr>
+
+                    <form>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputstu_username">Username</label>
+                                <input type="text" class="form-control" id="inputstu_username"
+                                       placeholder=" johndoe" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputstu_enrollment">Enrollment</label>
+                                <input type="text" class="form-control" id="inputstu_enrollment"
+                                       placeholder=" K01/015" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputstu_doadmission">Date Of Admission</label>
+                                <input type="date" class="form-control" id="inputstu_doadmission"
+                                       placeholder=" John Doe" required>
+                            </div>
+                        </div>
+
+                        <!--convert to dropdown in coming iteration  this whole group row -->
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputstu_standard">Standard</label>
+                                <input type="text" class="form-control" id="inputstu_standard"
+                                       placeholder=" JS1 " required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputstu_section">Section</label>
+                                <input type="text" class="form-control" id="inputstu_section"
+                                       placeholder=" A" required>
+                            </div>
+
+
+                            <div class="form-group col-md-5">
+                                <label for="inputstu_vanroute">Van Route</label>
+                                <input type="text" class="form-control" id="inputstu_vanroute"
+                                       placeholder=" 5A2" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label for="inputstu_email">Registered Email</label>
+                                <input type="text" class="form-control" id="inputstu_email"
+                                       placeholder=" s.gyankriti.student">
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <label for="inputstuCity">Email-Domain</label>
+
+                                <div class="form-row">
+
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" style="color: blue">
+                                            <em><strong>@gyankriti.com</strong></em>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--<button type="submit" class="btn btn-primary">Sign in</button>-->
+                    </form>
+                    <hr>
                 </div>
 
                 <div id="fees" class="container tab-pane fade"><br>
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                        laudantium, totam rem aperiam.</p>
+                    <h3>FEE STRUCTURE</h3>
+                    <p>This is needed to be asked!</p>
                 </div>
 
                 <div id="overview" class="container tab-pane fade"><br>
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                        laudantium, totam rem aperiam.</p>
+                    <h3>SUMMARY</h3>
+                    <p>Show all the data that will be sent and a button to submit action.</p>
+                    <hr>
+                    <button type="button" class="btn btn-primary" id="button_submit">Submit</button>
                 </div>
             </div>
         </div>

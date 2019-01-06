@@ -1,0 +1,22 @@
+@media only screen and (max-width: 760px) {
+    .searchbar {
+        min-width: 150px;
+        width: 150px;
+    }
+}
+
+.searchbar {
+    margin-left: 3%;
+}
+
+
+/*color tab heading*/
+.nav-item > a {
+    color: cornflowerblue;
+}
+
+
+/*color labels of form elements*/
+.form-group > label {
+    font-weight: bold;
+}
