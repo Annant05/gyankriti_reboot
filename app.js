@@ -2,8 +2,8 @@
 const express = require("express"), app = express(); // creating express server
 const path = require('path');
 const request = require("request");
-const bodyParser = require("body-parser");  // used bodyparser to get data from all the field in form
-// const db_server = require('./config/start_db');
+const bodyParser = require("body-parser");  // used bodyParser to get data from all the field in form
+
 
 // Declaration related to servers
 const PORT = process.env.PORT || 80;
@@ -31,10 +31,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use('/', require('./routes/index'));
-// app.use('/student', require('./routes/student'));
+app.use('/student', require('./routes/student'));
 // app.use('/transport', require('./routes/transport'));
-
-
+// db_server.startDB();
 console.log('Server-side code running');
 
 app.get('/basetemplate', function (req, res) {

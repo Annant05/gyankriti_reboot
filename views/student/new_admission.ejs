@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
+<!--suppress HtmlRequiredTitleElement -->
 <head>
 
-    <% include partials/head.ejs %>
+    <% include ../partials/head.ejs %>
 
 </head>
 
@@ -11,26 +12,26 @@
 
 <div class="wrapper">
     <!--Sidebar menu -->
-    <% include partials/sidebar_menu.ejs %>
+    <% include ../partials/sidebar_menu.ejs %>
     <!--Sidebar menu end -->
 
 
     <!-- Page Content Holder -->
     <div id="content">
         <!--Page Navbar start-->
-        <% include partials/navbar.ejs %>
+        <% include ../partials/navbar.ejs %>
         <!--Page Navabar end -->
 
         <!-- Tabs for adding new student -->
-        <!--< include partials/formtabs.ejs %-->
+        <% include formtabs.ejs %>
         <!-- tabs end -->
     </div>
 </div>
 
 
 <!-- Include all the jscripts here -->
-<% include partials/js_bottom.ejs %>
-<!--<script src="/js/addstudentajax.js"></script>-->
+<% include ../partials/js_bottom.ejs %>
+<script src="addstudentajax.js"></script>
 <!--End all the jscripts above-->
 </body>
 

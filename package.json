@@ -8,7 +8,7 @@
   "author": "annant",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.279.1",
+    "aws-sdk": "^2.384.0",
     "body-parser": "latest",
     "ejs": "^2.6.1",
     "express": "^4.16.3",

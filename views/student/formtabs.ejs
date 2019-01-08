@@ -7,6 +7,7 @@
     <div class="row">
 
         <div class="container">
+
             <ul class="nav nav-tabs  nav-fill bl" role="tablist">
 
                 <li class="nav-item">
@@ -39,7 +40,7 @@
                     <hr>
 
 
-                    <form>
+                    <form id="student_form" novalidate>
 
 
                         <div class="form-row">
@@ -58,7 +59,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="inputstu_dob">Date Of Birth</label>
-                                <input type="date" class="form-control" id="inputstu_dob"
+                                <input type="date" class="form-control " id="inputstu_dob"
                                        placeholder="mm/dd/yyyy"
                                        required>
                             </div>
@@ -79,7 +80,7 @@
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="radio"
                                                    name="inputstu_gender"
-                                                  value="male" required> <strong>Male</strong>
+                                                   value="male" required> <strong>Male</strong>
                                         </label>
                                     </div>
 
@@ -87,7 +88,7 @@
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="radio"
                                                    name="inputstu_gender"
-                                                  value="female"> <strong>Female</strong>
+                                                   value="female"> <strong>Female</strong>
                                         </label>
                                     </div>
                                 </div>
@@ -118,7 +119,7 @@
                     <h3>PARENTS</h3>
                     <hr>
 
-                    <form>
+                    <form id="parent_form" novalidate>
 
 
                         <h4>Father's Detail</h4>
@@ -136,7 +137,14 @@
                             <div class="form-group col-md-5">
                                 <label for="inputfather_email">Email</label>
                                 <input type="email" class="form-control" id="inputfather_email"
-                                       placeholder=" johndoe@example.com">
+                                       placeholder=" johndoe@example.com" required>
+                                <!--<div class="invalid-feedback">-->
+                                <!--please check email address.-->
+                                <!--</div>-->
+                                <!--<div class="valid-feedback">-->
+                                <!--Valid email-->
+                                <!--</div>-->
+
                             </div>
                         </div>
 
@@ -172,7 +180,7 @@
                     <h3>GYANKRITI</h3>
                     <hr>
 
-                    <form>
+                    <form id="gyankriti_form" novalidate>
 
                         <div class="form-row">
                             <div class="form-group col-md-4">
@@ -250,7 +258,9 @@
                     <h3>SUMMARY</h3>
                     <p>Show all the data that will be sent and a button to submit action.</p>
                     <hr>
-                    <button type="button" class="btn btn-primary" id="button_submit">Submit</button>
+                    <form id="submit_form" novalidate>
+                        <button type="button" class="btn btn-primary" id="button_submit">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
