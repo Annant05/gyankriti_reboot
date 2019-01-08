@@ -6,28 +6,24 @@ const config = require('../config/config');
 AWS.config.update(config.getAWS_JSONCredentials());
 const dynamodb = new AWS.DynamoDB();
 
-startOfflineDynamoDB(); // start dynamodb offline
 
 const basicDynamoTableFunctions = {
     listTables: function () {
         const params = {};
-        dynamodb.listTables(params, function (err, data) {
+        dynamodb.listTables(params, (err, data) => {
             if (err) console.log(err, err.stack); // an error occurred
             else console.log(data);           // successful response
         });
     }
 };
 
-basicDynamoTableFunctions.listTables();
 
-function startOfflineDynamoDB() {
+async function startOfflineDynamoDB() {
     cmd.get(
         'chdir',
-        function (err, data, stderr) {
+        (err, data, stderr) => {
             console.log('the current working dir is : ', data);
-
             let command = data.replace("\r\n", "") + "\\tools\\dynamo_offline\\server_start.bat";
-
             cmd.run(command);
         }
     );
@@ -36,7 +32,7 @@ function startOfflineDynamoDB() {
 
 const studentTable = {
     TABLE_NAME: "students",
-    createStudentTable: function () {
+    createStudentTable: async function () {
         const params = {
             TableName: studentTable.TABLE_NAME,
             AttributeDefinitions: [
@@ -59,7 +55,7 @@ const studentTable = {
             }
         };
 
-        dynamodb.createTable(params, function (err, data) {
+        dynamodb.createTable(params, (err, data) => {
             if (err) console.log(err, err.stack); // an error occurred
             else console.log(data);
         });
@@ -69,4 +65,6 @@ const studentTable = {
     }
 };
 
-// studentTable.createStudentTable();
+
+startOfflineDynamoDB().then(basicDynamoTableFunctions.listTables()); // start dynamodb offline
+// studentTable.createStudentTable().then(basicDynamoTableFunctions.listTables());

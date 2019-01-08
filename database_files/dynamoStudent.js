@@ -16,7 +16,7 @@ const studentFunctions = {
             TableName: TABLE_NAME,
         };
         try {
-            docClientDynamo.scan(params, function (err, data) {
+            docClientDynamo.scan(params, (err, data) => {
                 if (err) console.log(err, err.stack); // an error occurred
                 else {
                     callback(err, data);
@@ -29,7 +29,7 @@ const studentFunctions = {
     },
 
     // Function to add new student into the database
-    newAdmission: function addNewStudentToDatabase(studentDataObject) {
+    newAdmission: async function addNewStudentToDatabase(studentDataObject) {
         console.log("File: database_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : " + JSON.stringify(studentDataObject));
 
         // add time of insertion to the data;
@@ -42,7 +42,7 @@ const studentFunctions = {
 
         console.log("params for function : put(params) : " + JSON.stringify(params));
         try {
-            docClientDynamo.put(params, function (err, data) {
+            await docClientDynamo.put(params, (err, data) => {
                 if (err) {
                     console.log(err, err.stack);
                     return false;
@@ -56,6 +56,7 @@ const studentFunctions = {
             console.log(err);
         }
     }
+
 
 };
 /* END: Declaration of database functions */
