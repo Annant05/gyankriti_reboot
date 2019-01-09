@@ -9,29 +9,16 @@ const docClientDynamo = new AWS.DynamoDB.DocumentClient();
 const TABLE_NAME = "students";
 
 const studentFunctions = {
-    // get students
-    getStudents: function (callback) {
-        const params = {
-            Limit: 10,
-            TableName: TABLE_NAME,
-        };
-        try {
-            docClientDynamo.scan(params, (err, data) => {
-                if (err) console.log(err, err.stack); // an error occurred
-                else {
-                    callback(err, data);
-                }
-            });
-        } catch (err) {
-            console.log("In try catch block line 120  :  " + err);
-        }
 
-    },
+    //Finished Functions // Testing also done.
 
-    // Function to add new student into the database
-    newAdmission: async function addNewStudentToDatabase(studentDataObject) {
+    //* Function to add new student into the database */
+    newAdmission: async function addNewStudentToDatabase(studentDataObject, stateCallback) {
         console.log("File: database_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : " + JSON.stringify(studentDataObject));
 
+
+        // figure out a way to send response to the callie (the function that called it return true or false )
+        // let isSaved = false;
         // add time of insertion to the data;
         studentDataObject['time_of_insertion'] = (Math.round((new Date()).getTime() / 1000)).toString();
 
@@ -39,26 +26,69 @@ const studentFunctions = {
             TableName: TABLE_NAME,
             Item: studentDataObject
         };
-
         console.log("params for function : put(params) : " + JSON.stringify(params));
+
         try {
             await docClientDynamo.put(params, (err, data) => {
                 if (err) {
-                    console.log(err, err.stack);
-                    return false;
+                    console.log("There was some error ", err, err.stack);
+                    stateCallback(false);
+                    // isSaved = false;
                 }// an error occurred
                 else {
-                    console.log(data);
-                    return true;
+                    console.log("Data saved ", data);
+                    stateCallback(true);
+                    // isSaved = true;
+                    // allback(null, true);
+                    // console.log("my log " + isSaved);
                 }
             });
+
         } catch (err) {
             console.log(err);
         }
+        // console.log("isSaved before return ", isSaved);
+
+    },
+
+
+    //* Function to scan/retrieve list of students from the database  */
+    getCurrentStudents: async function getCurrentStudentsFromDatabase(sendDataInCallback) {
+        console.log("File: database_files/dynamoStudent calling function 'getCurrentStudents()'");
+
+        const params = {
+            Limit: 10,
+            TableName: TABLE_NAME,
+        };
+        console.log("params for function : scan(params) : " + JSON.stringify(params));
+
+        try {
+            await docClientDynamo.scan(params, (err, data) => {
+                if (err) {
+                    console.log(err, err.stack); // an error occurred
+                    sendDataInCallback(err, false);
+                } else {
+                    sendDataInCallback(data, true);
+                }
+            });
+        } catch (err) {
+            console.log("Error :  " + err);
+        }
     }
+
+    //END : Finished functions block
+
+
+    // New functions development
 
 
 };
 /* END: Declaration of database functions */
+
+
+// studentFunctions.getCurrentStudents((err, data) => {
+//     console.log(data);
+// });
+
 
 module.exports = studentFunctions;

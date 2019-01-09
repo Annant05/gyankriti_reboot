@@ -30,8 +30,8 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use('/', require('./routes/index'));
-app.use('/student', require('./routes/student'));
+app.use('/', require('./routes/index_router'));
+app.use('/student', require('./routes/student_router'));
 // app.use('/transport', require('./routes/transport'));
 // db_server.startDB();
 console.log('Server-side code running');

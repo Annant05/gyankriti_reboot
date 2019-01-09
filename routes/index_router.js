@@ -4,12 +4,12 @@ const router = express.Router();
 const TITLE = "Gyankriti Reboot";
 
 router.get('/', function (req, res) {
-    console.log("get / : render index using /");
+    console.log("GET: '/' = Render Web-Page");
     res.render('index', {TITLE: TITLE});
 });
 
 router.get('/index', function (req, res) {
-    console.log("get /index : render using /index");
+    console.log("GET: '/index' = Render Web-Page");
     res.render('index', {TITLE: TITLE});
 });
 
