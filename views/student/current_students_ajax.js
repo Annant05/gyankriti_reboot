@@ -1,28 +1,15 @@
 $(documentReady);
 
-const selector_student_table_main_body = $('#table_main_body');
+// const selector_student_table_main_body = $('#table_main_body');
+
+// let
 
 function documentReady() {
     // DOM Ready - do your stuff
-    $('#students_table').DataTable({
-        "scrollY": '50vh',
-        "scrollX": true,
-        "paging": true,
-        "ordering": true,
-        "order": [[1, "asc"]]
-    });
 
-
-    let table_examples = $('#students_table tbody');
-    table_examples.on('click', 'tr', function () {
+    let selector_students_table_body = $('#students_table tbody');
+    selector_students_table_body.on('click', 'tr', function () {
         $(this).toggleClass('selected');
-    });
-
-    table_examples.on('mouseenter', 'td', function () {
-        const colIdx = table.cell(this).index().column;
-
-        $(table.cells().nodes()).removeClass('highlight');
-        $(table.column(colIdx).nodes()).addClass('highlight');
     });
 
     $('#button').on('click', function () {
@@ -34,35 +21,44 @@ function documentReady() {
         method: 'POST',
         contentType: 'application/json',
         // data: JSON.stringify({new_admission_data: getFormInputsData()}),
-        success: (response) => (handleResponse(response))
+        success: (response) => {
+            console.log("\n isSuccess : ", JSON.stringify(response.body.isSuccess));
+            if (response.body.isSuccess) {
+                const arrayOfStudnetsInfo = response.body.studentsObject.Items;
+                // console.log(JSON.stringify(arrayOfStudnetsInfo));
+                datatable_functions(arrayOfStudnetsInfo);
+            }
+        }
     });
-
 
 //end of document ready
 }
 
 
-function handleResponse(response) {
-    console.log("\n isSuccess : ", JSON.stringify(response.body.isSuccess));
-    if (response.body.isSuccess) {
-        const arrayOfStudnetsInfo = response.body.studentsObject.Items;
-        // console.log(JSON.stringify(arrayOfStudnetsInfo));
+async function datatable_functions(arrayOfStudents) {
 
+    let datatable_students = $('#students_table').DataTable({
+        "scrollY": '50vh',
+        "scrollX": true,
+        "paging": true,
+        "ordering": true,
+        "order": [[0, "asc"]]
+    });
 
-        arrayOfStudnetsInfo.forEach((student) => {
-            console.log(student);
-            let appendRow =
-                `<tr>
-                        <td>    ${student.student_enrollment}  </td>
-                        <td>    ${student.student_fname + " " + student.student_lname}</td>
-                        <td>    ${student.student_standard}    </td>
-                        <td>    ${student.student_section}     </td>
-                        <td>    ${student.student_vanRoute}    </td>
-                        <td>    ${student.student_email}       </td>
-                </tr>`;
+    await arrayOfStudents.forEach((student) => {
+        console.log(student);
+        datatable_students.row.add([
 
-            selector_student_table_main_body.append(appendRow);
-        })
-    }
+            student.student_enrollment,
+            (student.student_fname + " " + student.student_lname),
+            student.student_standard,
+            student.student_section,
+            student.student_vanRoute,
+            student.student_email
+        ]).draw(true);
 
+    });
 }
+
+
+

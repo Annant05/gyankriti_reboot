@@ -4,3 +4,5 @@ code_ref/
 /tools/
 
 /config/config.js
+/tools/dynamo_offline/
+/tools/dynamo_offline/DynamoDBLocal_lib/
