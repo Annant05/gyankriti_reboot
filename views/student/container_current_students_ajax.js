@@ -1,9 +1,5 @@
 $(documentReady);
 
-// const selector_student_table_main_body = $('#table_main_body');
-
-// let
-
 function documentReady() {
     // DOM Ready - do your stuff
 
@@ -22,7 +18,7 @@ function documentReady() {
         contentType: 'application/json',
         // data: JSON.stringify({new_admission_data: getFormInputsData()}),
         success: (response) => {
-            console.log("\n isSuccess : ", JSON.stringify(response.body.isSuccess));
+            console.log("\n isSuccess receiving data from server : ", JSON.stringify(response.body.isSuccess));
             if (response.body.isSuccess) {
                 const arrayOfStudnetsInfo = response.body.studentsObject.Items;
                 // console.log(JSON.stringify(arrayOfStudnetsInfo));
@@ -36,7 +32,7 @@ function documentReady() {
 
 
 async function datatable_functions(arrayOfStudents) {
-
+    console.log("\nadding rows to the datatable");
     let datatable_students = $('#students_table').DataTable({
         "scrollY": '50vh',
         "scrollX": true,
@@ -46,7 +42,6 @@ async function datatable_functions(arrayOfStudents) {
     });
 
     await arrayOfStudents.forEach((student) => {
-        console.log(student);
         datatable_students.row.add([
 
             student.student_enrollment,

@@ -9,13 +9,13 @@ const bodyParser = require("body-parser");  // used bodyParser to get data from 
 const PORT = process.env.PORT || 80;
 
 request('http://169.254.169.254/latest/meta-data/public-ipv4', function (error, response, body) {
-    if (body !== undefined) console.log('server started on ip:port : http://' + body + ":" + PORT);
-    else console.log('server started on ip:port : ' + 'http://localhost' + ":" + PORT);
+    if (body !== undefined) console.log('\nserver started on ip:port : http://' + body + ":" + PORT);
+    else console.log('\nserver started on ip:port : ' + 'http://localhost' + ":" + PORT);
 });
 
 app.listen(PORT, function (err) {
     if (err) console.log("There was some problem in starting the server  : " + JSON.stringify(err, undefined, 2));
-    else console.log('server started on port : ' + PORT);
+    else console.log('\nserver started on port : ' + PORT);
 });
 
 //Main body of the js file
@@ -34,7 +34,7 @@ app.use('/', require('./routes/index_router'));
 app.use('/student', require('./routes/student_router'));
 // app.use('/transport', require('./routes/transport'));
 // db_server.startDB();
-console.log('Server-side code running');
+console.log('\nServer-side code running');
 
 app.get('/basetemplate', function (req, res) {
     res.render("basetemplate", {TITLE: "BASIC TEMPLATE"});

@@ -1,9 +1,13 @@
 <!--tabs container start-->
-<div class="container">
+<div class="container" id="admission_form_container">
 
     <div class="row">
         <div class="col-sm-10"><h1>New Admission</h1></div>
+        <button id="button_toggle_container" class="col-sm-2 btn btn-primary" type="button"
+                onclick="changeContainer();">Gyankriti Students
+        </button>
     </div>
+    <hr>
     <div class="row">
 
         <div class="container">
@@ -115,7 +119,7 @@
                     <hr>
                 </div>
 
-                <div id="parents" class="container tab-pane active"><br>
+                <div id="parents" class="container tab-pane"><br>
                     <h3>PARENTS</h3>
                     <hr>
 
@@ -269,3 +273,4 @@
     </div><!--/col-9-->
 </div>
 <!-- tabs container end-->
+<script src="container_new_admission_ajax.js"></script>

@@ -14,7 +14,7 @@ const studentFunctions = {
 
     //* Function to add new student into the database */
     newAdmission: async function addNewStudentToDatabase(studentDataObject, stateCallback) {
-        console.log("File: database_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : " + JSON.stringify(studentDataObject));
+        console.log("\nFile: database_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : " + JSON.stringify(studentDataObject));
 
 
         // figure out a way to send response to the callie (the function that called it return true or false )
@@ -26,41 +26,41 @@ const studentFunctions = {
             TableName: TABLE_NAME,
             Item: studentDataObject
         };
-        console.log("params for function : put(params) : " + JSON.stringify(params));
+        console.log("\nparams for function : put(params) : " + JSON.stringify(params));
 
         try {
             await docClientDynamo.put(params, (err, data) => {
                 if (err) {
-                    console.log("There was some error ", err, err.stack);
+                    console.log("\nThere was some error ", err, err.stack);
                     stateCallback(false);
                     // isSaved = false;
                 }// an error occurred
                 else {
-                    console.log("Data saved ", data);
+                    console.log("\nData saved ", data);
                     stateCallback(true);
                     // isSaved = true;
                     // allback(null, true);
-                    // console.log("my log " + isSaved);
+                    // console.log("\nmy log " + isSaved);
                 }
             });
 
         } catch (err) {
             console.log(err);
         }
-        // console.log("isSaved before return ", isSaved);
+        // console.log("\nisSaved before return ", isSaved);
 
     },
 
 
     //* Function to scan/retrieve list of students from the database  */
     getCurrentStudents: async function getCurrentStudentsFromDatabase(sendDataInCallback) {
-        console.log("File: database_files/dynamoStudent calling function 'getCurrentStudents()'");
+        console.log("\nFile: database_files/dynamoStudent calling function 'getCurrentStudents()'");
 
         const params = {
-            Limit: 10,
+            Limit: 20,
             TableName: TABLE_NAME,
         };
-        console.log("params for function : scan(params) : " + JSON.stringify(params));
+        console.log("\nparams for function : scan(params) : " + JSON.stringify(params));
 
         try {
             await docClientDynamo.scan(params, (err, data) => {
@@ -72,7 +72,7 @@ const studentFunctions = {
                 }
             });
         } catch (err) {
-            console.log("Error :  " + err);
+            console.log("\nError :  " + err);
         }
     }
 
