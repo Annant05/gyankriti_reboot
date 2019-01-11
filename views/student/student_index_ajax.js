@@ -25,7 +25,7 @@ async function documentReady() {
     }
 
     $("#admission_form_container").toggleClass("invisible");
-    setGyankritiStudentsVisibility();
+    // setGyankritiStudentsVisibility();
 
 }
 

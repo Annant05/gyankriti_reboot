@@ -27,7 +27,8 @@ router.get('/containers', (req, res) => {
     const body = {
         page_gyankriti_student: {
             TITLE: "Gyankriti Students",
-            HTML: file_gyankriti_students_ejs.toString()
+            // HTML: file_gyankriti_students_ejs.toString()
+            HTML: file_new_admission_ejs.toString()
         },
 
         page_new_admission: {
@@ -45,12 +46,12 @@ router.post('/new_admission', async (req, res) => {
     try {
         // console.log(J\nSON.stringify(req.body.new_admission_data));
         await dynamoStudent.newAdmission(req.body.new_admission_data, (isSaved) => {
-            console.log("\nis Data Saved to the dynamodb 'student' table:  " + isSaved);
+            console.log("is Data Saved to the dynamodb 'student' table:  " + isSaved);
             res.send({success: isSaved});
         });
 
     } catch (e) {
-        console.log("\nexception e : " + e);
+        console.log("exception e : " + e);
         res.send({success: false});
     }
 });
@@ -62,7 +63,7 @@ router.post('/current_students', async (req, res) => {
     try {
         await dynamoStudent.getCurrentStudents((studentsObject, isSuccess) => {
 
-            console.log("\nisSuccess in recieveing data from getCurrentStudents : ", isSuccess);
+            console.log("isSuccess in recieveing data from getCurrentStudents : ", isSuccess);
 
             if (isSuccess) {
                 res.send({body: {studentsObject: studentsObject, isSuccess: isSuccess}});
@@ -72,7 +73,7 @@ router.post('/current_students', async (req, res) => {
         });
 
     } catch (e) {
-        console.log("\nexception e : " + e);
+        console.log("exception e : " + e);
     }
 });
 

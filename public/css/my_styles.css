@@ -20,3 +20,11 @@
 .form-group > label {
     font-weight: bold;
 }
+
+.child-container {
+    position: absolute;
+}
+
+.parent-container {
+    position: relative;
+}

@@ -66,5 +66,5 @@ const studentTable = {
 };
 
 
-// startOfflineDynamoDB().then(basicDynamoTableFunctions.listTables()); // start dynamodb offline
+startOfflineDynamoDB().then(basicDynamoTableFunctions.listTables()); // start dynamodb offline
 // studentTable.createStudentTable().then(basicDynamoTableFunctions.listTables());
