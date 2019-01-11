@@ -1,5 +1,4 @@
 const selector_main_content_container = $("#main_content_container");
-selector_main_content_container.children().remove();
 
 let body;
 let isVisible = true;
@@ -25,7 +24,7 @@ async function documentReady() {
     }
 
     $("#admission_form_container").toggleClass("invisible");
-    // setGyankritiStudentsVisibility();
+    setGyankritiStudentsVisibility();
 
 }
 

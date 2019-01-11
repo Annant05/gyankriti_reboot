@@ -10,30 +10,31 @@ const dynamoStudent = require('../database_files/dynamoStudent');
 const fileDir = path.join(__dirname, '../views\\student\\');
 
 
-// load files to be sent to the client in jquery using ajax. Extend Dynamic functionality.
-const file_gyankriti_students_ejs = fs.readFileSync(fileDir + 'container_gyankriti_students.ejs');
-const file_new_admission_ejs = fs.readFileSync(fileDir + 'container_new_admission.ejs');
-
 /* END: Declaration node.js */
 
 router.get('/', (req, res) => {
     console.log("\nGET: 'student/student_index'  Web-Page");
     res.render('student/student_index', {TITLE: "Gyankriti"});
+
 });
 
 router.get('/containers', (req, res) => {
     console.log("\nGET: 'student/containers' Web-Pages");
 
+
+    // load files to be sent to the client in jquery using ajax. Extend Dynamic functionality.
+    const gyankriti_students_ejs_file = fs.readFileSync(fileDir + 'container_gyankriti_students.ejs');
+    const new_admission_ejs_file = fs.readFileSync(fileDir + 'container_new_admission.ejs');
+
     const body = {
         page_gyankriti_student: {
             TITLE: "Gyankriti Students",
-            // HTML: file_gyankriti_students_ejs.toString()
-            HTML: file_new_admission_ejs.toString()
+            HTML: gyankriti_students_ejs_file.toString()
         },
 
         page_new_admission: {
             TITLE: "New Admission",
-            HTML: file_new_admission_ejs.toString()
+            HTML: new_admission_ejs_file.toString()
         }
     };
 

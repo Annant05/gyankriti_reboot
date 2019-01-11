@@ -26,13 +26,13 @@ function documentReady() {
             }
         }
     });
+    // datatable_functions(null);
 
-//end of document ready
 }
 
 
 async function datatable_functions(arrayOfStudents) {
-    console.log("\nadding rows to the datatable");
+    console.log("\nexecuting datatable_functions();");
     let datatable_students = $('#students_table').DataTable({
         "scrollY": '50vh',
         "scrollX": true,
@@ -41,18 +41,22 @@ async function datatable_functions(arrayOfStudents) {
         "order": [[0, "asc"]]
     });
 
-    await arrayOfStudents.forEach((student) => {
-        datatable_students.row.add([
+    if (arrayOfStudents !== null) {
+        await arrayOfStudents.forEach((student) => {
+            console.log("adding rows to the datatable");
+            datatable_students.row.add([
+                student.student_enrollment,
+                (student.student_fname + " " + student.student_lname),
+                student.student_standard,
+                student.student_section,
+                student.student_vanRoute,
+                student.student_email
+            ]).draw(true);
 
-            student.student_enrollment,
-            (student.student_fname + " " + student.student_lname),
-            student.student_standard,
-            student.student_section,
-            student.student_vanRoute,
-            student.student_email
-        ]).draw(true);
-
-    });
+        });
+    } else {
+        console.log("no data received from server.");
+    }
 }
 
 

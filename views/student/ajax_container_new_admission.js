@@ -119,8 +119,21 @@ function documentReady() {
     }
 
     selector_button_submit.click(sendDataUsingAjax);
+
 }
 
 $(documentReady);
+
 //define Actions and function calls below
 
+function nextTab(tabId) {
+    let tabSelector = '#new_admission_tabs a[href="' + tabId + '"]';
+    console.log(tabSelector);
+    $(tabSelector).tab('show');
+}
+
+function previousTab(tabId) {
+    let tabSelector = '#new_admission_tabs a[href="' + tabId + '"]';
+    console.log(tabSelector);
+    $(tabSelector).tab('show');
+}
