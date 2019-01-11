@@ -38,6 +38,7 @@ async function datatable_functions(arrayOfStudents) {
         "scrollX": true,
         "paging": true,
         "ordering": true,
+        "responsive": true,
         "order": [[0, "asc"]]
     });
 
