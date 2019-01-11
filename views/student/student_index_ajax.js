@@ -1,11 +1,12 @@
 const selector_main_content_container = $("#main_content_container");
-
+selector_main_content_container.children().remove();
 
 let body;
 let isVisible = true;
 $(documentReady);
 
 async function documentReady() {
+
 
     await $.ajax({
         url: '/student/containers',
@@ -16,21 +17,31 @@ async function documentReady() {
             body = response.body;
             // console.log(JSON.stringify(response.body.page_gyankriti_student.HTML));
         }
-    });
+    }).done(addContainers);
 
+    function addContainers() {
+        $(body.page_gyankriti_student.HTML).appendTo(selector_main_content_container);
+        $(body.page_new_admission.HTML).appendTo(selector_main_content_container);
+    }
+
+    $("#admission_form_container").toggleClass("invisible");
     setGyankritiStudentsVisibility();
+
 }
 
 function setGyankritiStudentsVisibility() {
-    selector_main_content_container.children().remove();
+
     // On isVisible = true // gyankriti students table will be shown.
     if (isVisible) {
-        $(body.page_gyankriti_student.HTML).appendTo(selector_main_content_container);
         document.title = body.page_gyankriti_student.TITLE;
+        $("#gyankriti_students_container").toggleClass("invisible");
+        $("#admission_form_container").toggleClass("invisible");
 
     } else {
-        $(body.page_new_admission.HTML).appendTo(selector_main_content_container);
         document.title = body.page_new_admission.TITLE;
+        $("#gyankriti_students_container").toggleClass("invisible");
+        $("#admission_form_container").toggleClass("invisible");
+
     }
 }
 

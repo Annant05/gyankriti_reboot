@@ -1,38 +1,52 @@
 // define all the selector and global variables below
-$(documentReady);
-
-function documentReady() {
-    const selector_student_fname = $("#inputstu_fname");
-    const selector_student_lname = $("#inputstu_lname");
-    const selector_student_dob = $("#inputstu_dob");
-
-    const selector_student_city = $("#inputstu_city");
-    const selector_student_residentialAddress = $("#inputstu_address");
-    const selector_student_addressLine2 = $("#inputstu_addressline2");
-
-    const selector_student_username = $("#inputstu_username");
-    const selector_student_enrollment = $("#inputstu_enrollment");
-    const selector_student_dateAdmission = $("#inputstu_doadmission");
-
-    const selector_student_standard = $("#inputstu_standard");
-    const selector_student_section = $("#inputstu_section");
-    const selector_student_vanRoute = $("#inputstu_vanroute");
-    const selector_student_email = $("#inputstu_email");
-
-    const selector_father_name = $("#inputfather_name");
-    const selector_father_email = $("#inputfather_email");
-    const selector_father_mobile = $("#inputfather_mob");
-
-    const selector_mother_name = $("#inputmother_name");
-    const selector_mother_email = $("#inputmother_email");
-    const selector_mother_mobile = $("#inputmother_mob");
-
-    const selector_button_submit = $("#button_submit");
+let selector_student_fname;
+let selector_student_lname;
+let selector_student_dob;
+let selector_student_city;
+let selector_student_residentialAddress;
+let selector_student_addressLine2;
+let selector_student_username;
+let selector_student_enrollment;
+let selector_student_dateAdmission;
+let selector_student_standard;
+let selector_student_section;
+let selector_student_vanRoute;
+let selector_student_email;
+let selector_father_name;
+let selector_father_email;
+let selector_father_mobile;
+let selector_mother_name;
+let selector_mother_email;
+let selector_mother_mobile;
+let selector_button_submit;
 
 
 // Write function definitions below
+function documentReady() {
+    selector_student_fname = $("#inputstu_fname");
+    selector_student_lname = $("#inputstu_lname");
+    selector_student_dob = $("#inputstu_dob");
+    selector_student_city = $("#inputstu_city");
+    selector_student_residentialAddress = $("#inputstu_address");
+    selector_student_addressLine2 = $("#inputstu_addressline2");
+    selector_student_username = $("#inputstu_username");
+    selector_student_enrollment = $("#inputstu_enrollment");
+    selector_student_dateAdmission = $("#inputstu_doadmission");
+    selector_student_standard = $("#inputstu_standard");
+    selector_student_section = $("#inputstu_section");
+    selector_student_vanRoute = $("#inputstu_vanroute");
+    selector_student_email = $("#inputstu_email");
+    selector_father_name = $("#inputfather_name");
+    selector_father_email = $("#inputfather_email");
+    selector_father_mobile = $("#inputfather_mob");
+    selector_mother_name = $("#inputmother_name");
+    selector_mother_email = $("#inputmother_email");
+    selector_mother_mobile = $("#inputmother_mob");
+    selector_button_submit = $("#button_submit");
+    console.log("Selector initialized");
 
     function getFormInputsData() {
+
 
         function getGender() {
             const selector_gender_radio = $("input[name='inputstu_gender']:checked");
@@ -104,6 +118,9 @@ function documentReady() {
         }
     }
 
-//define Actions and function calls below
     selector_button_submit.click(sendDataUsingAjax);
 }
+
+$(documentReady);
+//define Actions and function calls below
+
