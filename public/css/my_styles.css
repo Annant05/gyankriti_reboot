@@ -30,7 +30,7 @@
 }
 
 .height-content {
-    min-height: 25em;
+    min-height: initial;
     height: max-content;
 }
 
@@ -57,4 +57,8 @@ li > .active {
 
 .button-shadow:hover {
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.text-bold {
+    font-weight: bold;
 }

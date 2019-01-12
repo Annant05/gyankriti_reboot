@@ -4,8 +4,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="float-left"><h1>New Admission</h1></div>
-            <button id="button_toggle_container" class="btn btn-primary button-shadow float-right" type="button"
-                    onclick="changeContainer();">Gyankriti Students
+            <button id="button_toggle_container" class="btn btn-primary button-shadow float-right"
+                    type="button" onclick="changeContainer();">Gyankriti Students
             </button>
         </div>
     </div>
@@ -48,59 +48,47 @@
                     <hr>
 
                     <div class="height-content">
-                        <form id="student_form" novalidate>
+                        <form id="student_form" novalidate="">
 
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputstu_fname">First Name</label>
                                     <input type="text" class="form-control" id="inputstu_fname"
-                                           placeholder=" John" required>
+                                           placeholder=" John" required="">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputstu_lname">Last Name</label>
                                     <input type="text" class="form-control" id="inputstu_lname"
-                                           placeholder=" Doe" required>
+                                           placeholder=" Doe" required="">
                                 </div>
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 text-center">
                                     <label for="inputstu_dob">Date Of Birth</label>
                                     <input type="date" class="form-control " id="inputstu_dob"
-                                           placeholder="mm/dd/yyyy"
-                                           required>
+                                           placeholder="mm/dd/yyyy" required="">
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 text-center">
                                     <label for="inputstu_city">City</label>
                                     <input type="text" class="form-control" id="inputstu_city"
-                                           placeholder=" Indore"
-                                           required>
+                                           placeholder=" Indore" required="">
                                 </div>
 
                                 <!--needs to  be checked-->
                                 <div class="form-group col-md-4 text-center">
-                                    <label>Gender</label>
+                                    <label for="inputstu_gender">Gender</label>
 
-                                    <div class="form-row justify-content-center">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="radio"
-                                                       name="inputstu_gender"
-                                                       value="male" required> <strong>Male</strong>
-                                            </label>
-                                        </div>
+                                    <select id="inputstu_gender"
+                                            class="text-bold form-control form-control-md">
+                                        <option value="select" selected>Select...</option>
 
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="radio"
-                                                       name="inputstu_gender"
-                                                       value="female"> <strong>Female</strong>
-                                            </label>
-                                        </div>
-                                    </div>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
 
+                                    </select>
                                 </div>
 
                             </div>
@@ -135,7 +123,7 @@
                     <hr>
 
                     <div class="height-content">
-                        <form id="parent_form" novalidate>
+                        <form id="parent_form" novalidate="">
 
 
                             <h4>Father's Detail</h4>
@@ -143,17 +131,17 @@
                                 <div class="form-group col-md-4">
                                     <label for="inputfather_name">Name</label>
                                     <input type="text" class="form-control" id="inputfather_name"
-                                           placeholder=" John Doe" required>
+                                           placeholder=" John Doe" required="">
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="inputfather_mob">Mobile No.</label>
+                                <div class="form-group col-md-3 text-center">
+                                    <label for="inputfather_mob">Mobile No</label>
                                     <input type="text" class="form-control" id="inputfather_mob"
-                                           placeholder=" 0123456789" required>
+                                           placeholder=" 0123456789" required="">
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label for="inputfather_email">Email</label>
                                     <input type="email" class="form-control" id="inputfather_email"
-                                           placeholder=" johndoe@example.com" required>
+                                           placeholder=" johndoe@example.com" required="">
                                     <!--<div class="invalid-feedback">-->
                                     <!--please check email address.-->
                                     <!--</div>-->
@@ -171,12 +159,12 @@
                                 <div class="form-group col-md-4">
                                     <label for="inputmother_name">Name</label>
                                     <input type="text" class="form-control" id="inputmother_name"
-                                           placeholder=" Jessica Doe" required>
+                                           placeholder=" Jessica Doe" required="">
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="inputmother_mob">Mobile No.</label>
+                                <div class="form-group col-md-3 text-center">
+                                    <label for="inputmother_mob">Mobile No</label>
                                     <input type="text" class="form-control" id="inputmother_mob"
-                                           placeholder=" 0123456789" required>
+                                           placeholder=" 0123456789" required="">
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label for="inputmother_email">Email</label>
@@ -208,56 +196,100 @@
                     <hr>
 
                     <div class="height-content">
-                        <form id="gyankriti_form" novalidate>
+                        <form id="gyankriti_form" novalidate="">
 
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="inputstu_username">Username</label>
                                     <input type="text" class="form-control" id="inputstu_username"
-                                           placeholder=" johndoe" required>
+                                           placeholder=" johndoe" required="">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputstu_enrollment">Enrollment</label>
                                     <input type="text" class="form-control" id="inputstu_enrollment"
-                                           placeholder=" K01/015" required>
+                                           placeholder=" K01/015" required="">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 text-center">
                                     <label for="inputstu_doadmission">Date Of Admission</label>
                                     <input type="date" class="form-control" id="inputstu_doadmission"
-                                           placeholder=" John Doe" required>
+                                           placeholder=" John Doe" required="">
                                 </div>
                             </div>
 
                             <!--convert to dropdown in coming iteration  this whole group row -->
                             <div class="form-row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3 text-center">
                                     <label for="inputstu_standard">Standard</label>
-                                    <input type="text" class="form-control" id="inputstu_standard"
-                                           placeholder=" JS1 " required>
+
+                                    <select id="inputstu_standard"
+                                            class="text-bold form-control form-control-md">
+                                        <option value="select" selected>Select...</option>
+
+                                        <option value="standard-1">Standard-1</option>
+                                        <option value="standard-2">Standard-2</option>
+                                        <option value="standard-3">Standard-3</option>
+                                        <option value="standard-4">Standard-4</option>
+                                        <option value="standard-5">Standard-5</option>
+                                        <option value="standard-6">Standard-6</option>
+
+                                    </select>
+
                                 </div>
-                                <div class="form-group col-md-3">
+
+                                <div class="form-group col-md-3 text-center">
                                     <label for="inputstu_section">Section</label>
-                                    <input type="text" class="form-control" id="inputstu_section"
-                                           placeholder=" A" required>
+
+                                    <select id="inputstu_section"
+                                            class="text-bold form-control form-control-md">
+                                        <option value="select" selected>Select...</option>
+
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+
+                                    </select>
                                 </div>
 
-
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-3 text-center">
                                     <label for="inputstu_vanroute">Van Route</label>
-                                    <input type="text" class="form-control" id="inputstu_vanroute"
-                                           placeholder=" 5A2" required>
+
+                                    <select id="inputstu_vanroute"
+                                            class="text-bold form-control form-control-md">
+                                        <option value="select" selected>Select...</option>
+
+                                        <option value="5A">5A</option>
+                                        <option value="1A">1A</option>
+                                        <option value="2C">2C</option>
+
+                                    </select>
                                 </div>
+
+                                <div class="form-group col-md-3 text-center">
+                                    <label for="inputstu_vanshift">Van Shift</label>
+
+                                    <select id="inputstu_vanshift"
+                                            class="text-bold form-control form-control-md">
+                                        <option value="select" selected>Select...</option>
+
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+
+                                    </select>
+                                </div>
+
+
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-5 text-center">
                                     <label for="inputstu_email">Registered Email</label>
                                     <input type="text" class="form-control" id="inputstu_email"
                                            placeholder=" s.gyankriti.student">
                                 </div>
 
                                 <div class="form-group col-md-5">
-                                    <label for="inputstuCity">Email-Domain</label>
+                                    <label>Email-Domain</label>
 
                                     <div class="form-row">
 
@@ -293,7 +325,39 @@
                     <hr>
 
                     <div class="height-content">
-                        <p>Under Development</p>
+                        <form id="fee_form" novalidate="">
+
+                            <div class="form-group row">
+
+                                <label for="inputstu_feestructure" class="col-sm-4 col-form-label">Fee
+                                    Structure :</label>
+
+                                <div class="col-sm-4">
+
+                                    <select id="inputstu_feestructure" class="text-bold form-control">
+
+                                        <option value="select" selected>Select...</option>
+                                        <option value="yearly">Yearly</option>
+                                        <option value="half-yearly">Half-Yearly</option>
+                                        <option value="quarterly">Quarterly</option>
+                                        <option value="custom">Custom</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="first_installment" class="col-sm-4 col-form-label">First
+                                    Installment (&#8377;) :</label>
+                                <div class="col-sm-4">
+                                    <input type="number" min="0" class="form-control" id="first_installment"
+                                           placeholder="Rs. Fee Amount">
+                                </div>
+                            </div>
+                            <!--<button type="submit" class="btn btn-primary button-shadow">Sign in</button>-->
+                        </form>
                     </div>
 
                     <hr>
@@ -322,16 +386,31 @@
                                 onclick="previousTab('#fees')">
                             Previous
                         </button>
-                        <button type="button" class="btn btn-primary button-shadow float-right" id="button_submit">
+                        <button type="button" class="btn btn-primary button-shadow float-right"
+                                id="button_submit">
                             Submit
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-    </div><!--/col-9-->
 </div>
 <!-- tabs container end-->
+
+<script>
+    function nextTab(tabId) {
+        let tabSelector = '#new_admission_tabs a[href="' + tabId + '"]';
+        console.log(tabSelector);
+        $(tabSelector).tab('show');
+    }
+
+    function previousTab(tabId) {
+        let tabSelector = '#new_admission_tabs a[href="' + tabId + '"]';
+        console.log(tabSelector);
+        $(tabSelector).tab('show');
+    }
+</script>
 <script src="ajax_container_new_admission.js"></script>
