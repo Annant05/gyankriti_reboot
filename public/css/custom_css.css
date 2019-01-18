@@ -1,0 +1,73 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+/*html {*/
+/*position: relative;*/
+/*min-height: 100%;*/
+/*}*/
+
+/*body {*/
+/*!* Margin bottom by footer height *!*/
+/*margin-bottom: 30px;*/
+/*}*/
+
+/*.footer {*/
+/*position: absolute;*/
+/*bottom: 0;*/
+/*width: 100%;*/
+/*margin-top: 60px;*/
+/*}*/
+
+
+.child-container {
+    position: absolute;
+}
+
+.parent-container {
+    position: relative;
+}
+
+.height-content {
+    min-height: initial;
+    height: max-content;
+}
+
+/*.shadow-nav-link:hover {*/
+/*box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);*/
+/*}*/
+
+
+/*li > .active {*/
+/*box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);*/
+/*font-weight: bold;*/
+/*}*/
+
+.button-shadow {
+    min-height: 2.7em;
+    padding: 2px 16px;
+    border-style: solid;
+    border-width: thin;
+    border-color: lightgrey;
+    /* Add shadows to create the "card" effect */
+    box-shadow: 8px 10px 20px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.5s;
+}
+
+.button-shadow:hover {
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+select {
+    font-weight: bold;
+}
+
+.display-none {
+    display: none;
+}
+
+.width-available {
+    min-width: available;
+}
