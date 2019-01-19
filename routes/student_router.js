@@ -24,34 +24,11 @@ router.get('/new-admission', (req, res) => {
 
 });
 
-router.get('/containers', (req, res) => {
-    console.log("\nGET: 'student/containers' Web-Pages");
-
-
-    // load files to be sent to the client in jquery using ajax. Extend Dynamic functionality.
-    const gyankriti_students_ejs_file = fs.readFileSync(fileDir + 'container_gyankriti_students.ejs');
-    const new_admission_ejs_file = fs.readFileSync(fileDir + 'new_admission.ejs');
-
-    const body = {
-        page_gyankriti_student: {
-            TITLE: "Gyankriti Students",
-            HTML: gyankriti_students_ejs_file.toString()
-        },
-
-        page_new_admission: {
-            TITLE: "New Admission",
-            HTML: new_admission_ejs_file.toString()
-        }
-    };
-
-    res.send({body: body});
-
-});
 
 router.post('/new-admission', async (req, res) => {
     console.log("\nPOST: 'student/new_admission' = Received  New Admission data from AJAX call.");
     try {
-        // console.log(J\nSON.stringify(req.body.new_admission_data));
+        // console.log(JSON.stringify(req.body.new_admission_data));
         await dynamoStudent.newAdmission(req.body.new_admission_data, (isSaved) => {
             console.log("is Data Saved to the dynamodb 'student' table:  " + isSaved);
             res.send({success: isSaved});
@@ -84,6 +61,30 @@ router.post('/current_students', async (req, res) => {
     }
 });
 
+
+router.get('/containers', (req, res) => {
+    console.log("\nGET: 'student/containers' Web-Pages");
+
+
+    // load files to be sent to the client in jquery using ajax. Extend Dynamic functionality.
+    const gyankriti_students_ejs_file = fs.readFileSync(fileDir + 'container_gyankriti_students.ejs');
+    const new_admission_ejs_file = fs.readFileSync(fileDir + 'new_admission.ejs');
+
+    const body = {
+        page_gyankriti_student: {
+            TITLE: "Gyankriti Students",
+            HTML: gyankriti_students_ejs_file.toString()
+        },
+
+        page_new_admission: {
+            TITLE: "New Admission",
+            HTML: new_admission_ejs_file.toString()
+        }
+    };
+
+    res.send({body: body});
+
+});
 
 /*  END: get and post method block */
 

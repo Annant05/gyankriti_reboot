@@ -1,61 +1,73 @@
+//Section 1 - student_general
 let dropdown_academic_session = null;
 let dropdown_admission_class = null;
 let input_student_first_name = null;
 let input_student_last_name = null;
-let input_student_aadhar_no = null;
+let input_student_aadhar = null;
 let input_student_samagra_ssmid = null;
 let field_date_of_birth = null;
 let dropdown_gender = null;
 
+// student_general 2
 let dropdown_nationality = null;
 let dropdown_religion = null;
 let dropdown_caste = null;
 let field_religion_other = null;
 
+// present_address
 let input_present_address = null;
 let dropdown_present_state = null;
 let dropdown_present_city = null;
 let input_present_pincode = null;
 
+//permanent address
 let input_permanent_address = null;
 let dropdown_permanent_state = null;
 let dropdown_permanent_city = null;
 let input_permanent_pincode = null;
 
+//about_parents
 let dropdown_the_parents_are = null;
 let dropdown_child_lives_with = null;
 let dropdown_adopted_child = null;
 
+//education history
 let dropdown_any_previous_schools = null;
 let table_previous_school = null;
 let table_body_previous_school = null;
 
+//radio questions
+//question 1 - disability
 let radio_question_disability = null;
 let radio_question_disability_yes = null;
 let radio_question_disability_no = null;
 let field_question_disability = null;
 
+//question 2 - therapist
 let radio_question_therapist = null;
 let radio_question_therapist_yes = null;
 let radio_question_therapist_no = null;
 let field_question_therapist = null;
 
+//question 3 - repeated grade
 let radio_question_repeated_grade = null;
 let radio_question_repeated_grade_yes = null;
 let radio_question_repeated_grade_no = null;
 let field_question_repeated_grade = null;
 
+//question 4 - suspended
 let radio_question_suspended = null;
 let radio_question_suspended_yes = null;
 let radio_question_suspended_no = null;
 let field_question_suspended = null;
 
+//question 5 - illness
 let radio_question_illness = null;
 let radio_question_illness_yes = null;
 let radio_question_illness_no = null;
 let field_question_illness = null;
 
-
+//father details
 let input_father_name = null;
 let input_father_email = null;
 let input_father_aadhar = null;
@@ -65,6 +77,7 @@ let input_father_mobile_no = null;
 let input_father_occupation = null;
 let input_father_name_of_organization = null;
 
+//mother details
 let input_mother_name = null;
 let input_mother_email = null;
 let input_mother_aadhar = null;
@@ -74,13 +87,25 @@ let input_mother_mobile_no = null;
 let input_mother_occupation = null;
 let input_mother_name_of_organization = null;
 
+// emergency contact and sibling
 let input_emergency_contact = null;
 
+// Sibling table
 let dropdown_any_sibling = null;
 let table_sibling = null;
 let table_body_sibling = null;
 
+//submit button - save information
 let button_save_information = null;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//*  some booleans to be used for form submission.   */
+
+let is_question_disability_to_save = false;
+let is_question_therapist_to_save = false;
+let is_question_repeated_grade_to_save = false;
+let is_question_suspended_to_save = false;
+let is_question_illness_to_save = false;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,7 +117,7 @@ function initializeJquerySelectors() {
     dropdown_admission_class = $("#dropdown_admission_class");
     input_student_first_name = $("#input_student_first_name");
     input_student_last_name = $("#input_student_last_name");
-    input_student_aadhar_no = $("#input_student_aadhar_no");
+    input_student_aadhar = $("#input_student_aadhar");
     input_student_samagra_ssmid = $("#input_student_samagra_ssmid");
     field_date_of_birth = $("#field_date_of_birth");
     dropdown_gender = $("#dropdown_gender");
@@ -109,7 +134,7 @@ function initializeJquerySelectors() {
     dropdown_present_city = $("#dropdown_present_city");
     input_present_pincode = $("#input_present_pincode");
 
-    //permanent adderess
+    //permanent address
     input_permanent_address = $("#input_permanent_address");
     dropdown_permanent_state = $("#dropdown_permanent_state");
     dropdown_permanent_city = $("#dropdown_permanent_city");
@@ -215,6 +240,9 @@ let options_array = {
 
 };
 
+
+// Functions declaration and definition
+
 function isInputFieldDisabled(selector, isDisabled) {
     console.log("some field isDisabled :", isDisabled);
 
@@ -226,19 +254,20 @@ function isInputFieldDisabled(selector, isDisabled) {
 
 }
 
+
 function getValFromDropdown(dropdown_selector) {
     let valueDropdownOption = dropdown_selector.children("option").filter(":selected").val();
     if (valueDropdownOption === 'choose') {
-        return "choose";
-        // isNoDropdownUnselected = false;
-        // alert("Please check : dropdown value is unselected : " + dropdown_selector.toString());
+        console.log(dropdown_selector.attr('id') + " is not selected");
+        return null;
     } else {
+        console.log(dropdown_selector.attr('id') + " is :", valueDropdownOption);
         return valueDropdownOption;
     }
 }
 
 
-function generateTable(table_body_selector, noOfRows, id) {
+function generateTable(table_body_selector, noOfRows, id_prefix) {
 
     table_body_selector.children().remove();
     console.log("No of rows to generate :" + noOfRows);
@@ -246,20 +275,16 @@ function generateTable(table_body_selector, noOfRows, id) {
     for (let rowNo = 1; rowNo <= noOfRows; rowNo++) {
         let tablebody = `<tr>
             <td class="text-center"> ${rowNo} </td>
-            <td>    <input id="${id}_a${rowNo}" class="width-available" type="text"  />    </td>
-            <td>    <input id="${id}_b${rowNo}" class="width-available" type="text"  />    </td>
-            <td>    <input id="${id}_c${rowNo}" class="width-available" type="text"  />    </td>
-            <td>    <input id="${id}_d${rowNo}" class="width-available" type="text"  />    </td>
-            <td>    <input id="${id}_e${rowNo}" class="width-available" type="text"  />    </td>
+            <td>    <input id="${id_prefix}_a${rowNo}" class="width-available" type="text"  />    </td>
+            <td>    <input id="${id_prefix}_b${rowNo}" class="width-available" type="text"  />    </td>
+            <td>    <input id="${id_prefix}_c${rowNo}" class="width-available" type="text"  />    </td>
+            <td>    <input id="${id_prefix}_d${rowNo}" class="width-available" type="text"  />    </td>
+            <td>    <input id="${id_prefix}_e${rowNo}" class="width-available" type="text"  />    </td>
         </tr>`;
         table_body_selector.append(tablebody);
     }
 }
 
-// function createTableRows(table_body_selector, noOfRows) {
-//
-//
-// }
 
 function initializeDropdown() {
     console.log("initializing dropdown and adding options");
@@ -294,11 +319,14 @@ function initializeDropdown() {
 
 }
 
+
 function documentReady() {
     initializeJquerySelectors();
     initializeDropdown();
     // isInputFieldDisabled(field_religion_other, true);
 
+
+    button_save_information.click(sendDataToServerUsingAjax);
 
     //* handle dropdown fields */
     dropdown_religion.change(() => {
@@ -320,7 +348,7 @@ function documentReady() {
             table_previous_school.addClass("display-none")
         } else {
             table_previous_school.removeClass("display-none");
-            generateTable(table_body_previous_school, Number(getValFromDropdown(dropdown_any_previous_schools)), "pre");
+            generateTable(table_body_previous_school, Number(valDropdown), "pre");
         }
     });
 
@@ -333,7 +361,7 @@ function documentReady() {
             table_sibling.addClass("display-none")
         } else {
             table_sibling.removeClass("display-none");
-            generateTable(table_body_sibling, Number(getValFromDropdown(dropdown_any_sibling)), "sib");
+            generateTable(table_body_sibling, Number(valDropdown), "sib");
         }
     });
 
@@ -342,47 +370,235 @@ function documentReady() {
     //for question 1
     radio_question_disability_no.on("click", () => {
         isInputFieldDisabled(field_question_disability, true);
+        is_question_disability_to_save = false;
     });
     radio_question_disability_yes.on("click", () => {
         isInputFieldDisabled(field_question_disability, false);
+        is_question_disability_to_save = true;
     });
 
 
     //for question 2
     radio_question_therapist_no.on("click", () => {
         isInputFieldDisabled(field_question_therapist, true);
+        is_question_therapist_to_save = false;
     });
     radio_question_therapist_yes.on("click", () => {
         isInputFieldDisabled(field_question_therapist, false);
+        is_question_therapist_to_save = true;
     });
 
 
     //for question 3
     radio_question_repeated_grade_no.on("click", () => {
         isInputFieldDisabled(field_question_repeated_grade, true);
+        is_question_repeated_grade_to_save = false;
     });
     radio_question_repeated_grade_yes.on("click", () => {
         isInputFieldDisabled(field_question_repeated_grade, false);
+        is_question_repeated_grade_to_save = true;
     });
 
 
     // for question 4
     radio_question_suspended_no.on("click", () => {
         isInputFieldDisabled(field_question_suspended, true);
+        is_question_suspended_to_save = false;
     });
     radio_question_suspended_yes.on("click", () => {
         isInputFieldDisabled(field_question_suspended, false);
+        is_question_suspended_to_save = true;
     });
 
 
     //for question 5
     radio_question_illness_no.on("click", () => {
         isInputFieldDisabled(field_question_illness, true);
+        is_question_illness_to_save = false;
     });
     radio_question_illness_yes.on("click", () => {
         isInputFieldDisabled(field_question_illness, false);
+        is_question_illness_to_save = true;
     });
 
 }
 
+
+function getFormInputData() {
+
+
+    function getValFromTextBox(text_selector) {
+        return text_selector.val();
+    }
+
+
+    function getRadio_QnA(radio_boolean, selector_field_question) {
+
+        if (radio_boolean) {
+            return {
+                is_applicable: radio_boolean,
+                reason: selector_field_question.val()
+            };
+        } else {
+            return {
+                is_applicable: radio_boolean
+            };
+        }
+    }
+
+
+    function getDropdownWithOther(dropdown_selector, field_other_answer) {
+
+        let valDropDown = getValFromDropdown(dropdown_selector);
+        if (valDropDown === "other") {
+            return {
+                value: valDropDown,
+                value_other: (field_other_answer.val()).trim()
+            };
+        } else {
+            return {
+                value: valDropDown
+            };
+        }
+    }
+
+
+    function getDataFromTableRowsIncludedInDropdown(dropdown_selector, table_body_selector, id_prefix) {
+
+        let valDropdown = getValFromDropdown(dropdown_selector);
+
+        if (valDropdown === "no") {
+            return {
+                value: valDropdown,
+                table_array: null
+            }
+        } else {
+            console.log("No of rows to generate :" + Number(valDropdown));
+            let tableData = [];
+
+            for (let rowNo = 1; rowNo <= Number(valDropdown); rowNo++) {
+
+                let array_element = {
+                    school_name: ($(`#${id_prefix}_a${rowNo}`).val()),
+                    city_and_state: ($(`#${id_prefix}_b${rowNo}`).val()),
+                    year_of_admission: ($(`#${id_prefix}_c${rowNo}`).val()),
+                    grades_completed: ($(`#${id_prefix}_d${rowNo}`).val()),
+                    board_pattern: ($(`#${id_prefix}_e${rowNo}`).val())
+                };
+
+                tableData.push(array_element);
+            }
+
+            console.log((JSON.stringify(tableData)));
+            return {
+                value: valDropdown,
+                table_array: tableData
+            };
+        }
+
+    }
+
+
+    // console.log(val_student_information);
+    return {
+
+        academic_session: getValFromDropdown(dropdown_academic_session),
+        admission_class: getValFromDropdown(dropdown_admission_class),
+
+        student_first_name: getValFromTextBox(input_student_first_name),
+        student_last_name: getValFromTextBox(input_student_last_name),
+        student_aadhar: getValFromTextBox(input_student_aadhar),
+        student_samagra_ssmid: getValFromTextBox(input_student_samagra_ssmid),
+        student_date_of_birth: getValFromTextBox(field_date_of_birth),
+        student_gender: getValFromDropdown(dropdown_gender),
+
+        student_nationality: getValFromDropdown(dropdown_nationality),
+        student_caste: getValFromDropdown(dropdown_caste),
+
+        present_address: getValFromTextBox(input_present_address),
+        present_state: getValFromDropdown(dropdown_present_state),
+        present_city: getValFromDropdown(dropdown_present_city),
+        present_pincode: getValFromTextBox(input_present_pincode),
+
+        permanent_address: getValFromTextBox(input_permanent_address),
+        permanent_state: getValFromDropdown(dropdown_permanent_state),
+        permanent_city: getValFromDropdown(dropdown_permanent_city),
+        permanent_pincode: getValFromTextBox(input_permanent_pincode),
+
+        the_parents_are: getValFromDropdown(dropdown_the_parents_are),
+        child_lives_with: getValFromDropdown(dropdown_child_lives_with),
+        adopted_child: getValFromDropdown(dropdown_adopted_child),
+
+        father_name: getValFromTextBox(input_father_name),
+        father_email: getValFromTextBox(input_father_email),
+        father_aadhar: getValFromTextBox(input_father_aadhar),
+        father_samagra_ssmid: getValFromTextBox(input_father_samagra_ssmid),
+        father_education_qualification: getValFromTextBox(input_father_education_qualification),
+        father_mobile_no: getValFromTextBox(input_father_mobile_no),
+        father_occupation: getValFromTextBox(input_father_occupation),
+        father_name_of_organization: getValFromTextBox(input_father_name_of_organization),
+
+        mother_name: getValFromTextBox(input_mother_name),
+        mother_email: getValFromTextBox(input_mother_email),
+        mother_aadhar: getValFromTextBox(input_mother_aadhar),
+        mother_samagra_ssmid: getValFromTextBox(input_mother_samagra_ssmid),
+        mother_education_qualification: getValFromTextBox(input_mother_education_qualification),
+        mother_mobile_no: getValFromTextBox(input_mother_mobile_no),
+        mother_occupation: getValFromTextBox(input_mother_occupation),
+        mother_name_of_organization: getValFromTextBox(input_mother_name_of_organization),
+
+        emergency_contact: getValFromTextBox(input_emergency_contact),
+
+        // below are all the special fields
+        // radio questions with answers.
+        disability: getRadio_QnA(is_question_disability_to_save, field_question_disability),
+        therapist: getRadio_QnA(is_question_therapist_to_save, field_question_therapist),
+        repeated_grade: getRadio_QnA(is_question_repeated_grade_to_save, field_question_repeated_grade),
+        suspended: getRadio_QnA(is_question_suspended_to_save, field_question_suspended),
+        illness: getRadio_QnA(is_question_illness_to_save, field_question_illness),
+
+        // Handle other field in dropdown. This is specific for religion dropdown as of now.
+        student_religion: getDropdownWithOther(dropdown_religion, field_religion_other),
+
+        // Handle table for this dropdowns
+        any_previous_schools: getDataFromTableRowsIncludedInDropdown(dropdown_any_previous_schools, table_body_previous_school, "pre"),
+        any_siblings: getDataFromTableRowsIncludedInDropdown(dropdown_any_sibling, table_body_sibling, "sib")
+
+    };
+}
+
+
+function sendDataToServerUsingAjax() {
+
+
+    console.log("Click on submit detected");
+    console.log("Logging Values : \n" + (JSON.stringify(getFormInputData())));
+
+    $.ajax({
+        url: '/student/new-admission',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({new_admission_data: getFormInputData()}),
+        success: function (response) {
+            console.log(response.success);
+        }
+    });
+
+    //TODO: Handle and output when data is successfully sent to the server:
+    // if (isNoFieldEmpty && isNoDropdownUnselected) {
+
+    // } else {
+    //     if (!isNoDropdownUnselected) {
+    //         alert("Please check : Dropdown value is unselected : ");
+    //     } else if (!isNoFieldEmpty) {
+    //         alert("Please check : Input box value is empty : ");
+    //     } else {
+    //         alert("Please check : Something Else is empty :  ");
+    //     }
+    // }
+
+}
+
 $(documentReady);
+
+
