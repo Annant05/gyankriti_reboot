@@ -37,14 +37,14 @@ const studentTable = {
             TableName: studentTable.TABLE_NAME,
             AttributeDefinitions: [
                 {
-                    AttributeName: "student_enrollment",  // Primary key
+                    AttributeName: "student_aadhar",  // Primary key
                     AttributeType: "S"
                 },
 
             ],
             KeySchema: [
                 {
-                    AttributeName: "student_enrollment",
+                    AttributeName: "student_aadhar",
                     KeyType: "HASH"
                 },
 
@@ -55,7 +55,7 @@ const studentTable = {
             }
         };
 
-        dynamodb.createTable(params, (err, data) => {
+        await dynamodb.createTable(params, (err, data) => {
             if (err) console.log(err, err.stack); // an error occurred
             else console.log(data);
         });
@@ -66,5 +66,5 @@ const studentTable = {
 };
 
 
-startOfflineDynamoDB().then(basicDynamoTableFunctions.listTables()); // start dynamodb offline
+// startOfflineDynamoDB().then(basicDynamoTableFunctions.listTables()); // start dynamodb offline
 // studentTable.createStudentTable().then(basicDynamoTableFunctions.listTables());

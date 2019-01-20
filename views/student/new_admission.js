@@ -292,7 +292,7 @@ function initializeDropdown() {
     function append_options_to_dropdown(dropdown_selector, options) {
         options.forEach(function (option) {
             dropdown_selector.append(
-                `<option value="${((option.toString()).toLowerCase())}">${option}</option>`);
+                `<option value="${((option.toString()))}">${option}</option>`);
         });
     }
 
@@ -300,7 +300,7 @@ function initializeDropdown() {
     append_options_to_dropdown(dropdown_admission_class, options_array.admission_class);
     append_options_to_dropdown(dropdown_gender, options_array.gender);
 
-    append_options_to_dropdown(dropdown_nationality, options_array.nationality);
+    append_options_to_dropdown0(dropdown_nationality, options_array.nationality);
     append_options_to_dropdown(dropdown_caste, options_array.caste);
     append_options_to_dropdown(dropdown_religion, options_array.religion);
 

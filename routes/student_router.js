@@ -41,8 +41,14 @@ router.post('/new-admission', async (req, res) => {
 });
 
 
-router.post('/current_students', async (req, res) => {
-    console.log("\nPOST: 'student/current_students' = Send students information.");
+router.get('/gyankriti-students', (req, res) => {
+    console.log("\nGET: 'student/gyankriti-students'  Web-Page");
+    res.render('student/gyankriti_students', {TITLE: "Gyankriti Students"});
+});
+
+
+router.post('/gyankriti-students', async (req, res) => {
+    console.log("\nPOST: 'student/gyankriti-students' = Send students information.");
 
     try {
         await dynamoStudent.getCurrentStudents((studentsObject, isSuccess) => {
@@ -62,29 +68,31 @@ router.post('/current_students', async (req, res) => {
 });
 
 
-router.get('/containers', (req, res) => {
-    console.log("\nGET: 'student/containers' Web-Pages");
 
-
-    // load files to be sent to the client in jquery using ajax. Extend Dynamic functionality.
-    const gyankriti_students_ejs_file = fs.readFileSync(fileDir + 'container_gyankriti_students.ejs');
-    const new_admission_ejs_file = fs.readFileSync(fileDir + 'new_admission.ejs');
-
-    const body = {
-        page_gyankriti_student: {
-            TITLE: "Gyankriti Students",
-            HTML: gyankriti_students_ejs_file.toString()
-        },
-
-        page_new_admission: {
-            TITLE: "New Admission",
-            HTML: new_admission_ejs_file.toString()
-        }
-    };
-
-    res.send({body: body});
-
-});
+//
+// router.get('/containers', (req, res) => {
+//     console.log("\nGET: 'student/containers' Web-Pages");
+//
+//
+//     // load files to be sent to the client in jquery using ajax. Extend Dynamic functionality.
+//     const gyankriti_students_ejs_file = fs.readFileSync(fileDir + 'container_gyankriti_students.ejs');
+//     const new_admission_ejs_file = fs.readFileSync(fileDir + 'new_admission.ejs');
+//
+//     const body = {
+//         page_gyankriti_student: {
+//             TITLE: "Gyankriti Students",
+//             HTML: gyankriti_students_ejs_file.toString()
+//         },
+//
+//         page_new_admission: {
+//             TITLE: "New Admission",
+//             HTML: new_admission_ejs_file.toString()
+//         }
+//     };
+//
+//     res.send({body: body});
+//
+// });
 
 /*  END: get and post method block */
 

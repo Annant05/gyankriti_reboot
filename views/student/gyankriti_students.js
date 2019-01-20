@@ -13,7 +13,7 @@ function documentReady() {
     });
 
     $.ajax({
-        url: '/student/current_students',
+        url: '/student/gyankriti-students',
         method: 'POST',
         contentType: 'application/json',
         // data: JSON.stringify({new_admission_data: getFormInputsData()}),
@@ -31,7 +31,7 @@ function documentReady() {
 }
 
 
-async function datatable_functions(arrayOfStudents) {
+function datatable_functions(arrayOfStudents) {
     console.log("\nexecuting datatable_functions();");
     let datatable_students = $('#students_table').DataTable({
         "scrollY": '50vh',
@@ -43,15 +43,15 @@ async function datatable_functions(arrayOfStudents) {
     });
 
     if (arrayOfStudents !== null) {
-        await arrayOfStudents.forEach((student) => {
+        arrayOfStudents.forEach((student) => {
             console.log("adding rows to the datatable");
             datatable_students.row.add([
-                student.student_enrollment,
-                (student.student_fname + " " + student.student_lname),
-                student.student_standard,
-                student.student_section,
-                student.student_vanRoute,
-                student.student_email
+                student.student_aadhar,
+                (student.student_first_name + " " + student.student_last_name),
+                student.student_date_of_birth,
+                student.academic_session,
+                student.admission_class,
+                student.student_gender
             ]).draw(true);
 
         });
