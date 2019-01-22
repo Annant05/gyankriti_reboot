@@ -101,7 +101,7 @@ router.post('/gyankriti-students', async (req, res) => {
     try {
         await dynamoStudent.getCurrentStudents((studentsObject, isSuccess) => {
 
-            console.log("isSuccess in recieveing data from getCurrentStudents : ", isSuccess);
+            console.log("isSuccess in receiving data from getCurrentStudents : ", isSuccess);
 
             if (isSuccess) {
                 res.send({body: {studentsObject: studentsObject, isSuccess: isSuccess}});
