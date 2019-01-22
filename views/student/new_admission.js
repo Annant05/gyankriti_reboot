@@ -95,8 +95,23 @@ let dropdown_any_sibling = null;
 let table_sibling = null;
 let table_body_sibling = null;
 
+// images displaying before uploading
+let img_student = null;
+let img_father = null;
+let img_mother = null;
+
 //submit button - save information
 let button_save_information = null;
+
+let button_student_image = null;
+let input_student_image = null;
+
+let button_father_image = null;
+let input_father_image = null;
+
+let button_mother_image = null;
+let input_mother_image = null;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //*  some booleans to be used for form submission.   */
@@ -209,9 +224,25 @@ function initializeJquerySelectors() {
     table_sibling = $("#table_sibling");
     table_body_sibling = $("#table_body_sibling");
 
+    // Images for uploading
+    img_student = $('#img_student');
+    img_father = $('#img_father');
+    img_mother = $('#img_mother');
+
+
     //submit button - save information
     button_save_information = $("#button_save_information");
-    // initializeDropdown();
+
+    // button to handle image uploads.
+    button_student_image = $("#button_student_image");
+    input_student_image = $("#input_student_image");
+
+    button_father_image = $("#button_father_image");
+    input_father_image = $("#input_father_image");
+
+    button_mother_image = $("#button_mother_image");
+    input_mother_image = $("#input_mother_image");
+
 
     console.log("initializing jquery selectors complete");
 }
@@ -300,7 +331,7 @@ function initializeDropdown() {
     append_options_to_dropdown(dropdown_admission_class, options_array.admission_class);
     append_options_to_dropdown(dropdown_gender, options_array.gender);
 
-    append_options_to_dropdown0(dropdown_nationality, options_array.nationality);
+    append_options_to_dropdown(dropdown_nationality, options_array.nationality);
     append_options_to_dropdown(dropdown_caste, options_array.caste);
     append_options_to_dropdown(dropdown_religion, options_array.religion);
 
@@ -320,6 +351,19 @@ function initializeDropdown() {
 }
 
 
+function showUploadedImage(imageInput, image_selector) {
+    if (imageInput.files && imageInput.files[0]) {
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            image_selector.attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(imageInput.files[0]);
+    }
+}
+
+
 function documentReady() {
     initializeJquerySelectors();
     initializeDropdown();
@@ -327,6 +371,32 @@ function documentReady() {
 
 
     button_save_information.click(sendDataToServerUsingAjax);
+
+
+    input_student_image.change(function () {
+        showUploadedImage(this, img_student);
+    });
+
+    input_father_image.change(function () {
+        showUploadedImage(this, img_father);
+    });
+
+    input_mother_image.change(function () {
+        showUploadedImage(this, img_mother);
+    });
+
+    button_student_image.click(() => {
+        input_student_image.trigger('click');
+    });
+
+    button_father_image.click(() => {
+        input_father_image.trigger('click');
+    });
+
+    button_mother_image.click(() => {
+        input_mother_image.trigger('click');
+    });
+
 
     //* handle dropdown fields */
     dropdown_religion.change(() => {

@@ -39,11 +39,17 @@
                     <div class="card text-center bg-dark">
                         <div class="card-body bg-light">
                             <h5 class="card-title">Student</h5>
-                            <img class="img-fluid d-block mx-auto rounded"
-                                 src="http://gyankriti.com/wp-content/uploads/2018/03/logo-100x100.png" width="250"
-                                 height="200" alt="student image gyankriti logo placeholder">
+                            <img id="img_student" class="img-250x250 d-block mx-auto rounded"
+                                 src="http://gyankriti.com/wp-content/uploads/2018/03/logo-100x100.png"
+                                 alt="student image gyankriti logo placeholder">
                             <p class="card-text">Upload an image</p>
-                            <button class="btn btn-primary button-shadow">Upload Image</button>
+
+                            <button class="btn btn-primary button-shadow" id="button_student_image">Upload Image
+                            </button>
+                            <form id="form_student_image" enctype="multipart/form-data">
+                                <input type="file" id="input_student_image" name="student_image" hidden>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -526,11 +532,17 @@
                     <div class="card text-center bg-dark">
                         <div class="card-body bg-light">
                             <h5 class="card-title">Father</h5>
-                            <img class="img-fluid d-block mx-auto rounded"
-                                 src="http://gyankriti.com/wp-content/uploads/2018/03/logo-100x100.png" width="250"
-                                 height="200" alt="placeholder gyankriti logo">
+                            <img id="img_father" class="img-250x250 d-block mx-auto rounded"
+                                 src="http://gyankriti.com/wp-content/uploads/2018/03/logo-100x100.png"
+                                 alt="placeholder gyankriti logo">
                             <p class="card-text">Upload an image</p>
-                            <button class="btn btn-primary button-shadow">Upload Image</button>
+
+                            <button class="btn btn-primary button-shadow" id="button_father_image">Upload Image
+                            </button>
+                            <form id="form_father_image" enctype="multipart/form-data">
+                                <input type="file" id="input_father_image" name="father_image" hidden>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -617,11 +629,17 @@
                     <div class="card text-center bg-dark">
                         <div class="card-body bg-light">
                             <h5 class="card-title">Mother</h5>
-                            <img class="img-fluid d-block mx-auto rounded"
-                                 src="http://gyankriti.com/wp-content/uploads/2018/03/logo-100x100.png" width="250"
-                                 height="200" alt="placeholder gyankriti logo">
+                            <img id="img_mother" class="img-250x250 d-block mx-auto rounded"
+                                 src="http://gyankriti.com/wp-content/uploads/2018/03/logo-100x100.png"
+                                 alt="placeholder gyankriti logo">
                             <p class="card-text">Upload an image</p>
-                            <button class="btn btn-primary button-shadow">Upload Image</button>
+
+                            <button class="btn btn-primary button-shadow" id="button_mother_image">Upload Image
+                            </button>
+                            <form id="form_mother_image" enctype="multipart/form-data">
+                                <input type="file" id="input_mother_image" name="mother_image" hidden>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -765,7 +783,6 @@
     <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <!--ENd main parent container-->
 </div>
-
 
 
 <script src="new_admission.js"></script>

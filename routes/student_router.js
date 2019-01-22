@@ -6,8 +6,56 @@ const bodyParser = require("body-parser");  // used body-parser to get data from
 const fs = require('fs');
 const path = require('path');
 
+//test code
+const multer = require('multer');
+// const upload = multer({dest: 'upload/'});
+
 const dynamoStudent = require('../database_files/dynamoStudent');
 const fileDir = path.join(__dirname, '../views\\student\\');
+
+// test code
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.jpg')
+    }
+});
+
+let upload = multer({storage: storage}).single('profileImage');
+
+
+router.post('/upload_test', function (req, res) {
+    console.log("received post req for file");
+    upload(req, res, function (err) {
+        if (err) {
+            // An error occurred when uploading
+        }
+        res.json({
+            success: true,
+            message: 'Image uploaded!'
+        });
+
+        // Everything went fine
+    })
+});
+
+
+// router.post('/upload_test', upload.single('avatar'), function (req, res, next) {
+//     console.log("received post req for file");
+//     // req.file is the `avatar` file
+//     // req.body will hold the text fields, if there were any
+// });
+//
+
+
+router.get('/upload_test', function (req, res) {
+    console.log("\nGET: 'student/upload_test'  Web-Page");
+    res.render('student/upload_test');
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+});
 
 
 /* END: Declaration node.js */
@@ -66,7 +114,6 @@ router.post('/gyankriti-students', async (req, res) => {
         console.log("exception e : " + e);
     }
 });
-
 
 
 //

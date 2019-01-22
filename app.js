@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");  // used bodyParser to get data from 
 
 
 // Declaration related to servers
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8080;
 
 request('http://169.254.169.254/latest/meta-data/public-ipv4', function (error, response, body) {
     if (body !== undefined) console.log('\nserver started on ip:port : http://' + body + ":" + PORT);
