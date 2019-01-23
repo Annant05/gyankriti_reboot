@@ -400,7 +400,7 @@ function documentReady() {
 
     //* handle dropdown fields */
     dropdown_religion.change(() => {
-        if (getValFromDropdown(dropdown_religion) === "other") {
+        if (getValFromDropdown(dropdown_religion) === "Other") {
             isInputFieldDisabled(field_religion_other, false);
         } else {
             isInputFieldDisabled(field_religion_other, true);
@@ -413,8 +413,8 @@ function documentReady() {
     // Generate table rows for previous schools
     dropdown_any_previous_schools.change(() => {
         table_previous_school.removeClass("display-none");
-        let valDropdown = getValFromDropdown(dropdown_any_previous_schools);
-        if (valDropdown === 'choose' || valDropdown === 'no') {
+        let valDropdown = (dropdown_any_previous_schools.children("option").filter(":selected").val());
+        if (valDropdown === 'choose' || valDropdown === 'No') {
             table_previous_school.addClass("display-none")
         } else {
             table_previous_school.removeClass("display-none");
@@ -426,8 +426,8 @@ function documentReady() {
     // Generate table rows for siblings table
     dropdown_any_sibling.change(() => {
         table_sibling.removeClass("display-none");
-        let valDropdown = getValFromDropdown(dropdown_any_sibling);
-        if (valDropdown === 'choose' || valDropdown === 'no') {
+        let valDropdown = (dropdown_any_sibling.children("option").filter(":selected").val());
+        if (valDropdown === 'choose' || valDropdown === 'No') {
             table_sibling.addClass("display-none")
         } else {
             table_sibling.removeClass("display-none");
@@ -520,7 +520,7 @@ function getFormInputData() {
     function getDropdownWithOther(dropdown_selector, field_other_answer) {
 
         let valDropDown = getValFromDropdown(dropdown_selector);
-        if (valDropDown === "other") {
+        if (valDropDown === "Other") {
             return {
                 value: valDropDown,
                 value_other: (field_other_answer.val()).trim()
@@ -537,7 +537,7 @@ function getFormInputData() {
 
         let valDropdown = getValFromDropdown(dropdown_selector);
 
-        if (valDropdown === "no") {
+        if (valDropdown === 'No') {
             return {
                 value: valDropdown,
                 table_array: null
@@ -651,6 +651,11 @@ function sendDataToServerUsingAjax() {
         data: JSON.stringify({new_admission_data: getFormInputData()}),
         success: function (response) {
             console.log(response.success);
+            if (response.success) {
+                alert("Information saved to the database.");
+            } else {
+                alert("There was some error in saving the information.")
+            }
         }
     });
 
