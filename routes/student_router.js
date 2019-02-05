@@ -32,9 +32,8 @@ router.post('/upload_test', function (req, res) {
         if (err) {
             // An error occurred when uploading
         }
-        res.json({
+        res.send({
             success: true,
-            message: 'Image uploaded!'
         });
 
         // Everything went fine
