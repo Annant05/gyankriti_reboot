@@ -19,16 +19,37 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/')
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + '.jpg')
+        cb(null, file.originalname)
     }
 });
+let upload = multer({storage: storage});
 
-let upload = multer({storage: storage}).single('profileImage');
+//.single('input_student_image');
+
+router.post('/upload', function (req, res, next) {
+    // console.lo;
+
+    let cpUpload = upload.fields([{name: 'profileImage', maxCount: 1}, {name: 'xfile', maxCount: 1}]);
+    cpUpload(req, res, (err) => {
+        if (err) {
+            // An error occurred when uploading
+            console.log("err on line /upload :post")
+        }
+        res.send({
+            success: true,
+        });
+
+        // Everything went fine
+    });
+
+
+    // res.send(req.files);
+});
 
 
 router.post('/upload_test', function (req, res) {
     console.log("received post req for file");
-    upload(req, res, function (err) {
+    upload(req, res, (err) => {
         if (err) {
             // An error occurred when uploading
         }
@@ -71,8 +92,39 @@ router.get('/new-admission', (req, res) => {
 
 });
 
+router.post('/upload-images', async (req, res) => {
+    console.log("\nPOST: 'student/upload-images' = Received  image files from AJAX call.");
+
+    let imagesUpload = upload.fields([
+        {name: 'input_student_image', maxCount: 1},
+        {name: 'input_father_image', maxCount: 1},
+        {name: 'input_mother_image', maxCount: 1}
+    ]);
+
+    try {
+        await imagesUpload(req, res, (err) => {
+            console.log("Calling imagesUpload Function");
+            if (err) {
+                // An error occurred when uploading
+                console.log("err saving files :post" + JSON.stringify(err));
+            } else {
+                console.log("images saved successfully");
+                res.send({success: true});
+            }
+            // Everything went fine
+            console.log(JSON.stringify(req.body));
+        });
+
+    } catch (e) {
+        console.log("exception e : " + e);
+        res.send({success: false});
+    }
+
+});
 
 router.post('/new-admission', async (req, res) => {
+
+
     console.log("\nPOST: 'student/new_admission' = Received  New Admission data from AJAX call.");
     try {
         // console.log(JSON.stringify(req.body.new_admission_data));

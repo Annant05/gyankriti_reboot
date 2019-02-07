@@ -3,13 +3,17 @@ function documentReady() {
     $("#upload").click(function () {
 
         let fd = new FormData();
+        let aadhar = '123465417859';
 
-        let files = $('#profileImage')[0].files[0];
+        let profiles = $('#profileImage')[0].files[0];
+        let xfile = $('#xfile')[0].files[0];
 
-        fd.append('profileImage', files);
+        fd.append('profileImage', profiles, 'student_img_' + aadhar);
+        fd.append('xfile', xfile, 'father_img_' + aadhar);
+
 
         $.ajax({
-            url: '/student/upload_test',
+            url: '/student/upload',
             type: 'post',
             data: fd,
             contentType: false,
