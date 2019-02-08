@@ -9,15 +9,22 @@
 <body>
 <p>hello </p>
 <hr>
+<label for="input_aadhar"> <b>AADHAR ID</b></label>
+<input id="input_aadhar" type="text" size="12"
+       minlength="12" maxlength="12" autocomplete="off">
 
+<button type="button" id="display_button">Display</button>
+<hr>
 
-<form id="img1" action="/student/upload_test" method="post" enctype="multipart/form-data">
-    <input id="profileImage"  accept="image/*" type="file" name="profileImage"/>
-    <hr>
-    <input id="xfile"  accept="image/*" type="file" name="xfile"/>
-    <button id="upload" type="button" name="upload" value="upload">Upload</button>
-</form>
-
+<img id="student_img" class="img-250x250" src="http://gyankriti.com/wp-content/uploads/2018/03/logo-100x100.png"
+     alt="student_image">
+<hr>
+<img id="father_img" class="img-250x250" src="http://gyankriti.com/wp-content/uploads/2018/03/logo-100x100.png"
+     alt="father_image">
+<hr>
+<img id="mother_img" class="img-250x250" src="http://gyankriti.com/wp-content/uploads/2018/03/logo-100x100.png"
+     alt="mother_image">
+<hr>
 
 <script src="upload.js"></script>
 </body>

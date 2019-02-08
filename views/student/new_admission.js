@@ -637,52 +637,54 @@ function getFormInputData() {
     };
 }
 
-function uploadImagesToServer() {
-
-    let fd = new FormData();
-
-    let student_image = input_student_image[0].files[0];
-    let father_image = input_father_image[0].files[0];
-    let mother_image = input_mother_image[0].files[0];
-
-    let stud_aadhar = $('#input_student_aadhar').val();
-
-    console.log("File extension of student image is : " + (student_image.name).split('.').pop());
-    console.log("File extension of father image is : " + (father_image.name).split('.').pop());
-    console.log("File extension of mother image is : " + (mother_image.name).split('.').pop());
-
-    let jsonObj = {
-        key1: "val1",
-        key2: "val2"
-    };
-
-    fd.append('input_student_image', student_image, stud_aadhar + '_student_img' + '.' + (student_image.name).split('.').pop());
-    fd.append('input_father_image', father_image, stud_aadhar + '_father_img' + '.' + (father_image.name).split('.').pop());
-    fd.append('input_mother_image', mother_image, stud_aadhar + '_mother_img' + '.' + (mother_image.name).split('.').pop());
-    fd.append('jsondata', JSON.stringify(jsonObj));
-
-    console.log(stud_aadhar + '_student_img' + '.' + (student_image.name).split('.').pop());
-    console.log(stud_aadhar + '_father_img' + '.' + (father_image.name).split('.').pop());
-    console.log(stud_aadhar + '_mother_img' + '.' + (mother_image.name).split('.').pop());
-
-    $.ajax({
-        url: '/student/upload-images',
-        type: 'post',
-        data: fd,
-        contentType: false,
-        processData: false,
-        success: function (response) {
-            if (response.success) {
-                alert("Image upload success") // Display image element
-            } else {
-                alert('file not uploaded');
-            }
-        }
-    });
-
-}
-
 function sendDataToServerUsingAjax() {
+
+
+    function uploadImagesToServer() {
+
+        let fd = new FormData();
+
+        let student_image = input_student_image[0].files[0];
+        let father_image = input_father_image[0].files[0];
+        let mother_image = input_mother_image[0].files[0];
+
+        let stud_aadhar = $('#input_student_aadhar').val();
+
+        console.log("File extension of student image is : " + (student_image.name).split('.').pop());
+        console.log("File extension of father image is : " + (father_image.name).split('.').pop());
+        console.log("File extension of mother image is : " + (mother_image.name).split('.').pop());
+
+        let jsonObj = {
+            key1: "val1",
+            key2: "val2"
+        };
+
+        fd.append('input_student_image', student_image, stud_aadhar + '_student_img' + '.' + (student_image.name).split('.').pop());
+        fd.append('input_father_image', father_image, stud_aadhar + '_father_img' + '.' + (father_image.name).split('.').pop());
+        fd.append('input_mother_image', mother_image, stud_aadhar + '_mother_img' + '.' + (mother_image.name).split('.').pop());
+        fd.append('jsondata', JSON.stringify(jsonObj));
+
+        console.log(stud_aadhar + '_student_img' + '.' + (student_image.name).split('.').pop());
+        console.log(stud_aadhar + '_father_img' + '.' + (father_image.name).split('.').pop());
+        console.log(stud_aadhar + '_mother_img' + '.' + (mother_image.name).split('.').pop());
+
+        $.ajax({
+            url: '/student/upload-images',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success) {
+                    alert("Image upload success") // Display image element
+                } else {
+                    alert('file not uploaded');
+                }
+            }
+        });
+
+    }
+    // function definition ended
 
 
     console.log("Click on submit detected");

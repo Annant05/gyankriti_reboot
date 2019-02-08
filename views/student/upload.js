@@ -1,31 +1,27 @@
 function documentReady() {
 
-    $("#upload").click(function () {
+    $("#display_button").click(function () {
+        const s3url = `https://s3.ap-south-1.amazonaws.com/`;
+        const BUCKET_NAME = `gyankriti2019/`;
+        const prefix = `images/`;
+        const aadhar = $("#input_aadhar").val();
 
-        let fd = new FormData();
-        let aadhar = '123465417859';
-
-        let profiles = $('#profileImage')[0].files[0];
-        let xfile = $('#xfile')[0].files[0];
-
-        fd.append('profileImage', profiles, 'student_img_' + aadhar);
-        fd.append('xfile', xfile, 'father_img_' + aadhar);
+        const student_suffix = `_student_img.jpg`;
+        const father_suffix = `_father_img.jpg`;
+        const mother_suffix = `_mother_img.jpg`;
 
 
-        $.ajax({
-            url: '/student/upload',
-            type: 'post',
-            data: fd,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                if (response.success) {
-                    alert("Image upload success") // Display image element
-                } else {
-                    alert('file not uploaded');
-                }
-            }
-        });
+        function getImageS3URL(suffix) {
+            console.log("generating url  : " ,s3url + BUCKET_NAME + prefix + aadhar + suffix );
+            return (s3url + BUCKET_NAME + prefix + aadhar + suffix);
+        }
+
+
+        $('#student_img').attr('src', getImageS3URL(student_suffix));
+        $('#father_img').attr('src', getImageS3URL(father_suffix));
+        $('#mother_img').attr('src', getImageS3URL(mother_suffix));
+
+
     });
 
 }

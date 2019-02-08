@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 
 const config = require('../config/config');
-const dynamoOffline = require('../config/intialize_dynamodb');
+// const dynamoOffline = require('../config/initialise_awscloud');
 
 AWS.config.update(config.getAWS_JSONCredentials());
 const docClientDynamo = new AWS.DynamoDB.DocumentClient();
@@ -14,7 +14,7 @@ const studentFunctions = {
 
     //* Function to add new student into the database */
     newAdmission: async function addNewStudentToDatabase(studentDataObject, stateCallback) {
-        console.log("\nFile: database_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : " + JSON.stringify(studentDataObject));
+        console.log("\nFile: support_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : " + JSON.stringify(studentDataObject));
 
 
         // figure out a way to send response to the callie (the function that called it return true or false )
@@ -54,7 +54,7 @@ const studentFunctions = {
 
     //* Function to scan/retrieve list of students from the database  */
     getCurrentStudents: async function getCurrentStudentsFromDatabase(sendDataInCallback) {
-        console.log("\nFile: database_files/dynamoStudent calling function 'getCurrentStudents()'");
+        console.log("\nFile: support_files/dynamoStudent calling function 'getCurrentStudents()'");
 
         const params = {
             Limit: 20,

@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");  // used body-parser to get data from
 const fs = require('fs');
 const path = require('path');
 
-const dynamoStudent = require('../database_files/dynamoSearch');
+const dynamoStudent = require('../support_files/db_dynamo_search');
 const fileDir = path.join(__dirname, '../views\\search\\');
 
 

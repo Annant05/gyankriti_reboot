@@ -4,7 +4,9 @@ const AWS = require('aws-sdk');
 const config = require('../config/config');
 // AWS.config.update({region: "ap-south-1 ", endpoint: 'https://dynamodb.ap-south-1.amazonaws.com'});
 AWS.config.update(config.getAWS_JSONCredentials());
+
 const dynamodb = new AWS.DynamoDB();
+const aws_s3 = new AWS.S3();
 
 
 const basicDynamoTableFunctions = {
@@ -19,7 +21,7 @@ const basicDynamoTableFunctions = {
 
 
 async function startOfflineDynamoDB() {
-    cmd.get(
+    await cmd.get(
         'chdir',
         (err, data, stderr) => {
             console.log('the current working dir is : ', data);
@@ -65,6 +67,31 @@ const studentTable = {
     }
 };
 
+const s3Storage = {
+    BUCKET_NAME: "gyankriti2019",
+    createS3Bucket: async function createS3BucketToStoreImages() {
+        let params = {
+            Bucket: s3Storage.BUCKET_NAME,
+            ACL: "public-read"
+        };
+
+        await aws_s3.createBucket(params, function (err, data) {
+
+            console.log("called Function createBucket ");
+
+            if (err) console.log(err, err.stack); // an error occurred
+            else console.log(data);           // successful response
+            /*
+            data = {
+             Location: "/examplebucket"
+            }
+            */
+        });
+    }
+
+};
+// s3Storage.createS3Bucket();
 
 // startOfflineDynamoDB().then(basicDynamoTableFunctions.listTables()); // start dynamodb offline
 // studentTable.createStudentTable().then(basicDynamoTableFunctions.listTables());
+
