@@ -1,25 +1,28 @@
 function documentReady() {
 
     $("#display_button").click(function () {
-        const s3url = `https://s3.ap-south-1.amazonaws.com/`;
-        const BUCKET_NAME = `gyankriti2019/`;
-        const prefix = `images/`;
-        const aadhar = $("#input_aadhar").val();
-
-        const student_suffix = `_student_img.jpg`;
-        const father_suffix = `_father_img.jpg`;
-        const mother_suffix = `_mother_img.jpg`;
 
 
-        function getImageS3URL(suffix) {
-            console.log("generating url  : " ,s3url + BUCKET_NAME + prefix + aadhar + suffix );
-            return (s3url + BUCKET_NAME + prefix + aadhar + suffix);
-        }
+        $.ajax({
+            url: '/student/gyankriti-students',
+            method: 'POST',
+            contentType: 'application/json',
+            // data: JSON.stringify({new_admission_data: getFormInputsData()}),
+            success: (response) => {
+                console.log("\n isSuccess receiving data from server : ", JSON.stringify(response.body.isSuccess));
+                if (response.body.isSuccess) {
+                    const JsonObj = response.body.studentsObject.Items[0];
 
+                    console.log(JSON.stringify(JsonObj));
 
-        $('#student_img').attr('src', getImageS3URL(student_suffix));
-        $('#father_img').attr('src', getImageS3URL(father_suffix));
-        $('#mother_img').attr('src', getImageS3URL(mother_suffix));
+                    $('#student_img').attr('src', JsonObj.student_image_url);
+                    $('#father_img').attr('src', JsonObj.father_image_url);
+                    $('#mother_img').attr('src', JsonObj.mother_image_url);
+                    // console.log(JSON.stringify(arrayOfStudnetsInfo));
+
+                }
+            }
+        });
 
 
     });

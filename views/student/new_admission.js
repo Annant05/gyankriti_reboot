@@ -370,7 +370,7 @@ function documentReady() {
     // isInputFieldDisabled(field_religion_other, true);
 
 
-    button_save_information.click(sendDataToServerUsingAjax);
+    button_save_information.click(uploadImagesToServer);
 
 
     input_student_image.change(function () {
@@ -637,69 +637,92 @@ function getFormInputData() {
     };
 }
 
-function sendDataToServerUsingAjax() {
+
+function uploadImagesToServer() {
 
 
-    function uploadImagesToServer() {
+    function generateImageS3URL(file_name) {
+        // This function will generate image in s3's url to be saved in the database.
 
-        let fd = new FormData();
+        const S3_URL = `https://s3.ap-south-1.amazonaws.com/`;
+        const BUCKET_NAME = `gyankriti2019/`;
+        const S3_DIRECTORY_PREFIX = `images/`;
 
-        let student_image = input_student_image[0].files[0];
-        let father_image = input_father_image[0].files[0];
-        let mother_image = input_mother_image[0].files[0];
-
-        let stud_aadhar = $('#input_student_aadhar').val();
-
-        console.log("File extension of student image is : " + (student_image.name).split('.').pop());
-        console.log("File extension of father image is : " + (father_image.name).split('.').pop());
-        console.log("File extension of mother image is : " + (mother_image.name).split('.').pop());
-
-        let jsonObj = {
-            key1: "val1",
-            key2: "val2"
-        };
-
-        fd.append('input_student_image', student_image, stud_aadhar + '_student_img' + '.' + (student_image.name).split('.').pop());
-        fd.append('input_father_image', father_image, stud_aadhar + '_father_img' + '.' + (father_image.name).split('.').pop());
-        fd.append('input_mother_image', mother_image, stud_aadhar + '_mother_img' + '.' + (mother_image.name).split('.').pop());
-        fd.append('jsondata', JSON.stringify(jsonObj));
-
-        console.log(stud_aadhar + '_student_img' + '.' + (student_image.name).split('.').pop());
-        console.log(stud_aadhar + '_father_img' + '.' + (father_image.name).split('.').pop());
-        console.log(stud_aadhar + '_mother_img' + '.' + (mother_image.name).split('.').pop());
-
-        $.ajax({
-            url: '/student/upload-images',
-            type: 'post',
-            data: fd,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                if (response.success) {
-                    alert("Image upload success") // Display image element
-                } else {
-                    alert('file not uploaded');
-                }
-            }
-        });
-
+        console.log("generating url  : ", S3_URL + BUCKET_NAME + S3_DIRECTORY_PREFIX + file_name);
+        return (S3_URL + BUCKET_NAME + S3_DIRECTORY_PREFIX + file_name);
     }
+
+    let modified_new_admission_data = getFormInputData();
+    const stud_aadhar = modified_new_admission_data.student_aadhar;
+
+    let fd = new FormData();
+
+    let student_image = input_student_image[0].files[0];
+    let father_image = input_father_image[0].files[0];
+    let mother_image = input_mother_image[0].files[0];
+
+
+    console.log("File extension of student image is : " + (student_image.name).split('.').pop());
+    console.log("File extension of father image is : " + (father_image.name).split('.').pop());
+    console.log("File extension of mother image is : " + (mother_image.name).split('.').pop());
+
+    const student_filename = stud_aadhar + `_student_img` + '.' + (student_image.name).split('.').pop();
+    const father_filename = stud_aadhar + `_father_img` + '.' + (father_image.name).split('.').pop();
+    const mother_filename = stud_aadhar + `_mother_img` + '.' + (mother_image.name).split('.').pop();
+
+    modified_new_admission_data.student_image_url = generateImageS3URL(student_filename);
+    modified_new_admission_data.father_image_url = generateImageS3URL(father_filename);
+    modified_new_admission_data.mother_image_url = generateImageS3URL(mother_filename);
+
+    fd.append('input_student_image', student_image, student_filename);
+    fd.append('input_father_image', father_image, father_filename);
+    fd.append('input_mother_image', mother_image, mother_filename);
+
+
+    // generate image url with extension to the json data.
+
+
+    console.log(student_filename);
+    console.log(father_filename);
+    console.log(mother_filename);
+
+
+    $.ajax({
+        url: '/student/upload-images',
+        type: 'post',
+        data: fd,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert("Image upload success");
+                sendJsonDataToServerUsingAjax(modified_new_admission_data);
+            } else {
+                alert('file not uploaded');
+            }
+        }
+    });
+
+}
+
+
+function sendJsonDataToServerUsingAjax(newAdmissionJSON) {
+
     // function definition ended
 
 
     console.log("Click on submit detected");
-    console.log("Logging Values : \n" + (JSON.stringify(getFormInputData())));
+    console.log("Logging form Values : \n" + JSON.stringify(newAdmissionJSON));
 
 
     $.ajax({
         url: '/student/new-admission',
         method: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({new_admission_data: getFormInputData()}),
+        data: JSON.stringify({new_admission_data: newAdmissionJSON}),
         success: function (response) {
             console.log(response.success);
             if (response.success) {
-                uploadImagesToServer();
                 alert("Information saved to the database.");
             } else {
                 alert("There was some error in saving the information.")
