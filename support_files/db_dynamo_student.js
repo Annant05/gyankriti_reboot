@@ -14,13 +14,14 @@ const studentFunctions = {
 
     //* Function to add new student into the database */
     newAdmission: async function addNewStudentToDatabase(studentDataObject, stateCallback) {
-        console.log("\nFile: support_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : " + JSON.stringify(studentDataObject));
+        console.log("\nFile: support_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : ");
 
 
-        // figure out a way to send response to the callie (the function that called it return true or false )
-        // let isSaved = false;
         // add time of insertion to the data;
-        studentDataObject['time_of_insertion'] = (Math.round((new Date()).getTime() / 1000)).toString();
+        studentDataObject['time_of_admission'] = (Math.round((new Date()).getTime() / 1000)).toString();
+
+        // add admission_status as pending because gynakriti details are not yet filled and it is possible that this student may leave school in future.
+        studentDataObject['admission_status'] = "pending";
 
         const params = {
             TableName: TABLE_NAME,
@@ -33,14 +34,12 @@ const studentFunctions = {
                 if (err) {
                     console.log("\nThere was some error ", err, err.stack);
                     stateCallback(false);
-                    // isSaved = false;
+
                 }// an error occurred
                 else {
                     console.log("\nData saved ", data);
                     stateCallback(true);
-                    // isSaved = true;
-                    // allback(null, true);
-                    // console.log("\nmy log " + isSaved);
+
                 }
             });
 
@@ -74,7 +73,42 @@ const studentFunctions = {
         } catch (err) {
             console.log("\nError :  " + err);
         }
+    },
+
+
+    //* Function to get a student information using aadhar card as a key list of students from the database  */
+    getStudentUsingKey: async function getStudentUsingPrimaryHashKeyFromDatabase(aadhar_key, sendDataInCallback) {
+
+        console.log("\nFile: support_files/dynamoStudent calling function 'getStudentUsingKey()'");
+
+        const params = {
+            TableName: TABLE_NAME,
+            Key: {
+                student_aadhar: aadhar_key
+            }
+
+            // Use ProjectionExpression to send specific keys only. // makes data transfer efficient and increases security
+            // ProjectionExpression: "mother_image_url,father_image_url,student_image_url,student_aadhar"
+
+        };
+        console.log("\nparams for function : get(params) : " + JSON.stringify(params));
+
+        try {
+            await docClientDynamo.get(params, (err, data) => {
+                if (err) {
+                    console.log(err, err.stack); // an error occurred
+                    sendDataInCallback(err, false);
+                } else {
+                    sendDataInCallback(data.Item, true);
+                }
+            });
+        } catch (err) {
+            console.log("\nError :  " + err);
+        }
     }
+
+
+
 
     //END : Finished functions block
 

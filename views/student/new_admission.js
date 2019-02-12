@@ -264,7 +264,7 @@ let options_array = {
 
     parents_are: ["Married", "Divorced", "Separated", "Widowed"],
     child_lives_with: ["Both Parents", "Father", "Mother", "Guardian"],
-    adopted_child: ["Yes", "No"],
+    adopted_child: ["No", "Yes"],
     previous_schools: ["No", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 
     any_siblings: ["No", 1, 2, 3, 4]
@@ -293,7 +293,7 @@ function getValFromDropdown(dropdown_selector) {
         return null;
     } else {
         console.log(dropdown_selector.attr('id') + " is :", valueDropdownOption);
-        return valueDropdownOption;
+        return valueDropdownOption.trim();
     }
 }
 
@@ -498,7 +498,7 @@ function getFormInputData() {
 
 
     function getValFromTextBox(text_selector) {
-        return text_selector.val();
+        return (text_selector.val()).trim();
     }
 
 
@@ -507,7 +507,7 @@ function getFormInputData() {
         if (radio_boolean) {
             return {
                 is_applicable: radio_boolean,
-                reason: selector_field_question.val()
+                reason: (selector_field_question.val()).trim()
             };
         } else {
             return {
@@ -549,11 +549,11 @@ function getFormInputData() {
             for (let rowNo = 1; rowNo <= Number(valDropdown); rowNo++) {
 
                 let array_element = {
-                    school_name: ($(`#${id_prefix}_a${rowNo}`).val()),
-                    city_and_state: ($(`#${id_prefix}_b${rowNo}`).val()),
-                    year_of_admission: ($(`#${id_prefix}_c${rowNo}`).val()),
-                    grades_completed: ($(`#${id_prefix}_d${rowNo}`).val()),
-                    board_pattern: ($(`#${id_prefix}_e${rowNo}`).val())
+                    school_name: ($(`#${id_prefix}_a${rowNo}`).val()).trim(),
+                    city_and_state: ($(`#${id_prefix}_b${rowNo}`).val()).trim(),
+                    year_of_admission: ($(`#${id_prefix}_c${rowNo}`).val()).trim(),
+                    grades_completed: ($(`#${id_prefix}_d${rowNo}`).val()).trim(),
+                    board_pattern: ($(`#${id_prefix}_e${rowNo}`).val()).trim()
                 };
 
                 tableData.push(array_element);
@@ -630,7 +630,7 @@ function getFormInputData() {
         // Handle other field in dropdown. This is specific for religion dropdown as of now.
         student_religion: getDropdownWithOther(dropdown_religion, field_religion_other),
 
-        // Handle table for this dropdowns
+        // Handle table for this dropdown
         any_previous_schools: getDataFromTableRowsIncludedInDropdown(dropdown_any_previous_schools, table_body_previous_school, "pre"),
         any_siblings: getDataFromTableRowsIncludedInDropdown(dropdown_any_sibling, table_body_sibling, "sib")
 
@@ -653,7 +653,9 @@ function uploadImagesToServer() {
     }
 
     let modified_new_admission_data = getFormInputData();
-    const stud_aadhar = modified_new_admission_data.student_aadhar;
+
+    // created using=  year of birth + last 4 digits of aadhar card no of student
+    const image_url_identifier_s3key = (modified_new_admission_data.student_aadhar).slice(-4) + "_" + (modified_new_admission_data.student_date_of_birth).slice(0, 4);
 
     let fd = new FormData();
 
@@ -666,13 +668,13 @@ function uploadImagesToServer() {
     console.log("File extension of father image is : " + (father_image.name).split('.').pop());
     console.log("File extension of mother image is : " + (mother_image.name).split('.').pop());
 
-    const student_filename = stud_aadhar + `_student_img` + '.' + (student_image.name).split('.').pop();
-    const father_filename = stud_aadhar + `_father_img` + '.' + (father_image.name).split('.').pop();
-    const mother_filename = stud_aadhar + `_mother_img` + '.' + (mother_image.name).split('.').pop();
+    const student_filename = image_url_identifier_s3key + `_student_img` + '.' + (student_image.name).split('.').pop();
+    const father_filename = image_url_identifier_s3key + `_father_img` + '.' + (father_image.name).split('.').pop();
+    const mother_filename = image_url_identifier_s3key + `_mother_img` + '.' + (mother_image.name).split('.').pop();
 
-    modified_new_admission_data.student_image_url = generateImageS3URL(student_filename);
-    modified_new_admission_data.father_image_url = generateImageS3URL(father_filename);
-    modified_new_admission_data.mother_image_url = generateImageS3URL(mother_filename);
+    modified_new_admission_data['student_image_url'] = generateImageS3URL(student_filename);
+    modified_new_admission_data['father_image_url'] = generateImageS3URL(father_filename);
+    modified_new_admission_data['mother_image_url'] = generateImageS3URL(mother_filename);
 
     fd.append('input_student_image', student_image, student_filename);
     fd.append('input_father_image', father_image, father_filename);
@@ -724,6 +726,7 @@ function sendJsonDataToServerUsingAjax(newAdmissionJSON) {
             console.log(response.success);
             if (response.success) {
                 alert("Information saved to the database.");
+                redirectToGyankritiAdmissionPage();
             } else {
                 alert("There was some error in saving the information.")
             }
@@ -744,6 +747,14 @@ function sendJsonDataToServerUsingAjax(newAdmissionJSON) {
     // }
 
 }
+
+
+function redirectToGyankritiAdmissionPage() {
+
+    window.location.replace("/student/gyankriti-students");
+
+}
+
 
 $(documentReady);
 

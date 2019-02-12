@@ -9,8 +9,6 @@ const router = express.Router();
 //test code
 
 
-// const upload = multer({dest: 'upload/'});
-
 const dynamoStudent = require('../support_files/db_dynamo_student');
 const s3storageStudent = require('../support_files/upload_to_s3');
 
@@ -19,38 +17,60 @@ const s3storageStudent = require('../support_files/upload_to_s3');
 
 /* END: Declaration node.js */
 
+// Render Index page for student section
 router.get('/', (req, res) => {
     console.log("\nGET: 'student/student_index'  Web-Page");
     res.render('student/student_index', {TITLE: "Gyankriti"});
 
 });
+//Do not tamper with the above get request
 
-router.get('/new-admission', (req, res) => {
-    console.log("\nGET: 'student/new_admission'  Web-Page");
-    res.render('student/new_admission', {TITLE: "New Admission"});
 
-});
+/* START: Testing Function Section */
+
 
 router.get('/upload-test', (req, res) => {
+    console.log("\nGET: 'student/upload_test'  Web-Page");
     res.render('student/upload_test', {TITLE: "Upload Test"});
 });
 
-router.post('/upload-images', async (req, res) => {
-    console.log("\nPOST: 'student/upload-images' = Received  image files from AJAX call.");
+router.post('/student-info', async (req, res) => {
+    console.log("\nPOST: 'student/student-info' = Send a student information using  key.");
+
+    console.log("get information for aadhar no : ", req.body.aadhar_key);
+
     try {
-        await s3storageStudent.uploadImagesToS3(req, res, (isSaved) => {
-            res.send({success: isSaved})
+        await dynamoStudent.getStudentUsingKey(req.body.aadhar_key, (studentObject, isSuccess) => {
+
+            console.log("isSuccess in receiving data from getStudentUsingKey : ", isSuccess);
+
+            if (isSuccess) {
+                res.send({body: {studentObject: studentObject, isSuccess: isSuccess}});
+            } else {
+                res.send({body: {studentObject: null, isSuccess: isSuccess}});
+            }
         });
+
     } catch (e) {
         console.log("exception e : " + e);
-        res.send({success: false});
     }
 });
 
+
+/* END: Testing Function Section */
+
+/* START: Production section / Finalized function definitions */
+
+// receiving data from client
+router.get('/new-admission', (req, res) => {
+    console.log("\nGET: 'student/new_admission'  Web-Page");
+    res.render('student/new_admission', {TITLE: "New Admission"});
+});
+
+
 router.post('/new-admission', async (req, res) => {
-
-
     console.log("\nPOST: 'student/new_admission' = Received  New Admission data from AJAX call.");
+
     try {
         // console.log(JSON.stringify(req.body.new_admission_data));
         await dynamoStudent.newAdmission(req.body.new_admission_data, (isSaved) => {
@@ -65,6 +85,20 @@ router.post('/new-admission', async (req, res) => {
 });
 
 
+router.post('/upload-images', async (req, res) => {
+    console.log("\nPOST: 'student/upload-images' = Received  image files from AJAX call.");
+    try {
+        await s3storageStudent.uploadImagesToS3(req, res, (isSaved) => {
+            res.send({success: isSaved})
+        });
+    } catch (e) {
+        console.log("exception e : " + e);
+        res.send({success: false});
+    }
+});
+
+
+// sending data from server
 router.get('/gyankriti-students', (req, res) => {
     console.log("\nGET: 'student/gyankriti-students'  Web-Page");
     res.render('student/gyankriti_students', {TITLE: "Gyankriti Students"});
@@ -90,6 +124,8 @@ router.post('/gyankriti-students', async (req, res) => {
         console.log("exception e : " + e);
     }
 });
+
+/* END: Production section / Finalized function definitions */
 
 /*  END: get and post method block */
 

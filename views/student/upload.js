@@ -4,14 +4,16 @@ function documentReady() {
 
 
         $.ajax({
-            url: '/student/gyankriti-students',
+            url: '/student/student-info',
             method: 'POST',
             contentType: 'application/json',
-            // data: JSON.stringify({new_admission_data: getFormInputsData()}),
+            data: JSON.stringify({
+                aadhar_key: ($("#input_aadhar").val()).trim()
+            }),
             success: (response) => {
                 console.log("\n isSuccess receiving data from server : ", JSON.stringify(response.body.isSuccess));
                 if (response.body.isSuccess) {
-                    const JsonObj = response.body.studentsObject.Items[0];
+                    const JsonObj = response.body.studentObject;
 
                     console.log(JSON.stringify(JsonObj));
 

@@ -3,6 +3,5 @@ code_ref/
 .idea/
 /tools/
 
-/config/config.js
 /tools/dynamo_offline/
 /tools/dynamo_offline/DynamoDBLocal_lib/
