@@ -3,7 +3,7 @@ const express = require("express"), app = express(); // creating express server
 const path = require('path');
 const request = require("request");
 const bodyParser = require("body-parser");  // used bodyParser to get data from all the field in form
-
+const cookieParser = require("cookie-parser");
 
 // Declaration related to servers
 const PORT = process.env.PORT || 80;
@@ -15,7 +15,7 @@ request('http://169.254.169.254/latest/meta-data/public-ipv4', function (error, 
 
 app.listen(PORT, function (err) {
     if (err) console.log("There was some problem in starting the server  : " + JSON.stringify(err, undefined, 2));
-    else console.log('\nserver started on port : ' + PORT);
+    else console.log('\nserver started on neport : ' + PORT);
 });
 
 //Main body of the js file
@@ -24,6 +24,7 @@ app.use(bodyParser.urlencoded({  // this is important
 }));
 
 app.use(bodyParser.json());  // this is important caused a lot of time waste.
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));

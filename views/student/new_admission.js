@@ -697,7 +697,7 @@ function uploadImagesToServer() {
         processData: false,
         success: function (response) {
             if (response.success) {
-                alert("Image upload success");
+                console.log("Image upload success");
                 sendJsonDataToServerUsingAjax(modified_new_admission_data);
             } else {
                 alert('file not uploaded');
@@ -725,34 +725,23 @@ function sendJsonDataToServerUsingAjax(newAdmissionJSON) {
         success: function (response) {
             console.log(response.success);
             if (response.success) {
-                alert("Information saved to the database.");
-                redirectToGyankritiAdmissionPage();
+                console.log("Information saved to the database.");
+                redirectToGyankritiAdmissionPage(newAdmissionJSON);
             } else {
                 alert("There was some error in saving the information.")
             }
         }
     });
 
-    //TODO: Handle and output when data is successfully sent to the server:
-    // if (isNoFieldEmpty && isNoDropdownUnselected) {
-
-    // } else {
-    //     if (!isNoDropdownUnselected) {
-    //         alert("Please check : Dropdown value is unselected : ");
-    //     } else if (!isNoFieldEmpty) {
-    //         alert("Please check : Input box value is empty : ");
-    //     } else {
-    //         alert("Please check : Something Else is empty :  ");
-    //     }
-    // }
-
 }
 
 
-function redirectToGyankritiAdmissionPage() {
+function redirectToGyankritiAdmissionPage(newAdmissionJSON) {
 
-    window.location.replace("/student/gyankriti-students");
+    $.cookie('student_name', newAdmissionJSON.student_first_name + " " + newAdmissionJSON.student_last_name, {expires: 1});
+    $.cookie('student_aadhar', newAdmissionJSON.student_aadhar, {expires: 1});
 
+    window.location.replace("/student/gyankriti-information");
 }
 
 

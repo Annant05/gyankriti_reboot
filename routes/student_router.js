@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+
 // const bodyParser = require("body-parser");  // used body-parser to get data from all the field in form
 // const fs = require('fs');
 // const path = require('path');
@@ -17,10 +18,14 @@ const s3storageStudent = require('../support_files/upload_to_s3');
 
 /* END: Declaration node.js */
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Render Index page for student section
 router.get('/', (req, res) => {
     console.log("\nGET: 'student/student_index'  Web-Page");
     res.render('student/student_index', {TITLE: "Gyankriti"});
+
 
 });
 //Do not tamper with the above get request
@@ -59,7 +64,14 @@ router.post('/student-info', async (req, res) => {
 
 /* END: Testing Function Section */
 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 /* START: Production section / Finalized function definitions */
+
 
 // receiving data from client
 router.get('/new-admission', (req, res) => {
@@ -71,11 +83,17 @@ router.get('/new-admission', (req, res) => {
 router.post('/new-admission', async (req, res) => {
     console.log("\nPOST: 'student/new_admission' = Received  New Admission data from AJAX call.");
 
+    const studentJsonObject = req.body.new_admission_data;
     try {
         // console.log(JSON.stringify(req.body.new_admission_data));
-        await dynamoStudent.newAdmission(req.body.new_admission_data, (isSaved) => {
+        await dynamoStudent.newAdmission(studentJsonObject, (isSaved) => {
             console.log("is Data Saved to the dynamodb 'student' table:  " + isSaved);
             res.send({success: isSaved});
+            // res.cookie('student_name', studentJsonObject.student_first_name + " " + studentJsonObject.student_last_name,
+            //     {
+            //         maxAge: 900000,
+            //         httpOnly: true
+            //     });
         });
 
     } catch (e) {
@@ -95,6 +113,45 @@ router.post('/upload-images', async (req, res) => {
         console.log("exception e : " + e);
         res.send({success: false});
     }
+});
+
+
+// part 2 of new admission
+router.get('/gyankriti-information', (req, res) => {
+    console.log("\nGET: 'student/gyankriti_information'  Web-Page");
+
+    // res.cookie('student_name', "Annant Gupta",
+    //     {
+    //         maxAge: 900000,
+    //         httpOnly: true
+    //     });
+
+    res.render('student/gyankriti_information', {TITLE: "Gyankriti Information"});
+
+});
+
+
+router.post('/gyankriti-information', async (req, res) => {
+    console.log("\nPOST: 'student/gyankriti-information' = Add data to gyankriti table and /update admission status to complete using  key.");
+
+    const gyankritiJsonObject = req.body.gyankriti_student_data;
+    try {
+        // console.log(JSON.stringify(req.body.new_admission_data));
+        await dynamoStudent.addGyankritiInformation(gyankritiJsonObject, (isSaved) => {
+            console.log("is Data Saved to the dynamodb 'gyankriti' table:  " + isSaved);
+
+            if (isSaved) {
+                dynamoStudent.updateAdmissionStatus(gyankritiJsonObject.student_aadhar, (isSaved) => {
+                    res.send({success: isSaved});
+                })
+            }
+        });
+
+    } catch (e) {
+        console.log("exception e : " + e);
+        res.send({success: false});
+    }
+
 });
 
 
@@ -126,6 +183,7 @@ router.post('/gyankriti-students', async (req, res) => {
 });
 
 /* END: Production section / Finalized function definitions */
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*  END: get and post method block */
 

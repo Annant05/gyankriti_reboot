@@ -51,7 +51,7 @@ function datatable_functions(arrayOfStudents) {
                 student.student_date_of_birth,
                 student.academic_session,
                 student.admission_class,
-                student.student_gender
+                student.admission_status
             ]).draw(true);
 
         });

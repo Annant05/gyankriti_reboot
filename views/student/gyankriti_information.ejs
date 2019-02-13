@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--suppress HtmlRequiredTitleElement -->
+<head>
+
+    <% include ../partials/head.ejs %>
+</head>
+
+<body class="bg-light">
+
+<!--Page Navbar start-->
+<% include ../partials/navbar.ejs %>
+<!--Page Navabar end -->
+
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 justify-content-center align-items-center d-flex">
+                <img class="img-fluid d-block mb-2" src="/images/gyankriti_photo.jpg"
+                     alt="Gyankriti new admission photo">
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+
+
+<!-- Page Content Holder -->
+<div id="main_content_container">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 order-md-1 d-flex flex-column justify-content-center">
+                <h3 class="mb-3 d-flex flex-row justify-content-center align-items-center"> Gyankriti-Student
+                    Information</h3>
+
+                <form class="needs-validation" novalidate="">
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
+                            <label for="output_student_name"><b>Student Name</b></label>
+                            <output class="form-control text-bold text-center" id="output_student_name">Name</output>
+                        </div>
+
+                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
+                            <label for="input_gyankriti_enrollment"><b>Enrollment</b></label>
+                            <input type="text" class="form-control" id="input_gyankriti_enrollment">
+                        </div>
+
+                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
+                            <label for="input_gyankriti_username"><b>Username</b></label>
+                            <input type="text" class="form-control" id="input_gyankriti_username">
+                        </div>
+
+                    </div>
+
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
+                            <label for="input_gyankriti_email"><b>Student Email</b></label>
+                            <input type="text" class="form-control" id="input_gyankriti_email">
+                        </div>
+
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
+                            <label for="dropdown_standard"><b>Standard</b></label>
+                            <select id="dropdown_standard" class="form-control d-block text-center">
+                                <option value="choose">Choose...</option>
+                            </select>
+                        </div>
+
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
+                            <label for="dropdown_section"><b>Section</b></label>
+                            <select id="dropdown_section" class="form-control d-block text-center">
+                                <option value="choose">Choose...</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
+                            <label for="dropdown_school_shift"><b>Shift</b></label>
+                            <select id="dropdown_school_shift" class="form-control d-block text-center">
+                                <option value="choose">Choose...</option>
+                            </select>
+                        </div>
+
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
+                            <label for="dropdown_mode_transportation"><b>Mode of Transportation</b></label>
+                            <select id="dropdown_mode_transportation" class="form-control d-block text-center">
+                                <option value="choose">Choose...</option>
+                            </select>
+                        </div>
+
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
+                            <label for="dropdown_van_route"><b>Van Route</b></label>
+                            <select id="dropdown_van_route" class="form-control d-block text-center">
+                                <option value="choose">Choose...</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 order-md-1 d-flex flex-column justify-content-center">
+                <button id="button_complete_admission_process" class="btn btn-primary button-shadow">Complete Admission
+                    Process
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <!--END main parent container-->
+</div>
+
+
+<script src="gyankriti_information.js"></script>
+<!--Include all the jscripts here -->
+<% include ../partials/js_bottom.ejs %>
+<!--<script src="student_index.js"></script>-->
+<!--End all the jscripts above-->
+</body>
+
+</html>

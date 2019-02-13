@@ -67,6 +67,42 @@ const studentTable = {
     }
 };
 
+const gyankritiTable = {
+    TABLE_NAME: "gyankriti",
+    createGyankritiTable: async function () {
+        const params = {
+            TableName: gyankritiTable.TABLE_NAME,
+            AttributeDefinitions: [
+                {
+                    AttributeName: "gyankriti_enrollment",  // Primary key
+                    AttributeType: "S"
+                },
+
+            ],
+            KeySchema: [
+                {
+                    AttributeName: "gyankriti_enrollment",
+                    KeyType: "HASH"
+                },
+
+            ],
+            ProvisionedThroughput: {
+                ReadCapacityUnits: 5,
+                WriteCapacityUnits: 5
+            }
+        };
+
+        await dynamodb.createTable(params, (err, data) => {
+            if (err) console.log(err, err.stack); // an error occurred
+            else console.log(data);
+        });
+
+        console.log("The table are listed \n");
+        basicDynamoTableFunctions.listTables();
+    }
+};
+
+
 const s3Storage = {
     BUCKET_NAME: "gyankriti2019",
     createS3Bucket: async function createS3BucketToStoreImages() {
@@ -90,6 +126,10 @@ const s3Storage = {
     }
 
 };
+
+
+//
+// gyankritiTable.createGyankritiTable();
 // s3Storage.createS3Bucket();
 
 // startOfflineDynamoDB().then(basicDynamoTableFunctions.listTables()); // start dynamodb offline
