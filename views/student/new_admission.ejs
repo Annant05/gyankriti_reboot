@@ -100,13 +100,18 @@
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_student_aadhar"> <b>AADHAR ID</b></label>
-                                <input id="input_student_aadhar" class="form-control" type="text" size="12"
-                                       minlength="12" maxlength="12" autocomplete="off">
+                                <input id="input_student_aadhar" class="form-control" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===12 && event.keyCode!==8) return false;"
+                                       autocomplete="off">
                             </div>
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_student_samagra_ssmid"><b>Samagra SSMID</b></label>
-                                <input id="input_student_samagra_ssmid" type="text" class="form-control">
+                                <input id="input_student_samagra_ssmid" autocomplete="off" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===9 && event.keyCode!==8) return false;"
+                                       class="form-control">
                             </div>
 
                         </div>
@@ -203,8 +208,9 @@
 
                             <div class="justify-content-center align-items-center d-flex flex-column col-md-2">
                                 <label for="input_present_pincode"><b>Pincode</b></label>
-                                <input type="text" id="input_present_pincode" class="form-control d-block" minlength="6"
-                                       size="6" maxlength="6">
+                                <input id="input_present_pincode" class="form-control d-block" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===6 && event.keyCode!==8) return false;">
                             </div>
 
                         </div>
@@ -234,8 +240,9 @@
 
                             <div class="justify-content-center align-items-center d-flex flex-column col-md-2">
                                 <label for="input_permanent_pincode"><b>Pincode</b></label>
-                                <input type="text" id="input_permanent_pincode"
-                                       class="form-control d-block" minlength="6" size="6" maxlength="6">
+                                <input id="input_permanent_pincode" class="form-control d-block" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===6 && event.keyCode!==8) return false;">
                             </div>
 
                         </div>
@@ -419,7 +426,7 @@
 
                             <div class=" mx-2">
                                 <label for="radio_question_repeated_grade_yes"> YES</label>
-                                <input id="radio_question_repeated_grade_yes" type="radio" val=ue""yes"
+                                <input id="radio_question_repeated_grade_yes" type="radio" value="yes"
                                        name="radio_question_repeated_grade">
                             </div>
 
@@ -561,7 +568,7 @@
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_father_email"><b>Email Address</b></label>
-                                <input id="input_father_email" type="text" class="form-control">
+                                <input id="input_father_email" type="email" class="form-control">
                             </div>
 
                         </div>
@@ -571,13 +578,18 @@
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_father_aadhar"><b>AADHAR ID</b></label>
-                                <input class="form-control" id="input_father_aadhar" type="text" size="12"
-                                       minlength="12" maxlength="12" autocomplete="off">
+                                <input class="form-control" id="input_father_aadhar" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===12 && event.keyCode!==8) return false;"
+                                       autocomplete="off">
                             </div>
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_father_samagra_ssmid"><b>Samagra SSMID</b></label>
-                                <input id="input_father_samagra_ssmid" type="text" class="form-control">
+                                <input id="input_father_samagra_ssmid" autocomplete="off" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===9 && event.keyCode!==8) return false;"
+                                       class="form-control">
                             </div>
 
                         </div>
@@ -593,7 +605,9 @@
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_father_mobile_no"><b>Mobile Number</b></label>
-                                <input id="input_father_mobile_no" type="text" size="10" maxlength="10" minlength="10"
+                                <input id="input_father_mobile_no" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===10 && event.keyCode!==8) return false;"
                                        class="form-control">
                             </div>
                         </div>
@@ -657,7 +671,7 @@
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_mother_email"><b>Email Address</b></label>
-                                <input id="input_mother_email" type="text" class="form-control">
+                                <input id="input_mother_email" type="email" class="form-control">
                             </div>
 
                         </div>
@@ -667,14 +681,19 @@
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_mother_aadhar"><b>AADHAR ID</b></label>
-                                <input class="form-control" id="input_mother_aadhar" type="text" size="12"
-                                       minlength="12" maxlength="12" autocomplete="off">
+                                <input class="form-control" id="input_mother_aadhar" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===12 && event.keyCode!==8) return false;"
+                                       autocomplete="off">
 
                             </div>
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_mother_samagra_ssmid"><b>Samagra SSMID</b></label>
-                                <input id="input_mother_samagra_ssmid" type="text" class="form-control">
+                                <input id="input_mother_samagra_ssmid" autocomplete="off" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===9 && event.keyCode!==8) return false;"
+                                       class="form-control">
 
                             </div>
 
@@ -691,7 +710,9 @@
 
                             <div class="col-md-6 justify-content-center align-items-center d-flex flex-column">
                                 <label for="input_mother_mobile_no"><b>Mobile Number</b></label>
-                                <input id="input_mother_mobile_no" type="text" size="10" maxlength="10" minlength="10"
+                                <input id="input_mother_mobile_no" type="number"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                       onKeyDown="if(this.value.length===10 && event.keyCode!==8) return false;"
                                        class="form-control">
                             </div>
 
@@ -732,7 +753,9 @@
                             <label for="input_emergency_contact"><b> Contact number for emergency situations? (Friend,
                                     Office
                                     etc.) </b></label>
-                            <input id="input_emergency_contact" type="text" size="10" maxlength="10" minlength="10"
+                            <input id="input_emergency_contact" type="number"
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                   onKeyDown="if(this.value.length===10 && event.keyCode!==8) return false;"
                                    class="form-control">
                         </div>
 
@@ -769,22 +792,32 @@
         </div>
     </div>
 
-
     <hr>
     <div class="container">
         <div class="row">
             <div class="col-md-12 order-md-1 d-flex flex-column justify-content-center">
-                <button id="button_save_information" class="btn btn-primary button-shadow">Save Information</button>
+
+                <button id="button_modal_save_and_print" type="button" class="btn btn-success mx-2 my-3 button-shadow"
+                        data-dismiss="modal">Save and Print
+                </button>
+
+                <button id="button_modal_save_only" type="button" class="btn btn-primary mx-2 my-3 button-shadow"
+                        data-dismiss="modal">Save only
+                </button>
+
             </div>
         </div>
     </div>
 
+
     <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <!--ENd main parent container-->
+
 </div>
 
 
 <script src="new_admission.js"></script>
+
 <!-- Include all the jscripts here -->
 <% include ../partials/js_bottom.ejs %>
 <!--<script src="student_index.js"></script>-->

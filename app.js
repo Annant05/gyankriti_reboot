@@ -4,6 +4,7 @@ const path = require('path');
 const request = require("request");
 const bodyParser = require("body-parser");  // used bodyParser to get data from all the field in form
 const cookieParser = require("cookie-parser");
+require('log-timestamp');
 
 // Declaration related to servers
 const PORT = process.env.PORT || 80;

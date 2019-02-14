@@ -101,8 +101,9 @@ let img_father = null;
 let img_mother = null;
 
 //submit button - save information
-let button_save_information = null;
+let button_toggle_modal = null;
 
+// Image buttons
 let button_student_image = null;
 let input_student_image = null;
 
@@ -111,6 +112,11 @@ let input_father_image = null;
 
 let button_mother_image = null;
 let input_mother_image = null;
+
+// buttons for actions in the modal
+
+let button_modal_save_and_print = null;
+let button_modal_save_only = null;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -121,6 +127,12 @@ let is_question_therapist_to_save = false;
 let is_question_repeated_grade_to_save = false;
 let is_question_suspended_to_save = false;
 let is_question_illness_to_save = false;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//* global variables */
+
+let globalVariableStudentJson = null;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -231,7 +243,7 @@ function initializeJquerySelectors() {
 
 
     //submit button - save information
-    button_save_information = $("#button_save_information");
+    button_toggle_modal = $("#button_toggle_modal");
 
     // button to handle image uploads.
     button_student_image = $("#button_student_image");
@@ -242,6 +254,10 @@ function initializeJquerySelectors() {
 
     button_mother_image = $("#button_mother_image");
     input_mother_image = $("#input_mother_image");
+
+    // buttons for modal actions.
+    button_modal_save_and_print = $("#button_modal_save_and_print");
+    button_modal_save_only = $("#button_modal_save_only");
 
 
     console.log("initializing jquery selectors complete");
@@ -367,10 +383,19 @@ function showUploadedImage(imageInput, image_selector) {
 function documentReady() {
     initializeJquerySelectors();
     initializeDropdown();
+
+    $(':input').keypress(function () {
+        $(this).next(':input').focus();
+    });
+
     // isInputFieldDisabled(field_religion_other, true);
 
 
-    button_save_information.click(uploadImagesToServer);
+    button_modal_save_and_print.click(saveAndPrint);
+
+    button_modal_save_only.click(saveOnly);
+
+    // button_toggle_modal.click(uploadImagesAndDataToServer);
 
 
     input_student_image.change(function () {
@@ -638,7 +663,7 @@ function getFormInputData() {
 }
 
 
-function uploadImagesToServer() {
+function uploadImagesAndDataToServer() {
 
 
     function generateImageS3URL(file_name) {
@@ -651,6 +676,39 @@ function uploadImagesToServer() {
         console.log("generating url  : ", S3_URL + BUCKET_NAME + S3_DIRECTORY_PREFIX + file_name);
         return (S3_URL + BUCKET_NAME + S3_DIRECTORY_PREFIX + file_name);
     }
+
+
+    function sendJsonDataToServerUsingAjax(newAdmissionJSON) {
+
+        // function definition ended
+
+
+        console.log("Click on submit detected");
+        console.log("Logging form Values : \n" + JSON.stringify(newAdmissionJSON));
+
+        globalVariableStudentJson = newAdmissionJSON;
+
+        $.ajax({
+            url: '/student/new-admission',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({new_admission_data: newAdmissionJSON}),
+            success: function (response) {
+                console.log(response.success);
+                if (response.success) {
+
+                    $.cookie('student_name', globalVariableStudentJson.student_first_name + " " + globalVariableStudentJson.student_last_name, {expires: 1});
+                    $.cookie('student_aadhar', globalVariableStudentJson.student_aadhar, {expires: 1});
+
+                    console.log("Information saved to the database.");
+                } else {
+                    alert("There was some error in saving the information.")
+                }
+            }
+        });
+
+    }
+
 
     let modified_new_admission_data = getFormInputData();
 
@@ -708,40 +766,38 @@ function uploadImagesToServer() {
 }
 
 
-function sendJsonDataToServerUsingAjax(newAdmissionJSON) {
+function saveAndPrint() {
 
-    // function definition ended
+    // save data to server
+    uploadImagesAndDataToServer();
 
+    // print The form
+    window.onafterprint = function (e) {
+        $(window).off('mousemove', window.onafterprint);
+        console.log('Print Dialog Closed..');
+    };
 
-    console.log("Click on submit detected");
-    console.log("Logging form Values : \n" + JSON.stringify(newAdmissionJSON));
+    window.print();
 
+    setTimeout(function () {
+        $(window).one('mousemove', window.onafterprint);
+    }, 3);
 
-    $.ajax({
-        url: '/student/new-admission',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({new_admission_data: newAdmissionJSON}),
-        success: function (response) {
-            console.log(response.success);
-            if (response.success) {
-                console.log("Information saved to the database.");
-                redirectToGyankritiAdmissionPage(newAdmissionJSON);
-            } else {
-                alert("There was some error in saving the information.")
-            }
-        }
-    });
+    // redirect to next page
+    redirectToGyankritiAdmissionPage();
 
 }
 
+function saveOnly() {
+    uploadImagesAndDataToServer();
+    redirectToGyankritiAdmissionPage()
+}
 
-function redirectToGyankritiAdmissionPage(newAdmissionJSON) {
 
-    $.cookie('student_name', newAdmissionJSON.student_first_name + " " + newAdmissionJSON.student_last_name, {expires: 1});
-    $.cookie('student_aadhar', newAdmissionJSON.student_aadhar, {expires: 1});
+function redirectToGyankritiAdmissionPage() {
 
     window.location.replace("/student/gyankriti-information");
+
 }
 
 
