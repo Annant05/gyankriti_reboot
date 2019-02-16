@@ -16,7 +16,7 @@ request('http://169.254.169.254/latest/meta-data/public-ipv4', function (error, 
 
 app.listen(PORT, function (err) {
     if (err) console.log("There was some problem in starting the server  : " + JSON.stringify(err, undefined, 2));
-    else console.log('\nserver started on neport : ' + PORT);
+    else console.log('\nserver started on the port : ' + PORT);
 });
 
 //Main body of the js file

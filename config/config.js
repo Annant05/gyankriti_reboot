@@ -13,8 +13,20 @@ const awsCredentialConfig = {
     // secretAccessKey: ""
 };
 
+const msg91_config = {
+    MSG91_API_KEY: '262954AXfHV7Gd5c67b754',
+    SENDER_ID: 'GKSCHL'  /*  Must be six characters only  */
+};
+
 module.exports = {
     getAWS_JSONCredentials: () => {
         return awsCredentialConfig;
+    },
+
+    getMSG91_config: () => {
+        return msg91_config;
     }
+
 };
+
+
