@@ -21,18 +21,7 @@
 <% include ../partials/navbar.ejs %>
 <!--Page Navabar end -->
 
-<div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 justify-content-center align-items-center d-flex">
-                <img class="img-fluid d-block mb-2" src="/images/gyankriti_header.jpg"
-                     alt="Gyankriti new admission photo">
-            </div>
-        </div>
-    </div>
-    <hr>
-</div>
-
+<% include ../partials/gyankriti_header.ejs %>
 
 <!-- Page Content Holder -->
 <div id="main_content_container">
@@ -110,6 +99,36 @@
             </div>
         </div>
     </div>
+    <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+    <hr>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 order-md-1 d-flex flex-column justify-content-center">
+                <h3 class="mb-3 text-center">Results</h3>
+                <!--table in  container -->
+                <table id="students_table" class="table table-striped table-bordered row-border hover order-column"
+                       style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>Aadhar</th>
+                        <th>Full Name</th>
+                        <th>Date of Birth</th>
+                        <th>Academic Session</th>
+                        <th>Admission Class</th>
+                        <th>Admission Status</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table_main_body">
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
     <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <!--ENd main parent container-->
 </div>

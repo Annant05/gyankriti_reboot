@@ -18,6 +18,25 @@ router.get('/', (req, res) => {
 
 });
 
+router.post('/', async (req, res) => {
+    console.log("\nPOST: 'search/search_index' = get search config.");
+
+    const search_config = req.body.search_config;
+
+    try {
+        console.log(JSON.stringify(search_config));
+        console.log("search config received");
+
+
+        res.send({success: true});
+
+    } catch (e) {
+        console.log("exception e : " + e);
+        res.send({success: false});
+    }
+
+})
+;
 
 /*  END: get and post method block */
 
