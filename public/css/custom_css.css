@@ -64,6 +64,10 @@ select {
     font-weight: bold;
 }
 
+select:disabled {
+    cursor: not-allowed;
+}
+
 .display-none {
     display: none;
 }

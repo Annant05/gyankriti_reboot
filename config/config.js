@@ -15,7 +15,7 @@ const awsCredentialConfig = {
 
 const msg91_config = {
     MSG91_API_KEY: '262954AXfHV7Gd5c67b754',
-    SENDER_ID: 'GKSCHL'  /*  Must be six characters only  */
+    SENDER_ID: 'GYNKRT'  /*  Must be six characters only  */
 };
 
 module.exports = {

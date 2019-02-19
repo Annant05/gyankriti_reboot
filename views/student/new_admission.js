@@ -290,7 +290,7 @@ let options_array = {
 
 // Functions declaration and definition
 
-function isInputFieldDisabled(selector, isDisabled) {
+function disableInputField(selector, isDisabled) {
     console.log("some field isDisabled :", isDisabled);
 
     if (isDisabled) {
@@ -388,7 +388,7 @@ function documentReady() {
         $(this).next(':input').focus();
     });
 
-    // isInputFieldDisabled(field_religion_other, true);
+    // disableInputField(field_religion_other, true);
 
 
     button_modal_save_and_print.click(saveAndPrint);
@@ -426,9 +426,9 @@ function documentReady() {
     //* handle dropdown fields */
     dropdown_religion.change(() => {
         if (getValFromDropdown(dropdown_religion) === "Other") {
-            isInputFieldDisabled(field_religion_other, false);
+            disableInputField(field_religion_other, false);
         } else {
-            isInputFieldDisabled(field_religion_other, true);
+            disableInputField(field_religion_other, true);
         }
     });
 
@@ -464,55 +464,55 @@ function documentReady() {
 
     //for question 1
     radio_question_disability_no.on("click", () => {
-        isInputFieldDisabled(field_question_disability, true);
+        disableInputField(field_question_disability, true);
         is_question_disability_to_save = false;
     });
     radio_question_disability_yes.on("click", () => {
-        isInputFieldDisabled(field_question_disability, false);
+        disableInputField(field_question_disability, false);
         is_question_disability_to_save = true;
     });
 
 
     //for question 2
     radio_question_therapist_no.on("click", () => {
-        isInputFieldDisabled(field_question_therapist, true);
+        disableInputField(field_question_therapist, true);
         is_question_therapist_to_save = false;
     });
     radio_question_therapist_yes.on("click", () => {
-        isInputFieldDisabled(field_question_therapist, false);
+        disableInputField(field_question_therapist, false);
         is_question_therapist_to_save = true;
     });
 
 
     //for question 3
     radio_question_repeated_grade_no.on("click", () => {
-        isInputFieldDisabled(field_question_repeated_grade, true);
+        disableInputField(field_question_repeated_grade, true);
         is_question_repeated_grade_to_save = false;
     });
     radio_question_repeated_grade_yes.on("click", () => {
-        isInputFieldDisabled(field_question_repeated_grade, false);
+        disableInputField(field_question_repeated_grade, false);
         is_question_repeated_grade_to_save = true;
     });
 
 
     // for question 4
     radio_question_suspended_no.on("click", () => {
-        isInputFieldDisabled(field_question_suspended, true);
+        disableInputField(field_question_suspended, true);
         is_question_suspended_to_save = false;
     });
     radio_question_suspended_yes.on("click", () => {
-        isInputFieldDisabled(field_question_suspended, false);
+        disableInputField(field_question_suspended, false);
         is_question_suspended_to_save = true;
     });
 
 
     //for question 5
     radio_question_illness_no.on("click", () => {
-        isInputFieldDisabled(field_question_illness, true);
+        disableInputField(field_question_illness, true);
         is_question_illness_to_save = false;
     });
     radio_question_illness_yes.on("click", () => {
-        isInputFieldDisabled(field_question_illness, false);
+        disableInputField(field_question_illness, false);
         is_question_illness_to_save = true;
     });
 

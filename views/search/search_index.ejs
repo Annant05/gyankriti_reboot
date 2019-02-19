@@ -6,118 +6,119 @@
 
     <% include ../partials/head.ejs %>
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+
 </head>
 
-<body>
+<body class="bg-light">
 
-<div class="wrapper">
+<!--Page Navbar start-->
+<% include ../partials/navbar.ejs %>
+<!--Page Navabar end -->
 
-    <!-- Page Content Holder -->
-    <div id="content">
-        <!--Page Navbar start-->
-        <% include ../partials/navbar.ejs %>
-        <!--Page Navabar end -->
-
-        <div class="container parent-container" id="main_content_container">
-
-            <div class="container child-container" id="admission_form_container">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="float-left"><h1>Search</h1></div>
-
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="container">
-                        <div class="height-content">
-
-                            <form id="search_for" novalidate="">
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-3 text-center">
-                                        <label for="inputstu_standard">Search For :</label>
-
-                                        <select id="inputstu_standard"
-                                                class="text-bold form-control form-control-md">
-                                            <option value="select" selected>Select...</option>
-
-                                            <option value="standard-1">Standard-1</option>
-                                            <option value="standard-2">Standard-2</option>
-                                            <option value="standard-3">Standard-3</option>
-                                            <option value="standard-4">Standard-4</option>
-                                            <option value="standard-5">Standard-5</option>
-                                            <option value="standard-6">Standard-6</option>
-
-                                        </select>
-
-                                    </div>
-
-                                    <div class="form-group col-md-3 text-center">
-                                        <label for="inputstu_section">Search By :</label>
-
-                                        <select id="inputstu_section"
-                                                class="text-bold form-control form-control-md">
-                                            <option value="select" selected>Select...</option>
-
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-3 text-center">
-                                        <label for="inputstu_vanroute">Van Route</label>
-
-                                        <select id="inputstu_vanroute"
-                                                class="text-bold form-control form-control-md">
-                                            <option value="select" selected>Select...</option>
-
-                                            <option value="5A">5A</option>
-                                            <option value="1A">1A</option>
-                                            <option value="2C">2C</option>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-3 text-center">
-                                        <label for="inputstu_vanshift">Van Shift</label>
-
-                                        <select id="inputstu_vanshift"
-                                                class="text-bold form-control form-control-md">
-                                            <option value="select" selected>Select...</option>
-
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-
-                                        </select>
-                                    </div>
-
-
-                                </div>
-                                <!--<button type="submit" class="btn btn-primary button-shadow">Sign in</button>-->
-                            </form>
-                        </div>
-
-                        <hr>
-
-                    </div>
-                </div>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 justify-content-center align-items-center d-flex">
+                <img class="img-fluid d-block mb-2" src="/images/gyankriti_header.jpg"
+                     alt="Gyankriti new admission photo">
             </div>
-
-
         </div>
     </div>
+    <hr>
 </div>
 
+
+<!-- Page Content Holder -->
+<div id="main_content_container">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 order-md-1 d-flex flex-column justify-content-center">
+                <h3 class="mb-3 text-center">Search and SMS</h3>
+
+
+                <form id="search" novalidate="">
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-2 text-center">
+                            <label for="dropdown_query"><b>Query</b></label>
+
+                            <select class="form-control d-block text-center" id="dropdown_query"
+                                    name="academic_session" data-live-search="true" data-actions-box="true"
+                                    data-size="5" data-selected-text-format="count > 3">
+                            </select>
+
+                        </div>
+
+                        <div class="form-group col-md-2 text-center">
+                            <label for="dropdown_grade"><b>Grade</b></label>
+
+                            <select class="form-control d-block text-center" data-live-search="true"
+                                    data-actions-box="true"
+                                    data-size="5" data-selected-text-format="count > 3" multiple
+                                    id="dropdown_grade"
+                                    name="select_grade">
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2 text-center">
+                            <label for="dropdown_section"><b>Section</b></label>
+
+                            <select id="dropdown_section" class="form-control d-block text-center"
+                                    data-live-search="true"
+                                    data-actions-box="true" data-size="5" data-selected-text-format="count > 3" multiple
+                                    name="select_section">
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2 text-center">
+                            <label for="dropdown_route"><b>Route</b></label>
+
+                            <select class="form-control d-block text-center"
+                                    data-actions-box="true" data-live-search="true"
+                                    data-selected-text-format="count > 3"
+                                    data-size="5" id="dropdown_route" multiple name=select_route>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2 text-center">
+                            <label for="dropdown_shift"><b>Shift</b></label>
+
+                            <select class="form-control d-block text-center"
+                                    data-actions-box="true" data-live-search="true"
+                                    data-selected-text-format="count > 3"
+                                    data-size="5" id="dropdown_shift" multiple name=select_shift>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2 text-center  d-flex flex-row justify-content-center align-items-center">
+                            <button id="button_search" type="button" class="btn btn-primary button-shadow">Search
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+    <!--ENd main parent container-->
+</div>
+
+
+<script src="search_index.js"></script>
 <!-- Include all the jscripts here -->
 <% include ../partials/js_bottom.ejs %>
-<script src="search_index.js"></script>
+<!--<script src="student_index.js"></script>-->
 <!--End all the jscripts above-->
 </body>
 

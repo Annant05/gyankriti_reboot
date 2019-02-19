@@ -65,7 +65,7 @@ const messageFunctions = {
 // }
 
 // test function calls
-// messageFunctions.sendSMS([9806247089], "Hello from the other side", (isSuccess) => {
+// messageFunctions.sendSMS([9806247089,9179878711], "Hello from Gyankriti!", (isSuccess) => {
 //     console.log("isSuccess :", isSuccess);
 // });
 

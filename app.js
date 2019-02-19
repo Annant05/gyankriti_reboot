@@ -32,9 +32,13 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+
+// url routing
 app.use('/', require('./routes/index_router'));
 app.use('/student', require('./routes/student_router'));
 app.use('/search', require('./routes/search_router'));
+
+
 
 // app.use('/transport', require('./routes/transport'));
 // db_server.startDB();
