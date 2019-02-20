@@ -682,6 +682,7 @@ function uploadImagesAndDataToServer() {
 
                     $.cookie('student_name', globalVariableStudentJson.student_first_name + " " + globalVariableStudentJson.student_last_name, {expires: 1});
                     $.cookie('student_aadhar', globalVariableStudentJson.student_aadhar, {expires: 1});
+                    $.cookie('admission_standard', globalVariableStudentJson.admission_standard, {expires: 1});
 
                     console.log("Information saved to the database.");
                 } else {

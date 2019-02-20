@@ -72,7 +72,10 @@ function documentReady() {
     initializeJquerySelectors();
     initializeDropdown();
     output_student_name.val($.cookie("student_name"));
-    output_admission_fee.val("Select Standard");
+
+    output_admission_fee.val(`Rs. ${options_array.admission_fee[$.cookie('admission_standard')]} /-`);
+    dropdown_standard.val($.cookie('admission_standard'));
+
 
     dropdown_standard.change(() => {
         let val = getValFromDropdown(dropdown_standard);
@@ -147,6 +150,7 @@ function redirectToGyankritiAdmissionPage(newAdmissionJSON) {
 
     $.removeCookie('student_name');
     $.removeCookie('student_aadhar');
+    $.removeCookie('admission_standard');
 
     window.location.replace("/student/gyankriti-students");
 }
