@@ -165,6 +165,8 @@ const databaseFunctions = {
         // add time of insertion to the data;
         gyankritiDataObject['time_of_insertion'] = (Math.round((new Date()).getTime() / 1000)).toString();
 
+        gyankritiDataObject['search_helper'] = `${gyankritiDataObject.standard}_${gyankritiDataObject.section}_${gyankritiDataObject.route}_${gyankritiDataObject.shift}`;
+
         const params = {
             TableName: TABLE_GYANKRITI,
             Item: gyankritiDataObject

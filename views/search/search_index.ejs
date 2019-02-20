@@ -41,7 +41,7 @@
 
                             <select class="form-control d-block text-center" id="dropdown_query"
                                     name="academic_session" data-live-search="true" data-actions-box="true"
-                                    data-size="5" data-selected-text-format="count > 3">
+                                    data-size="5">
                             </select>
 
                         </div>
@@ -51,7 +51,7 @@
 
                             <select class="form-control d-block text-center" data-live-search="true"
                                     data-actions-box="true"
-                                    data-size="5" data-selected-text-format="count > 3" multiple
+                                    data-size="5"
                                     id="dropdown_standard"
                                     name="select_standard">
                             </select>
@@ -62,7 +62,7 @@
 
                             <select id="dropdown_section" class="form-control d-block text-center"
                                     data-live-search="true"
-                                    data-actions-box="true" data-size="5" data-selected-text-format="count > 3" multiple
+                                    data-actions-box="true" data-size="5"
                                     name="select_section">
                             </select>
                         </div>
@@ -72,8 +72,7 @@
 
                             <select class="form-control d-block text-center"
                                     data-actions-box="true" data-live-search="true"
-                                    data-selected-text-format="count > 3"
-                                    data-size="5" id="dropdown_route" multiple name=select_route>
+                                    data-size="5" id="dropdown_route" name=select_route>
                             </select>
                         </div>
 
@@ -82,8 +81,7 @@
 
                             <select class="form-control d-block text-center"
                                     data-actions-box="true" data-live-search="true"
-                                    data-selected-text-format="count > 3"
-                                    data-size="5" id="dropdown_shift" multiple name=select_shift>
+                                    data-size="5" id="dropdown_shift" name=select_shift>
                             </select>
                         </div>
 
@@ -102,7 +100,7 @@
     <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
     <hr>
-    <div class="container">
+    <div class="container" id="results_table_container">
         <div class="row">
 
             <div class="col-md-12 order-md-1 d-flex flex-column justify-content-center">
@@ -112,12 +110,13 @@
                        style="width:100%">
                     <thead>
                     <tr>
-                        <th>Aadhar</th>
+                        <th>Enrollment</th>
                         <th>Full Name</th>
-                        <th>Date of Birth</th>
-                        <th>Academic Session</th>
-                        <th>Admission Class</th>
-                        <th>Admission Status</th>
+                        <th>Email</th>
+                        <th>Standard</th>
+                        <th>Section</th>
+                        <th>Route</th>
+                        <th>Shift</th>
                     </tr>
                     </thead>
                     <tbody id="table_main_body">

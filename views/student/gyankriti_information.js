@@ -107,12 +107,13 @@ function getFormInputData() {
         gyankriti_username: getValFromTextBox(input_gyankriti_username),
         gyankriti_email: getValFromTextBox(input_gyankriti_email),
 
-        gyankriti_standard: getValFromDropdown(dropdown_standard),
-        gyankriti_section: getValFromDropdown(dropdown_section),
-        gyankriti_shift: getValFromDropdown(dropdown_shift),
+        standard: getValFromDropdown(dropdown_standard),
+        section: getValFromDropdown(dropdown_section),
+        shift: getValFromDropdown(dropdown_shift),
+        route: getValFromDropdown(dropdown_route),
 
-        admission_fee: getValFromTextBox(output_admission_fee),
-        dropdown_route: getValFromDropdown(dropdown_route)
+        admission_fee: getValFromTextBox(output_admission_fee)
+
 
     }
         ;

@@ -21,28 +21,27 @@ const options_config = {
 
     },
 
-    gyankriti_information:
-        {
-            standard: ['JS1', 'JS2', 'PS1', 'PS2', 'PS3', 'PS4'],
-            section: ['A', 'B', 'C', 'D'],
-            route: ['1', '2', '3', '4', '5', 'Walk-in'],
-            shift: ['A', 'B', 'C', 'D'],
-            admission_fee: {
-                'JS1': 5000,
-                'JS2': 6000,
-                'PS1': 7000,
-                'PS2': 8000,
-                'PS3': 9000,
-                'PS4': 10000
-            },
-        },
+    gyankriti_information: {
+        standard: ['JS1', 'JS2', 'PS1', 'PS2', 'PS3', 'PS4'],
+        section: ['A', 'B', 'C', 'D'],
+        route: ['1', '2', '3', '4', '5', '6', 'Walk-in'],
+        shift: ['A', 'B', 'C', 'D'],
+        admission_fee: {
+            'JS1': 5000,
+            'JS2': 6000,
+            'PS1': 7000,
+            'PS2': 8000,
+            'PS3': 9000,
+            'PS4': 10000
+        }
+    },
 
     search: {
         query: ['Students', 'Transport'],
-        standard: ['JS1', 'JS2', 'PS1', 'PS2', 'PS3', 'PS4'],
-        section: ['A', 'B', 'C', 'D'],
-        route: ['1', '2', '3', '4', '5', 'Walk-in'],
-        shift: ['A', 'B', 'C', 'D']
+        standard: ['All', 'JS1', 'JS2', 'PS1', 'PS2', 'PS3', 'PS4'],
+        section: ['All', 'A', 'B', 'C', 'D'],
+        route: ['All', '1', '2', '3', '4', '5', 'Walk-in'],
+        shift: ['All', 'A', 'B', 'C', 'D']
     }
 
 };

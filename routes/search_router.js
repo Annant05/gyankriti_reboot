@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");  // used body-parser to get data from
 const fs = require('fs');
 const path = require('path');
 
-const dynamoStudent = require('../support_files/db_dynamo_search');
+const dynamoSearch = require('../support_files/db_dynamo_search');
 const fileDir = path.join(__dirname, '../views\\search\\');
 
 
@@ -19,16 +19,17 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    console.log("\nPOST: 'search/search_index' = get search config.");
+    console.log("\nPOST: 'search/search_index' = post results using search config.");
 
     const search_config = req.body.search_config;
 
     try {
         console.log(JSON.stringify(search_config));
         console.log("search config received");
-
-
-        res.send({success: true});
+        dynamoSearch.getSearchResults(search_config, (data, isSuccess) => {
+            // console.log(JSON.stringify(data.Items[0]));
+            res.send({results_array: data.Items, success: isSuccess});
+        });
 
     } catch (e) {
         console.log("exception e : " + e);
