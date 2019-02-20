@@ -5,14 +5,14 @@ let input_gyankriti_email = null;
 
 let dropdown_standard = null;
 let dropdown_section = null;
-let dropdown_school_shift = null;
+let dropdown_shift = null;
 
-let dropdown_mode_transportation = null;
-let dropdown_van_route = null;
-let input_field_other = null;
+let dropdown_route = null;
+let output_admission_fee = null;
 
 let button_complete_admission_process = null;
 
+let options_array = null;
 
 function initializeJquerySelectors() {
     console.log("initializing jquery selectors");
@@ -25,23 +25,17 @@ function initializeJquerySelectors() {
 
     dropdown_standard = $("#dropdown_standard");
     dropdown_section = $("#dropdown_section");
-    dropdown_school_shift = $("#dropdown_school_shift");
+    dropdown_shift = $("#dropdown_shift");
 
-    dropdown_mode_transportation = $("#dropdown_mode_transportation");
-    dropdown_van_route = $("#dropdown_van_route");
-    input_field_other = $("#input_field_other");
+
+    dropdown_route = $("#dropdown_route");
+    output_admission_fee = $("#output_admission_fee");
 
     button_complete_admission_process = $("#button_complete_admission_process");
 
+    // options array
+    options_array = options_config.gyankriti_information;
 }
-
-let options_array = {
-    standard: ["JS1", "JS2", "S1", "S2", "S3", "S4", "S5"],
-    section: ["A", "B", "C"],
-    school_shift: ["1st : 8:30 ", "2nd : 9:30 ", "3rd : 10:30 "],
-    mode_transportation: ["Van", "Bus", "Walk-in"],
-    van_route: ["1A", "2A", "1B", "2B", "none"]
-};
 
 
 function getValFromDropdown(dropdown_selector) {
@@ -68,9 +62,8 @@ function initializeDropdown() {
 
     append_options_to_dropdown(dropdown_standard, options_array.standard);
     append_options_to_dropdown(dropdown_section, options_array.section);
-    append_options_to_dropdown(dropdown_school_shift, options_array.school_shift);
-    append_options_to_dropdown(dropdown_mode_transportation, options_array.mode_transportation);
-    append_options_to_dropdown(dropdown_van_route, options_array.van_route);
+    append_options_to_dropdown(dropdown_shift, options_array.shift);
+    append_options_to_dropdown(dropdown_route, options_array.route);
 
 }
 
@@ -79,7 +72,16 @@ function documentReady() {
     initializeJquerySelectors();
     initializeDropdown();
     output_student_name.val($.cookie("student_name"));
+    output_admission_fee.val("Select Standard");
 
+    dropdown_standard.change(() => {
+        let val = getValFromDropdown(dropdown_standard);
+        if (val === null) {
+            output_admission_fee.val("Select Standard");
+        } else {
+            output_admission_fee.val(`Rs. ${options_array.admission_fee[val]} /-`);
+        }
+    });
 
     button_complete_admission_process.click(sendJsonDataToServerUsingAjax);
 
@@ -104,12 +106,13 @@ function getFormInputData() {
 
         gyankriti_standard: getValFromDropdown(dropdown_standard),
         gyankriti_section: getValFromDropdown(dropdown_section),
-        gyankriti_school_shift: getValFromDropdown(dropdown_school_shift),
+        gyankriti_shift: getValFromDropdown(dropdown_shift),
 
-        dropdown_mode_transportation: getValFromDropdown(dropdown_mode_transportation),
-        dropdown_van_route: getValFromDropdown(dropdown_van_route)
+        admission_fee: getValFromTextBox(output_admission_fee),
+        dropdown_route: getValFromDropdown(dropdown_route)
 
-    };
+    }
+        ;
 }
 
 

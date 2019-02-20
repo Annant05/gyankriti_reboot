@@ -15,8 +15,6 @@
 
 <% include ../partials/gyankriti_header.ejs %>
 
-
-
 <!-- Page Content Holder -->
 <div id="main_content_container">
 
@@ -75,25 +73,25 @@
                     <div class="row mb-3">
 
                         <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
-                            <label for="dropdown_school_shift"><b>Shift</b></label>
-                            <select id="dropdown_school_shift" class="form-control d-block text-center">
+                            <label for="dropdown_shift"><b>Shift</b></label>
+                            <select id="dropdown_shift" class="form-control d-block text-center">
                                 <option value="choose">Choose...</option>
                             </select>
                         </div>
 
                         <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
-                            <label for="dropdown_mode_transportation"><b>Mode of Transportation</b></label>
-                            <select id="dropdown_mode_transportation" class="form-control d-block text-center">
+                            <label for="dropdown_route"><b>Route</b></label>
+                            <select id="dropdown_route" class="form-control d-block text-center">
                                 <option value="choose">Choose...</option>
                             </select>
                         </div>
 
-                        <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
-                            <label for="dropdown_van_route"><b>Van Route</b></label>
-                            <select id="dropdown_van_route" class="form-control d-block text-center">
-                                <option value="choose">Choose...</option>
-                            </select>
+                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
+                            <label for="output_admission_fee"><b>Admission Fee</b></label>
+                            <output class="form-control text-bold text-center" id="output_admission_fee">
+                            </output>
                         </div>
+
 
                     </div>
 

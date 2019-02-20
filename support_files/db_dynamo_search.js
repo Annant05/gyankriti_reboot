@@ -13,7 +13,7 @@ const TABLE_STUDENTS = "students";
 const TABLE_GYANKRITI = "gyankriti";
 
 // Object with all the database support functions.
-const databaseFunctions = {
+const searchFunctions = {
 
     //Finished Functions // Testing also done.
 
@@ -25,28 +25,25 @@ const databaseFunctions = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // New functions development
 
-    getSearchResults: async function getSearchResultsFromTheServer(aadhar_key, sendDataInCallback) {
-        console.log("\nFile: support_files/dynamoStudent calling function 'getStudentUsingKey()'");
+    getSearchResults: async function getSearchResultsFromTheServer(search_config, sendDataInCallback) {
+        console.log("\nFile: support_files/searchFunction calling function 'getSearchResults()'");
 
-        const params = {
+
+        let params = {
             TableName: TABLE_STUDENTS,
-            Key: {
-                student_aadhar: aadhar_key
-            }
-
-            // Use ProjectionExpression to send specific keys only. // makes data transfer efficient and increases security
-            // ProjectionExpression: "mother_image_url,father_image_url,student_image_url,student_aadhar"
-
+            FilterExpression: 'Year = :this_year',
+            ExpressionAttributeValues: {':this_year': 2015}
         };
+
         console.log("\nparams for function : get(params) : " + JSON.stringify(params));
 
         try {
-            await docClientDynamo.get(params, (err, data) => {
+            await docClientDynamo.scan(params, (err, data) => {
                 if (err) {
                     console.log(err, err.stack); // an error occurred
                     sendDataInCallback(err, false);
                 } else {
-                    sendDataInCallback(data.Item, true);
+                    sendDataInCallback(data, true);
                 }
             });
         } catch (err) {
@@ -60,11 +57,11 @@ const databaseFunctions = {
 
 // some test code function calls
 
-// databaseFunctions.getCurrentStudents((err, data) => {
+// searchFunctions.getCurrentStudents((err, data) => {
 //     console.log(data);
 // });
 
-// databaseFunctions.updateRecord('452177883232', (isSaved) => {
+// searchFunctions.updateRecord('452177883232', (isSaved) => {
 //     if (isSaved) {
 //         console.log("table updated");
 //     } else {
@@ -74,4 +71,4 @@ const databaseFunctions = {
 // });
 
 
-module.exports = databaseFunctions;
+module.exports = searchFunctions;

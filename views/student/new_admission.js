@@ -1,6 +1,6 @@
 //Section 1 - student_general
 let dropdown_academic_session = null;
-let dropdown_admission_class = null;
+let dropdown_admission_standard = null;
 let input_student_first_name = null;
 let input_student_last_name = null;
 let input_student_aadhar = null;
@@ -134,6 +134,9 @@ let is_question_illness_to_save = false;
 
 let globalVariableStudentJson = null;
 
+//* array of options    */
+let options_array = null;
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function initializeJquerySelectors() {
@@ -141,7 +144,7 @@ function initializeJquerySelectors() {
 
     //Section 1 - student_general
     dropdown_academic_session = $("#dropdown_academic_session");
-    dropdown_admission_class = $("#dropdown_admission_class");
+    dropdown_admission_standard = $("#dropdown_admission_standard");
     input_student_first_name = $("#input_student_first_name");
     input_student_last_name = $("#input_student_last_name");
     input_student_aadhar = $("#input_student_aadhar");
@@ -259,33 +262,13 @@ function initializeJquerySelectors() {
     button_modal_save_and_print = $("#button_modal_save_and_print");
     button_modal_save_only = $("#button_modal_save_only");
 
+    // initialize options_array
+    options_array = options_config.new_admission;
 
     console.log("initializing jquery selectors complete");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//* array of options    */
-let options_array = {
-    academic_session: [2019, 2018, 2016, 2015],
-    admission_class: ["JS1", "JS2", "S1", "S2", "S3", "S4", "S5"],
-    gender: ["Male", "Female", "Transgender"],
-
-    nationality: ["Indian", "Other"],
-    caste: ["SC", "ST", "OBC", "GENERAL"],
-    religion: ["Buddhist", "Christian", "Jain", "Hindu", "Islam", "Sikh", "Other"],
-
-    state: ["Madhya Pradesh", "Other"],
-    city: ["Indore", "Other"],
-
-    parents_are: ["Married", "Divorced", "Separated", "Widowed"],
-    child_lives_with: ["Both Parents", "Father", "Mother", "Guardian"],
-    adopted_child: ["No", "Yes"],
-    previous_schools: ["No", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-
-    any_siblings: ["No", 1, 2, 3, 4]
-
-};
 
 
 // Functions declaration and definition
@@ -344,7 +327,7 @@ function initializeDropdown() {
     }
 
     append_options_to_dropdown(dropdown_academic_session, options_array.academic_session);
-    append_options_to_dropdown(dropdown_admission_class, options_array.admission_class);
+    append_options_to_dropdown(dropdown_admission_standard, options_array.admission_standard);
     append_options_to_dropdown(dropdown_gender, options_array.gender);
 
     append_options_to_dropdown(dropdown_nationality, options_array.nationality);
@@ -598,7 +581,7 @@ function getFormInputData() {
     return {
 
         academic_session: getValFromDropdown(dropdown_academic_session),
-        admission_class: getValFromDropdown(dropdown_admission_class),
+        admission_standard: getValFromDropdown(dropdown_admission_standard),
 
         student_first_name: getValFromTextBox(input_student_first_name),
         student_last_name: getValFromTextBox(input_student_last_name),
@@ -772,6 +755,7 @@ function saveAndPrint() {
     uploadImagesAndDataToServer();
 
     // print The form
+    // noinspection JSUnusedLocalSymbols
     window.onafterprint = function (e) {
         $(window).off('mousemove', window.onafterprint);
         console.log('Print Dialog Closed..');

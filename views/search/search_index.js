@@ -1,5 +1,5 @@
 let dropdown_query = null;
-let dropdown_grade = null;
+let dropdown_standard = null;
 let dropdown_section = null;
 let dropdown_route = null;
 let dropdown_shift = null;
@@ -8,6 +8,7 @@ let button_search = null;
 
 let isNoDropDownEmpty = false;
 
+let options_array = null;
 
 let tempJSON = [
     {
@@ -322,33 +323,29 @@ let tempJSON = [
 ];
 
 
-let options_array = {
-    query: ['Students', 'Transport'],
-    grade: ['JS1', 'JS2', 'PS1', 'PS2', 'PS3', 'PS4'],
-    section: ['A', 'B', 'C', 'D'],
-    route: ['1', '2', '3', '4', '5', 'Walk-in'],
-    shift: ['A', 'B', 'C', 'D']
-};
-
-
 function initializeJquerySelectors() {
 
     console.log("initializing jquery selectors");
 
     dropdown_query = $("#dropdown_query ");
-    dropdown_grade = $("#dropdown_grade ");
+    dropdown_standard = $("#dropdown_standard ");
     dropdown_section = $("#dropdown_section ");
     dropdown_route = $("#dropdown_route ");
     dropdown_shift = $("#dropdown_shift ");
     button_search = $("#button_search ");
 
 
+    // options_array
+    options_array = options_config.search;
     console.log("initializing jquery selectors complete");
 }
 
 
+
+
 function initializeDropdown() {
     console.log("initializing dropdown and adding options");
+
 
     function append_options_to_dropdown(dropdown_selector, options) {
         options.forEach(function (option) {
@@ -358,7 +355,7 @@ function initializeDropdown() {
     }
 
     append_options_to_dropdown(dropdown_query, options_array.query);
-    append_options_to_dropdown(dropdown_grade, options_array.grade);
+    append_options_to_dropdown(dropdown_standard, options_array.standard);
     append_options_to_dropdown(dropdown_section, options_array.section);
     append_options_to_dropdown(dropdown_route, options_array.route);
     append_options_to_dropdown(dropdown_shift, options_array.shift);
@@ -398,7 +395,7 @@ function getSearchConfigJSON() {
     };
 
     if (query_val[0] === options_array.query[0]) {
-        searchConfig['grade'] = getValuesSelectedFromDropdown(dropdown_grade);
+        searchConfig['standard'] = getValuesSelectedFromDropdown(dropdown_standard);
         searchConfig['section'] = getValuesSelectedFromDropdown(dropdown_section);
     }
 
@@ -505,10 +502,10 @@ function documentReady() {
         let option = (getValuesSelectedFromDropdown(dropdown_query))[0];
 
         if (option === 'Students') {
-            disableInputField(dropdown_grade, false);
+            disableInputField(dropdown_standard, false);
             disableInputField(dropdown_section, false);
         } else {
-            disableInputField(dropdown_grade, true);
+            disableInputField(dropdown_standard, true);
             disableInputField(dropdown_section, true);
         }
 
