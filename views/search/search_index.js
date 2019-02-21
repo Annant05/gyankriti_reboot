@@ -175,16 +175,20 @@ function initializeDatatable() {
     // ;
 }
 
-async function addRowsToDataTable(results_array) {
+function addRowsToDataTable(results_array) {
     console.log("\nexecuting datatable_functions();");
 
     // clear old results
     datatable_results.clear().draw();
 
+    let count = results_array.length - 1;
 
-    // load and add new results
-    if (results_array !== null) {
-        await results_array.forEach((aRow) => {
+    console.log("adding rows from 1 to : ", count + 1);
+
+    function asyncWhileLoop() {
+        if (count !== -1) {
+
+            let aRow = results_array[count--];
 
             console.log("adding rows to the datatable");
 
@@ -197,8 +201,13 @@ async function addRowsToDataTable(results_array) {
                 aRow.route,
                 aRow.shift
             ]).draw(true);
+        }
+        requestAnimationFrame(asyncWhileLoop);
+    }
 
-        });
+    // load and add new results
+    if (results_array !== null) {
+        requestAnimationFrame(asyncWhileLoop);
 
     } else {
         console.log("no data received from server.");
