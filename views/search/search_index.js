@@ -111,28 +111,37 @@ function getSearchConfigJSON() {
     return searchConfig;
 }
 
+let previous_search_config = null;
 
 function executeSearchOnServer() {
     console.log("button clicked");
 
     const search_config = getSearchConfigJSON();
 
-    $.ajax({
-        url: '/search',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({search_config: search_config}),
-        success: function (response) {
-            console.log(response.success);
-            if (response.success) {
-                console.log(JSON.stringify(response.results_array[0]));
-                console.log("Data recieved from the server");
-                addRowsToDataTable(response.results_array);
-            } else {
-                alert("There was some error in saving the information.")
+    if (previous_search_config !== JSON.stringify(search_config)) {
+
+        $.ajax({
+            url: '/search',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({search_config: search_config}),
+            success: function (response) {
+                console.log(response.success);
+                if (response.success) {
+                  
+                    previous_search_config = JSON.stringify(search_config);
+
+                    console.log(JSON.stringify(response.results_array[0]));
+                    console.log("Data recieved from the server");
+                    addRowsToDataTable(response.results_array);
+                } else {
+                    alert("There was some error in saving the information.")
+                }
             }
-        }
-    });
+        });
+    } else {
+        console.log(`search config has not changed`);
+    }
 
 }
 
@@ -175,43 +184,53 @@ function initializeDatatable() {
     // ;
 }
 
+function asyncForEachLoop(array) {
+
+    console.log(`Looping over ${array.length} rows asyncronously`);
+
+    let count = array.length - 1;
+
+
+    function asyncWhileLoop() {
+        if (count !== -1) {
+            console.log("adding rows to the datatable");
+
+            doTheFollowingLoopStatementsOnEachElement(array[count--]);
+        }
+        requestAnimationFrame(asyncWhileLoop);
+    }
+
+    function doTheFollowingLoopStatementsOnEachElement(element) {
+
+        datatable_results.row.add([
+            element.gyankriti_enrollment,
+            `${element.first_name} ${element.last_name}`,
+            element.gyankriti_email,
+            element.standard,
+            element.section,
+            element.route,
+            element.shift
+        ]).draw(true);
+
+    }
+
+    // load and add new results
+    if (array !== null) {
+        requestAnimationFrame(asyncWhileLoop);
+    } else {
+        console.log("passed Array is empty/null.");
+    }
+}
+
+
 function addRowsToDataTable(results_array) {
     console.log("\nexecuting datatable_functions();");
 
     // clear old results
     datatable_results.clear().draw();
 
-    let count = results_array.length - 1;
-
-    console.log("adding rows from 1 to : ", count + 1);
-
-    function asyncWhileLoop() {
-        if (count !== -1) {
-
-            let aRow = results_array[count--];
-
-            console.log("adding rows to the datatable");
-
-            datatable_results.row.add([
-                aRow.gyankriti_enrollment,
-                `${aRow.first_name} ${aRow.last_name}`,
-                aRow.gyankriti_email,
-                aRow.standard,
-                aRow.section,
-                aRow.route,
-                aRow.shift
-            ]).draw(true);
-        }
-        requestAnimationFrame(asyncWhileLoop);
-    }
-
-    // load and add new results
-    if (results_array !== null) {
-        requestAnimationFrame(asyncWhileLoop);
-
-    } else {
-        console.log("no data received from server.");
-    }
+    //
+    asyncForEachLoop(results_array);
 }
 
 
