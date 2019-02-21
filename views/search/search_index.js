@@ -5,15 +5,24 @@ let dropdown_route = null;
 let dropdown_shift = null;
 
 let button_search = null;
+let button_select_all = null;
 
-let table_selector = null;
+let table_results = null;
+let body_table_results = null;
+
 let datatable_results = null;
 
-let results_table_container = null;
 // let isNoDropDownEmpty = false;
 
-let options_array = null;
 
+///////////////////////////////////////
+//* global variables */
+
+let options_array = null;
+let previous_search_config = null;
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function initializeJquerySelectors() {
 
@@ -24,11 +33,12 @@ function initializeJquerySelectors() {
     dropdown_section = $("#dropdown_section ");
     dropdown_route = $("#dropdown_route ");
     dropdown_shift = $("#dropdown_shift ");
+
     button_search = $("#button_search ");
+    button_select_all = $("#button_select_all");
 
-    table_selector = $('#students_table');
-
-    results_table_container = $('#results_table_container');
+    table_results = $('#table_results');
+    body_table_results = $('#table_results tbody');
 
 
     // options_array
@@ -58,26 +68,7 @@ function initializeDropdown() {
     // make sure this line always executes at the end
     $('select').selectpicker();
 
-
 }
-
-
-// function getValuesSelectedFromDropdown(dropdown_selector) {
-//     let valueDropdownOptions = [];
-//
-//     $(`#${dropdown_selector.attr('id')} option:selected`).each(function () {
-//         valueDropdownOptions.push($(this).val());
-//     });
-//
-//     if (valueDropdownOptions.length) {
-//         isNoDropDownEmpty = true;
-//         return valueDropdownOptions;
-//     } else {
-//         console.log(dropdown_selector.attr('id') + " is not selected");
-//         isNoDropDownEmpty = false;
-//     }
-//
-// }
 
 
 function getValFromDropdown(dropdown_selector) {
@@ -111,7 +102,6 @@ function getSearchConfigJSON() {
     return searchConfig;
 }
 
-let previous_search_config = null;
 
 function executeSearchOnServer() {
     console.log("button clicked");
@@ -128,7 +118,7 @@ function executeSearchOnServer() {
             success: function (response) {
                 console.log(response.success);
                 if (response.success) {
-                  
+
                     previous_search_config = JSON.stringify(search_config);
 
                     console.log(JSON.stringify(response.results_array[0]));
@@ -159,42 +149,58 @@ function disableInputField(selector, isDisabled) {
     selector.selectpicker("refresh");
 }
 
+
 function initializeDatatable() {
-    let selector_students_table_body = $('#students_table tbody');
-    selector_students_table_body.on('click', 'tr', function () {
-        $(this).toggleClass('selected');
-    });
 
-    $('#button').on('click', function () {
-        alert(table.rows('.selected').data().length + ' row(s) selected');
-    });
-
-    datatable_results = table_selector.DataTable({
+    datatable_results = table_results.DataTable({
         // lengthChange: false,
         // buttons: ['copy', 'excel', 'pdf', 'colvis'],
         scrollX: true,
         paging: true,
         ordering: true,
         responsive: true,
-        order: [[0, "asc"]]
+        order: [[0, "asc"]],
+
     });
 
-    // datatable_results.buttons().container()
-    //     .appendTo(results_table_container, datatable_results.table().container())
-    // ;
+
+    body_table_results.on('click', 'tr', function () {
+        $(this).toggleClass('selected');
+    });
+
+
+    button_select_all.click(() => {
+        console.log("button click detected");
+
+        const val = button_select_all.val();
+
+        if (datatable_results.rows().data().length) {
+
+            if (val === "select") {
+                datatable_results.rows().select();
+                button_select_all.val("deselect").text("Deselect All");
+            } else {
+                datatable_results.rows().deselect();
+                button_select_all.val("select").text("Select All");
+            }
+        } else {
+            console.log("No rows in the table ");
+        }
+
+    });
+
+
 }
 
 function asyncForEachLoop(array) {
 
-    console.log(`Looping over ${array.length} rows asyncronously`);
+    console.log(`Looping over ${array.length} rows asynchronously`);
 
     let count = array.length - 1;
 
 
     function asyncWhileLoop() {
         if (count !== -1) {
-            console.log("adding rows to the datatable");
-
             doTheFollowingLoopStatementsOnEachElement(array[count--]);
         }
         requestAnimationFrame(asyncWhileLoop);
@@ -216,6 +222,7 @@ function asyncForEachLoop(array) {
 
     // load and add new results
     if (array !== null) {
+        console.log("adding data to the table");
         requestAnimationFrame(asyncWhileLoop);
     } else {
         console.log("passed Array is empty/null.");
@@ -228,6 +235,9 @@ function addRowsToDataTable(results_array) {
 
     // clear old results
     datatable_results.clear().draw();
+
+    // This will help when table is cleared but the button is deselect all;
+    button_select_all.val("select").text("Select All");
 
     //
     asyncForEachLoop(results_array);
