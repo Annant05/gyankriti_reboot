@@ -18,12 +18,12 @@ const messageFunctions = {
                         await msg91_client.send(recipients, SMSmessage, (err, data) => {
                             if (err) {
                                 console.log("\nThere was some error ", err, err.stack);
-                                stateCallback(false);
+                                stateCallback(count,false);
 
                             }// an error occurred
                             else {
                                 console.log("\nData :", data);
-                                stateCallback(true);
+                                stateCallback(count,true);
                             }
                         });
 

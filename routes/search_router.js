@@ -7,19 +7,21 @@ const fs = require('fs');
 const path = require('path');
 
 const dynamoSearch = require('../support_files/db_dynamo_search');
+const smsClient = require('../support_files/sms_api');
+
 const fileDir = path.join(__dirname, '../views\\search\\');
 
 
 /* END: Declaration node.js */
 
 router.get('/', (req, res) => {
-    console.log("\nGET: 'search/search_index'  Web-Page");
-    res.render('search/search_index', {TITLE: "Gyankriti-Search"});
+    console.log("\nGET: '/search'  Web-Page");
+    res.render('search/search', {TITLE: "Gyankriti-Search"});
 
 });
 
 router.post('/', async (req, res) => {
-    console.log("\nPOST: 'search/search_index' = post results using search config.");
+    console.log("\nPOST: '/search' = post results using search config.");
 
     const search_config = req.body.search_config;
 
@@ -36,8 +38,36 @@ router.post('/', async (req, res) => {
         res.send({success: false});
     }
 
-})
-;
+});
+
+
+router.post('/send-sms', async (req, res) => {
+    console.log("\nPOST: 'search/send-sms' = sending sms ");
+
+    const recipients_array = req.body.raw_recipients_array;
+
+    try {
+        console.log("sending sms");
+        console.log(`recipients  : ${JSON.stringify(recipients_array[0])}`);
+        console.log(`message : ${req.body.sms_message}`);
+
+        // recipients_array.forEach((elem) => {
+        //     console.log(`\n\n elements : ${elem} `);
+        // });
+
+
+        res.send({sent_count: recipients_array.length, success: true});
+        // smsClient.sendSMS(recipients_array, req.body.message, (count, isSuccess) => {
+        //     res.send({sent_count: count, success: isSuccess});
+        // });
+
+    } catch (e) {
+        console.log("exception e : " + e);
+        res.send({success: false});
+    }
+
+});
+
 
 /*  END: get and post method block */
 

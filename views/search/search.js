@@ -12,8 +12,9 @@ let body_table_results = null;
 
 let datatable_results = null;
 
-// let isNoDropDownEmpty = false;
 
+// menu action buttons
+let menu_button_send_sms = null;
 
 ///////////////////////////////////////
 //* global variables */
@@ -40,6 +41,7 @@ function initializeJquerySelectors() {
     table_results = $('#table_results');
     body_table_results = $('#table_results tbody');
 
+    menu_button_send_sms = $('#menu_button_send_sms');
 
     // options_array
     options_array = options_config.search;
@@ -170,7 +172,7 @@ function initializeDatatable() {
 
 
     button_select_all.click(() => {
-        console.log("button click detected");
+        console.log("clicked button select all");
 
         const val = button_select_all.val();
 
@@ -190,7 +192,31 @@ function initializeDatatable() {
     });
 
 
+    menu_button_send_sms.click(() => {
+        console.log("clicked on send sms button");
+
+        console.log(datatable_results.rows().data().length);
+
+        let rowsJson = datatable_results.rows('.selected').data();
+
+        if (rowsJson.length) {
+            console.log(" selected rows  : ", JSON.stringify(rowsJson[0]));
+            let array_to_send = [];
+
+            for (let i = 0; i < rowsJson.length; i++) {
+                console.log(`row :  ${rowsJson[i]}`);
+                array_to_send.push(rowsJson[i]);
+            }
+
+            sendSmsToSelectedRows(array_to_send, "My name is Annant Gupta.");
+        } else {
+            console.log("No rows are selected in the table ");
+        }
+
+    });
+
 }
+
 
 function asyncForEachLoop(array) {
 
@@ -241,6 +267,33 @@ function addRowsToDataTable(results_array) {
 
     //
     asyncForEachLoop(results_array);
+}
+
+
+function sendSmsToSelectedRows(selected_array, sms_message) {
+
+    console.log("sending sms array to server");
+
+    if (selected_array !== null && sms_message !== "") {
+
+        $.ajax({
+            url: '/search/send-sms',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({sms_message: sms_message, raw_recipients_array: selected_array}),
+            success: function (response) {
+                console.log(response.success);
+                if (response.success) {
+                    console.log(`Sms sent to ${response.sent_count} cellphones`);
+                } else {
+                    alert("There was some error sending sms.")
+                }
+            }
+        });
+    } else {
+        console.log(`search config has not changed`);
+    }
+
 }
 
 
