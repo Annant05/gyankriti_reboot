@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
 router.post('/send-sms', async (req, res) => {
     console.log("\nPOST: 'search/send-sms' = sending sms ");
 
-    const raw_array = req.body.raw_recipients_array;
+    const recipients_mobile_no_array = req.body.raw_recipients_array;
     const message = req.body.sms_message;
 
     try {
@@ -56,23 +56,23 @@ router.post('/send-sms', async (req, res) => {
 
         console.log(`message : ${message}`);
 
+        //
+        // let recipients_mobile_no_array = [];
 
-        let recipients_mobile_no_array = [];
 
-
-        raw_array.forEach((elem) => {
-            //  Important : row no 7 and 8 contains mobile no. this is a potential bug needs fixing.
-            // console.log(` elements mobile no: ${elem[7]}  and ${elem[8]} `);
-
-            // this loop is a potential bug
-            recipients_mobile_no_array.push(parseInt(elem[7]), parseInt(elem[8]));
-        });
+        // raw_array.forEach((elem) => {
+        //     //  Important : row no 7 and 8 contains mobile no. this is a potential bug needs fixing.
+        //     // console.log(` elements mobile no: ${elem[7]}  and ${elem[8]} `);
+        //
+        //     // this loop is a potential bug
+        //     recipients_mobile_no_array.push(parseInt(elem[7]), parseInt(elem[8]));
+        // });
 
 
         // res.send({sent_count: recipients_mobile_no_array.length, success: true});
 
-        smsClient.sendSMS(recipients_mobile_no_array, message, (count, isSuccess) => {
-            res.send({sent_count: count, success: isSuccess});
+        smsClient.sendSMS(recipients_mobile_no_array, message, (isSuccess) => {
+            res.send({success: isSuccess});
         });
 
     } catch (e) {

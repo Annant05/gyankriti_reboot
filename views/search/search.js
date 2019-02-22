@@ -255,17 +255,19 @@ function initializeDatatable() {
 
 
             let rawArrayObject = datatable_results.rows('.selected').data();
-            let selected_rows_array = [];
+            let message_recipients = [];
 
             for (let i = 0; i < rawArrayObject.length; i++) {
                 // console.log(`row :  ${rawArrayObject[i]}`);
-                selected_rows_array.push(rawArrayObject[i]);
+                message_recipients.push((rawArrayObject[i][7]), (rawArrayObject[i])[8]);
             }
 
             // set cookie so that we can use the same sms for for hour.
             $.cookie("previous_sms", message, {expires: 1 / 24});
 
-            sendSmsToSelectedRows(selected_rows_array, message);
+            console.log(` recipients array : ${message_recipients}`)
+
+            sendSmsToSelectedRows(message_recipients, message);
 
         } else {
             modal_textarea_sms.toggleClass('border-invalid', true);
@@ -374,7 +376,8 @@ function sendSmsToSelectedRows(selected_array, sms_message) {
             success: function (response) {
                 console.log(response.success);
                 if (response.success) {
-                    console.log(`Sms sent to ${response.sent_count} cellphones`);
+
+                    // console.log(`Sms sent to ${response.sent_count} cellphones`);
                     modal_send_sms.modal('hide');
                 } else {
                     alert("There was some error sending sms.")
