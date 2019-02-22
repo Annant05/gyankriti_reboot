@@ -88,3 +88,7 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+.border-invalid {
+    border-color: #dc3545;
+}

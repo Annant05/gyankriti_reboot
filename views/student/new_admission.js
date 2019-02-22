@@ -394,7 +394,7 @@ function documentReady() {
     });
 
     button_student_image.click(() => {
-        input_student_image.trigger('click');
+        input_student_image.triggerc('click');
     });
 
     button_father_image.click(() => {

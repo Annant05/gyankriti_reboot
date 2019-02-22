@@ -28,6 +28,7 @@ router.post('/', async (req, res) => {
     try {
         console.log(JSON.stringify(search_config));
         console.log("search config received");
+
         dynamoSearch.getSearchResults(search_config, (data, isSuccess) => {
             // console.log(JSON.stringify(data.Items[0]));
             res.send({results_array: data.Items, success: isSuccess});
@@ -44,22 +45,35 @@ router.post('/', async (req, res) => {
 router.post('/send-sms', async (req, res) => {
     console.log("\nPOST: 'search/send-sms' = sending sms ");
 
-    const recipients_array = req.body.raw_recipients_array;
+    const raw_array = req.body.raw_recipients_array;
+    const message = req.body.sms_message;
 
     try {
+
         console.log("sending sms");
-        console.log(`recipients  : ${JSON.stringify(recipients_array[0])}`);
-        console.log(`message : ${req.body.sms_message}`);
 
-        // recipients_array.forEach((elem) => {
-        //     console.log(`\n\n elements : ${elem} `);
-        // });
+        // console.log(`recipients  : ${JSON.stringify(raw_array[0])}`);
+
+        console.log(`message : ${message}`);
 
 
-        res.send({sent_count: recipients_array.length, success: true});
-        // smsClient.sendSMS(recipients_array, req.body.message, (count, isSuccess) => {
-        //     res.send({sent_count: count, success: isSuccess});
-        // });
+        let recipients_mobile_no_array = [];
+
+
+        raw_array.forEach((elem) => {
+            //  Important : row no 7 and 8 contains mobile no. this is a potential bug needs fixing.
+            // console.log(` elements mobile no: ${elem[7]}  and ${elem[8]} `);
+
+            // this loop is a potential bug
+            recipients_mobile_no_array.push(parseInt(elem[7]), parseInt(elem[8]));
+        });
+
+
+        // res.send({sent_count: recipients_mobile_no_array.length, success: true});
+
+        smsClient.sendSMS(recipients_mobile_no_array, message, (count, isSuccess) => {
+            res.send({sent_count: count, success: isSuccess});
+        });
 
     } catch (e) {
         console.log("exception e : " + e);

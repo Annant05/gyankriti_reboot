@@ -5,25 +5,26 @@ const msg91_client = new MSG91(config.MSG91_API_KEY, config.SENDER_ID, 4);
 
 const messageFunctions = {
 
-    sendSMS: async function sendSMSUsingMSG91API(recipients, SMSmessage, stateCallback) {
-        console.log(`\nFile: support_files/sms_msg91 calling function 'sendSMS()'  Argument Passed : \nRecipients : ${recipients}  , Message : ${SMSmessage}`);
+    sendSMS: async function sendSMSUsingMSG91API(recipients, SMS_message, stateCallback) {
+        console.log(`\nFile: support_files/sms_msg91 calling function 'sendSMS()'  Argument Passed : \nRecipients : ${recipients}  , Message : ${SMS_message}`);
 
         this.getBalance(async (remainingCapacity) => {
                 console.log("remaining messages : ", remainingCapacity);
+
                 try {
 
                     if (remainingCapacity >= recipients.length) {
                         console.log(`Sending ${recipients.length} messages`);
 
-                        await msg91_client.send(recipients, SMSmessage, (err, data) => {
+                        await msg91_client.send(recipients, SMS_message, (err, data) => {
                             if (err) {
                                 console.log("\nThere was some error ", err, err.stack);
-                                stateCallback(count,false);
+                                stateCallback(false);
 
                             }// an error occurred
                             else {
                                 console.log("\nData :", data);
-                                stateCallback(count,true);
+                                stateCallback(true);
                             }
                         });
 

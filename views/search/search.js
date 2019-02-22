@@ -16,12 +16,18 @@ let datatable_results = null;
 // menu action buttons
 let menu_button_send_sms = null;
 
+// modal and its buttons
+let modal_send_sms = null;
+let modal_send_sms_title = null;
+let modal_textarea_sms = null;
+let modal_button_send_sms = null;
+let modal_button_use_previous_message = null;
+
 ///////////////////////////////////////
 //* global variables */
 
 let options_array = null;
 let previous_search_config = null;
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -43,9 +49,22 @@ function initializeJquerySelectors() {
 
     menu_button_send_sms = $('#menu_button_send_sms');
 
+    // modal selectors
+    modal_send_sms = $('#modal_send_sms');
+    modal_send_sms_title = $('#modal_send_sms_title');
+
+    modal_textarea_sms = $('#modal_textarea_sms');
+    modal_textarea_sms.toggleClass("border-invalid", false);
+
+    modal_button_send_sms = $('#modal_button_send_sms');
+    modal_button_use_previous_message = $('#modal_button_use_previous_message');
+
     // options_array
     options_array = options_config.search;
     console.log("initializing jquery selectors complete");
+
+
+    // $.cookie("previous_sms", '', {expires: (1 / 24)});
 }
 
 
@@ -161,7 +180,28 @@ function initializeDatatable() {
         paging: true,
         ordering: true,
         responsive: true,
+        stateSave: true,
         order: [[0, "asc"]],
+
+        columnDefs: [
+            {
+                "targets": [7],
+                "visible": false,
+                "searchable": false
+            },
+            {
+                "targets": [8],
+                "visible": false
+            },
+            {
+                "targets": [9],
+                "visible": false
+            },
+            {
+                "targets": [10],
+                "visible": false
+            }
+        ]
 
     });
 
@@ -191,28 +231,69 @@ function initializeDatatable() {
 
     });
 
+    modal_button_use_previous_message.click(() => {
+        let cookie_prev_sms = $.cookie("previous_sms");
+
+        if (cookie_prev_sms !== undefined) {
+            modal_textarea_sms.val(cookie_prev_sms);
+            console.log("found prev cookie", cookie_prev_sms);
+
+        } else {
+            console.log('cookie does not exist');
+        }
+
+    });
+
+    // modal_textarea_sms
+    modal_button_send_sms.click(() => {
+
+        const message = modal_textarea_sms.val();
+
+        if (message !== '') {
+            modal_textarea_sms.toggleClass('border-invalid', false);
+            console.log(`message is : ${message}`);
+
+
+            let rawArrayObject = datatable_results.rows('.selected').data();
+            let selected_rows_array = [];
+
+            for (let i = 0; i < rawArrayObject.length; i++) {
+                // console.log(`row :  ${rawArrayObject[i]}`);
+                selected_rows_array.push(rawArrayObject[i]);
+            }
+
+            // set cookie so that we can use the same sms for for hour.
+            $.cookie("previous_sms", message, {expires: 1 / 24});
+
+            sendSmsToSelectedRows(selected_rows_array, message);
+
+        } else {
+            modal_textarea_sms.toggleClass('border-invalid', true);
+            console.log("textarea is empty");
+
+        }
+
+        // sendSmsToSelectedRows(selected_rows_array, modal_textarea_sms.text());
+
+    });
+
+
+    // This button is just to show modal.
 
     menu_button_send_sms.click(() => {
         console.log("clicked on send sms button");
 
-        console.log(datatable_results.rows().data().length);
+        let selectedRowsCount = datatable_results.rows('.selected').data().length;
 
-        let rowsJson = datatable_results.rows('.selected').data();
+        if (selectedRowsCount) {
+            console.log(" selected rows  : ", JSON.stringify(selectedRowsCount));
 
-        if (rowsJson.length) {
-            console.log(" selected rows  : ", JSON.stringify(rowsJson[0]));
-            let array_to_send = [];
+            modal_send_sms_title.find('strong').text(selectedRowsCount);
+            modal_send_sms.modal('show');
 
-            for (let i = 0; i < rowsJson.length; i++) {
-                console.log(`row :  ${rowsJson[i]}`);
-                array_to_send.push(rowsJson[i]);
-            }
-
-            sendSmsToSelectedRows(array_to_send, "My name is Annant Gupta.");
         } else {
             console.log("No rows are selected in the table ");
         }
-
     });
 
 }
@@ -241,7 +322,16 @@ function asyncForEachLoop(array) {
             element.standard,
             element.section,
             element.route,
-            element.shift
+            element.shift,
+
+            //   this columns are hidden used only for mailing and sending sms to parents ,
+
+            element.father_mobile_no,
+            element.mother_mobile_no,
+            element.father_email,
+            element.mother_email
+
+
         ]).draw(true);
 
     }
@@ -285,6 +375,7 @@ function sendSmsToSelectedRows(selected_array, sms_message) {
                 console.log(response.success);
                 if (response.success) {
                     console.log(`Sms sent to ${response.sent_count} cellphones`);
+                    modal_send_sms.modal('hide');
                 } else {
                     alert("There was some error sending sms.")
                 }
