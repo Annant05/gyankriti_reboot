@@ -97,6 +97,7 @@ input[type=number]::-webkit-outer-spin-button {
     visibility: hidden;
     min-width: 250px;
     margin-left: -125px;
+    margin-right: -125px;
     text-align: center;
     background-color: #b4fac5;
     color: #10571f;
@@ -104,8 +105,8 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 16px;
     position: fixed;
     z-index: 1;
-    left: 90%;
-    top: 10%;
+    left: 50%;
+    top: 15%;
     font-size: 17px;
 }
 
@@ -133,7 +134,7 @@ input[type=number]::-webkit-outer-spin-button {
         opacity: 0;
     }
     to {
-        top: 10%;
+        top: 15%;
         opacity: 1;
     }
 }
@@ -144,14 +145,14 @@ input[type=number]::-webkit-outer-spin-button {
         opacity: 0;
     }
     to {
-        top: 10%;
+        top: 15%;
         opacity: 1;
     }
 }
 
 @-webkit-keyframes fadeout {
     from {
-        top: 10%;
+        top: 15%;
         opacity: 0;
     }
     to {
@@ -162,7 +163,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 @keyframes fadeout {
     from {
-        top: 10%;
+        top: 15%;
         opacity: 0;
     }
     to {
