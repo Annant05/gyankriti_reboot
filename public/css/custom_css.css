@@ -92,3 +92,81 @@ input[type=number]::-webkit-outer-spin-button {
 .border-invalid {
     border-color: #dc3545;
 }
+
+.snackbar-layout {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    text-align: center;
+    background-color: #b4fac5;
+    color: #10571f;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 90%;
+    top: 10%;
+    font-size: 17px;
+}
+
+.snackbar-failed {
+    background-color: #f8d7da;
+    color: #721c24;
+
+}
+
+.snackbar-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+}
+
+.snackbar-show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+
+@-webkit-keyframes fadein {
+    from {
+        top: 0;
+        opacity: 0;
+    }
+    to {
+        top: 10%;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        top: 0;
+        opacity: 0;
+    }
+    to {
+        top: 10%;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        top: 10%;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        top: 10%;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}

@@ -23,6 +23,8 @@ let modal_textarea_sms = null;
 let modal_button_send_sms = null;
 let modal_button_use_previous_message = null;
 
+
+let snackbar = null;
 ///////////////////////////////////////
 //* global variables */
 
@@ -59,6 +61,10 @@ function initializeJquerySelectors() {
     modal_button_send_sms = $('#modal_button_send_sms');
     modal_button_use_previous_message = $('#modal_button_use_previous_message');
 
+    snackbar = $("#snackbar");
+
+    snackbar.toggleClass("snackbar-show", false);
+    snackbar.toggleClass("snackbar-failed", false);
     // options_array
     options_array = options_config.search;
     console.log("initializing jquery selectors complete");
@@ -151,6 +157,7 @@ function executeSearchOnServer() {
             }
         });
     } else {
+        showsnackbar("Search query is same as previous one.", false);
         console.log(`search config has not changed`);
     }
 
@@ -244,6 +251,7 @@ function initializeDatatable() {
 
     });
 
+
     // modal_textarea_sms
     modal_button_send_sms.click(() => {
 
@@ -294,6 +302,7 @@ function initializeDatatable() {
             modal_send_sms.modal('show');
 
         } else {
+            showsnackbar("No rows are selected in the table ", false);
             console.log("No rows are selected in the table ");
         }
     });
@@ -376,17 +385,39 @@ function sendSmsToSelectedRows(selected_array, sms_message) {
             success: function (response) {
                 console.log(response.success);
                 if (response.success) {
-
-                    // console.log(`Sms sent to ${response.sent_count} cellphones`);
                     modal_send_sms.modal('hide');
+                    showsnackbar("Messages sent Successfully! ", true);
+                    console.log(`Messages sent Successfully!`);
                 } else {
-                    alert("There was some error sending sms.")
+                    console.log("Error : Failed to send sms");
+                    showsnackbar("Error : Failed to send sms", false);
+                    // alert("There was some error sending sms.")
                 }
             }
         });
     } else {
-        console.log(`search config has not changed`);
+        showsnackbar("Make sure rows are selected", false);
     }
+
+}
+
+
+function showsnackbar(notify_message, state) {
+
+    snackbar.toggleClass("snackbar-show", true);
+
+    $("#snackbar_text").text(notify_message);
+
+    if (state) {
+        snackbar.toggleClass("snackbar-failed", false);
+    } else {
+        snackbar.toggleClass("snackbar-failed", true);
+    }
+
+    setTimeout(() => {
+        snackbar.toggleClass("snackbar-show", false);
+    }, 3000);
+
 
 }
 

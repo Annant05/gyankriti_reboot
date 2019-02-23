@@ -106,6 +106,13 @@
             <div class="col-md-12 order-md-1 d-flex flex-column justify-content-center">
                 <h3 class="mb-3 text-center">Results</h3>
 
+                <!--<div class="alert alert-warning alert-dismissible fade show" role="alert">-->
+                <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+                <!--<span aria-hidden="true">&times;</span>-->
+                <!--</button>-->
+                <!--<strong>Holy guacamole!</strong> You should check in on some of those fields below.-->
+                <!--</div>-->
+
 
                 <div class="form-group align-items-center">
 
@@ -128,7 +135,7 @@
 
                             <div class="dropdown-menu" aria-labelledby="menu_dropdown_action">
                                 <a id="menu_button_send_sms" class="dropdown-item">Send SMS</a>
-                                <a id="menu_test_modal" class="dropdown-item">Test Modal</a>
+                                <a id="menu_button_custom_sms" class="dropdown-item">Send Single SMS</a>
                                 <a class="dropdown-item">Something else here</a>
                             </div>
 
@@ -136,6 +143,7 @@
                     </div>
 
                 </div>
+
 
                 <!--table in  container -->
                 <table id="table_results" class="table table-striped table-bordered row-border hover order-column"
@@ -167,7 +175,7 @@
     </div>
 
 
-    <!-- Modal -->
+    <!-- Modal  for select sms-->
     <div class="modal fade" id="modal_send_sms" tabindex="-1" role="dialog"
          aria-labelledby="modal_send_sms_title" aria-hidden="true">
 
@@ -208,6 +216,10 @@
         </div>
     </div>
 
+
+    <div id="snackbar" class="snackbar-layout snackbar-show snackbar-failed">
+        <span id="snackbar_text"> </span>
+    </div>
 
     <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <!--ENd main parent container-->
