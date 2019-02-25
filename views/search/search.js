@@ -314,18 +314,30 @@ function asyncForEachLoop(array) {
 
     console.log(`Looping over ${array.length} rows asynchronously`);
 
-    let count = array.length - 1;
+    function doSomething() {
+        let count = array.length - 1;
 
+        for (let i = 0; i < count; i++) {
+            let element = array[i];
+            datatable_results.row.add([
+                element.gyankriti_enrollment,
+                `${element.first_name} ${element.last_name}`,
+                element.gyankriti_email,
+                element.standard,
+                element.section,
+                element.route,
+                element.shift,
 
-    function asyncWhileLoop() {
-        if (count !== -1) {
-            doTheFollowingLoopStatementsOnEachElement(array[count--]);
+                //   this columns are hidden used only for mailing and sending sms to parents ,
+
+                element.father_mobile_no,
+                element.mother_mobile_no,
+                element.father_email,
+                element.mother_email
+            ])
         }
-        requestAnimationFrame(asyncWhileLoop);
-    }
 
-    function doTheFollowingLoopStatementsOnEachElement(element) {
-
+        let element = array[count];
         datatable_results.row.add([
             element.gyankriti_enrollment,
             `${element.first_name} ${element.last_name}`,
@@ -347,10 +359,41 @@ function asyncForEachLoop(array) {
 
     }
 
+    // function asyncWhileLoop() {
+    //     if (count !== -1) {
+    //         doTheFollowingLoopStatementsOnEachElement(array[count--]);
+    //     }
+    //     requestAnimationFrame(asyncWhileLoop);
+    // }
+    //
+    // function doTheFollowingLoopStatementsOnEachElement(element) {
+    //
+    //     datatable_results.row.add([
+    //         element.gyankriti_enrollment,
+    //         `${element.first_name} ${element.last_name}`,
+    //         element.gyankriti_email,
+    //         element.standard,
+    //         element.section,
+    //         element.route,
+    //         element.shift,
+    //
+    //         //   this columns are hidden used only for mailing and sending sms to parents ,
+    //
+    //         element.father_mobile_no,
+    //         element.mother_mobile_no,
+    //         element.father_email,
+    //         element.mother_email
+    //
+    //
+    //     ]).draw(true);
+    //
+    // }
+
     // load and add new results
+
     if (array !== null) {
         console.log("adding data to the table");
-        requestAnimationFrame(asyncWhileLoop);
+        requestAnimationFrame(doSomething);
     } else {
         console.log("passed Array is empty/null.");
     }
