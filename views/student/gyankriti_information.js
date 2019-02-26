@@ -73,7 +73,9 @@ function initializeDropdown() {
 
 
 function calcTotalFee() {
-
+    let total_fee = Number(output_bus_fee.val()) + Number(output_mess_fee.val()) + Number(output_admission_fee.val());
+    // console.log(`the total fee kis  : ${total_fee}`);
+    output_total_fee.val(total_fee);
 }
 
 
@@ -92,9 +94,13 @@ function documentReady() {
     dropdown_standard.change(() => {
         let val = getValFromDropdown(dropdown_standard);
         if (val === null) {
-            output_admission_fee.val("Select Standard");
+            output_admission_fee.val(0);
         } else {
+            dropdown_bus_facility.trigger('change');
+            dropdown_mess_facility.trigger('change');
+
             output_admission_fee.val(`${options_array.admission_fee[val]}`);
+            calcTotalFee();
         }
     });
 
@@ -115,15 +121,47 @@ function documentReady() {
     });
 
 
+    dropdown_bus_facility.change(() => {
+        const val = getValFromDropdown(dropdown_bus_facility);
+        console.log(`change in dropdown_bus_facility  : ${val}`);
+
+        if (val === "Yes") {
+            output_bus_fee.val(options_array.bus_fee[getValFromDropdown(dropdown_standard)]);
+        } else {
+            output_bus_fee.val(0);
+        }
+        calcTotalFee();
+    });
+
+
+    dropdown_mess_facility.change(() => {
+        const val = getValFromDropdown(dropdown_mess_facility);
+        console.log(`change in dropdown_mess_facility  : ${val}`);
+
+        if (val === "Yes") {
+            output_mess_fee.val(options_array.mess_fee[getValFromDropdown(dropdown_standard)]);
+        } else {
+            output_mess_fee.val(0);
+        }
+        calcTotalFee();
+    });
+
+
+    output_bus_fee.keyup(() => {
+        calcTotalFee();
+    });
+    output_admission_fee.keyup(() => {
+        calcTotalFee();
+    });
+    output_mess_fee.keyup(() => {
+        calcTotalFee();
+    });
+
     button_complete_admission_process.click(sendJsonDataToServerUsingAjax);
 
 }
 
 function getFormInputData() {
-
-    function getValFromTextBox(text_selector) {
-        return (text_selector.val()).trim();
-    }
 
 
     // console.log(val_student_information);
@@ -141,11 +179,17 @@ function getFormInputData() {
         shift: getValFromDropdown(dropdown_shift),
         route: getValFromDropdown(dropdown_route),
 
-        admission_fee: getValFromTextBox(output_admission_fee)
+        bus_fee: getValFromTextBox(output_bus_fee),
+        admission_fee: getValFromTextBox(output_admission_fee),
+        mess_fee: getValFromTextBox(output_mess_fee),
+        total_fee: getValFromTextBox(output_total_fee),
 
+        father_mobile_no: $.cookie('father_mobile_no'),
+        mother_mobile_no: $.cookie('mother_mobile_no'),
+        father_email: $.cookie('father_email'),
+        mother_email: $.cookie('mother_email')
 
-    }
-        ;
+    };
 }
 
 
@@ -176,13 +220,19 @@ function sendJsonDataToServerUsingAjax() {
     });
 }
 
+
 function redirectToGyankritiAdmissionPage(newAdmissionJSON) {
 
     $.removeCookie('student_name');
     $.removeCookie('student_aadhar');
     $.removeCookie('admission_standard');
 
-    window.location.replace("/student/gyankriti-students");
+    $.removeCookie('father_mobile_no');
+    $.removeCookie('mother_mobile_no');
+    $.removeCookie('father_email');
+    $.removeCookie('mother_email');
+
+    window.location.replace("/search");
 }
 
 

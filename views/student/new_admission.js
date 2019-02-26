@@ -622,18 +622,31 @@ function getFormInputData() {
 }
 
 
+function setCookies() {
+
+    console.log("setting cookies");
+    const expiresTIme = {expires: 1};
+
+    $.cookie('student_name', globalVariableStudentJson.student_first_name + " " + globalVariableStudentJson.student_last_name, expiresTIme);
+    $.cookie('student_aadhar', globalVariableStudentJson.student_aadhar, expiresTIme);
+    $.cookie('admission_standard', globalVariableStudentJson.admission_standard, expiresTIme);
+
+    $.cookie('father_mobile_no', globalVariableStudentJson.father_mobile_no, expiresTIme);
+    $.cookie('mother_mobile_no', globalVariableStudentJson.mother_mobile_no, expiresTIme);
+    $.cookie('father_email', globalVariableStudentJson.father_email, expiresTIme);
+    $.cookie('mother_email', globalVariableStudentJson.mother_email, expiresTIme);
+
+}
+
+
 function uploadImagesAndDataToServer() {
 
 
     function generateImageS3URL(file_name) {
         // This function will generate image in s3's url to be saved in the database.
 
-        const S3_URL = `https://s3.ap-south-1.amazonaws.com/`;
-        const BUCKET_NAME = `gyankriti2019/`;
-        const S3_DIRECTORY_PREFIX = `images/`;
-
-        console.log("generating url  : ", S3_URL + BUCKET_NAME + S3_DIRECTORY_PREFIX + file_name);
-        return (S3_URL + BUCKET_NAME + S3_DIRECTORY_PREFIX + file_name);
+        console.log("generating url  : ", AWS_options.S3_URL + AWS_options.BUCKET_NAME + AWS_options.S3_DIRECTORY_PREFIX + file_name);
+        return (AWS_options.S3_URL + AWS_options.BUCKET_NAME + AWS_options.S3_DIRECTORY_PREFIX + file_name);
     }
 
 
@@ -656,14 +669,7 @@ function uploadImagesAndDataToServer() {
                 console.log(response.success);
                 if (response.success) {
 
-                    $.cookie('student_name', globalVariableStudentJson.student_first_name + " " + globalVariableStudentJson.student_last_name, {expires: 1});
-                    $.cookie('student_aadhar', globalVariableStudentJson.student_aadhar, {expires: 1});
-                    $.cookie('admission_standard', globalVariableStudentJson.admission_standard, {expires: 1});
-
-
-                    // save to session storage
-                    sessionStorage.setItem("new_admission_data", JSON.stringify(newAdmissionJSON));
-
+                    setCookies();
                     console.log("Information saved to the database.");
                 } else {
                     alert("There was some error in saving the information.")
@@ -710,7 +716,6 @@ function uploadImagesAndDataToServer() {
     console.log(father_filename);
     console.log(mother_filename);
 
-
     $.ajax({
         url: '/student/upload-images',
         type: 'post',
@@ -730,23 +735,30 @@ function uploadImagesAndDataToServer() {
 }
 
 
-function saveAndPrint() {
+async function saveAndPrint() {
+
+
+    function print() {
+        // print The form
+        // noinspection JSUnusedLocalSymbols
+        window.onafterprint = function (e) {
+            $(window).off('mousemove', window.onafterprint);
+            console.log('Print Dialog Closed..');
+        };
+
+        window.print();
+
+        setTimeout(function () {
+            $(window).one('mousemove', window.onafterprint);
+        }, 5000);
+
+    }
+
 
     // save data to server
-    uploadImagesAndDataToServer();
+    await uploadImagesAndDataToServer();
+    await requestAnimationFrame(print);
 
-    // print The form
-    // noinspection JSUnusedLocalSymbols
-    window.onafterprint = function (e) {
-        $(window).off('mousemove', window.onafterprint);
-        console.log('Print Dialog Closed..');
-    };
-
-    window.print();
-
-    setTimeout(function () {
-        $(window).one('mousemove', window.onafterprint);
-    }, 3);
 
     // redirect to next page
     redirectToGyankritiAdmissionPage();

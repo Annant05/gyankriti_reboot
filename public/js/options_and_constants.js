@@ -26,6 +26,7 @@ const options_config = {
         section: ['A', 'B', 'C', 'D'],
         route: ['1', '2', '3', '4', '5', '6', 'Walk-in'],
         shift: ['A', 'B', 'C', 'D'],
+
         admission_fee: {
             'JS1': 5000,
             'JS2': 6000,
@@ -34,8 +35,26 @@ const options_config = {
             'PS3': 9000,
             'PS4': 10000
         },
-        bus_facility: ["Yes", "No"],
-        mess_facility: ["Yes", "No"]
+
+        bus_facility: ["No", "Yes"],
+        bus_fee: {
+            'JS1': 1000,
+            'JS2': 2000,
+            'PS1': 3000,
+            'PS2': 4000,
+            'PS3': 5000,
+            'PS4': 6000
+        },
+
+        mess_facility: ["No", "Yes"],
+        mess_fee: {
+            'JS1': 500,
+            'JS2': 600,
+            'PS1': 700,
+            'PS2': 800,
+            'PS3': 900,
+            'PS4': 1000
+        }
     },
 
     search: {
@@ -45,6 +64,15 @@ const options_config = {
         route: ['All', '1', '2', '3', '4', '5', 'Walk-in'],
         shift: ['All', 'A', 'B', 'C', 'D']
     }
+
+};
+
+// options to create aws url for image;
+const AWS_options = {
+
+    S3_URL: `https://s3.ap-south-1.amazonaws.com/`,
+    BUCKET_NAME: `gyankriti2019/`,
+    S3_DIRECTORY_PREFIX: `images/`
 
 };
 
@@ -70,3 +98,5 @@ function getValFromDropdown(dropdown_selector) {
 function getValFromTextBox(text_selector) {
     return (text_selector.val()).trim();
 }
+
+
