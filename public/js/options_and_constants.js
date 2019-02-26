@@ -33,7 +33,9 @@ const options_config = {
             'PS2': 8000,
             'PS3': 9000,
             'PS4': 10000
-        }
+        },
+        bus_facility: ["Yes", "No"],
+        mess_facility: ["Yes", "No"]
     },
 
     search: {
@@ -45,3 +47,26 @@ const options_config = {
     }
 
 };
+
+
+function append_options_to_dropdown(dropdown_selector, options) {
+    options.forEach(function (option) {
+        dropdown_selector.append(
+            `<option value="${((option.toString()))}">${option}</option>`);
+    });
+}
+
+function getValFromDropdown(dropdown_selector) {
+    let valueDropdownOption = dropdown_selector.children("option").filter(":selected").val();
+    if (valueDropdownOption === 'choose') {
+        console.log(dropdown_selector.attr('id') + " is not selected");
+        return null;
+    } else {
+        console.log(dropdown_selector.attr('id') + " is :", valueDropdownOption);
+        return valueDropdownOption.trim();
+    }
+}
+
+function getValFromTextBox(text_selector) {
+    return (text_selector.val()).trim();
+}

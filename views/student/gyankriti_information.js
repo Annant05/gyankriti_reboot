@@ -1,16 +1,27 @@
 let output_student_name = null;
 let input_gyankriti_enrollment = null;
-let input_gyankriti_username = null;
 let input_gyankriti_email = null;
+let input_gyankriti_username = null;
 
 let dropdown_standard = null;
 let dropdown_section = null;
 let dropdown_shift = null;
 
+let dropdown_bus_facility = null;
 let dropdown_route = null;
+let dropdown_mess_facility = null;
+
+let output_bus_fee = null;
 let output_admission_fee = null;
+let output_mess_fee = null;
+let output_total_fee = null;
+
+let button_output_bus_fee = null;
+let button_output_admission_fee = null;
+let button_output_mess_fee = null;
 
 let button_complete_admission_process = null;
+
 
 let options_array = null;
 
@@ -27,43 +38,41 @@ function initializeJquerySelectors() {
     dropdown_section = $("#dropdown_section");
     dropdown_shift = $("#dropdown_shift");
 
-
+    dropdown_bus_facility = $('#dropdown_bus_facility');
     dropdown_route = $("#dropdown_route");
-    output_admission_fee = $("#output_admission_fee");
+    dropdown_mess_facility = $('#dropdown_mess_facility');
 
     button_complete_admission_process = $("#button_complete_admission_process");
+
+    output_bus_fee = $('#output_bus_fee ');
+    output_admission_fee = $('#output_admission_fee ');
+    output_mess_fee = $('#output_mess_fee ');
+    output_total_fee = $('#output_total_fee ');
+
+    button_output_bus_fee = $('#button_output_bus_fee ');
+    button_output_admission_fee = $('#button_output_admission_fee ');
+    button_output_mess_fee = $('#button_output_mess_fee ');
+
+
+    $(".input-disabled").prop("disabled", true);
 
     // options array
     options_array = options_config.gyankriti_information;
 }
 
-
-function getValFromDropdown(dropdown_selector) {
-    let valueDropdownOption = dropdown_selector.children("option").filter(":selected").val();
-    if (valueDropdownOption === 'choose') {
-        console.log(dropdown_selector.attr('id') + " is not selected");
-        return null;
-    } else {
-        console.log(dropdown_selector.attr('id') + " is :", valueDropdownOption);
-        return valueDropdownOption.trim();
-    }
-}
-
-
 function initializeDropdown() {
     console.log("initializing dropdown and adding options");
-
-    function append_options_to_dropdown(dropdown_selector, options) {
-        options.forEach(function (option) {
-            dropdown_selector.append(
-                `<option value="${((option.toString()))}">${option}</option>`);
-        });
-    }
 
     append_options_to_dropdown(dropdown_standard, options_array.standard);
     append_options_to_dropdown(dropdown_section, options_array.section);
     append_options_to_dropdown(dropdown_shift, options_array.shift);
     append_options_to_dropdown(dropdown_route, options_array.route);
+    append_options_to_dropdown(dropdown_bus_facility, options_array.bus_facility);
+    append_options_to_dropdown(dropdown_mess_facility, options_array.mess_facility);
+}
+
+
+function calcTotalFee() {
 
 }
 
@@ -71,10 +80,13 @@ function initializeDropdown() {
 function documentReady() {
     initializeJquerySelectors();
     initializeDropdown();
-    output_student_name.val($.cookie("student_name"));
 
-    output_admission_fee.val(`Rs. ${options_array.admission_fee[$.cookie('admission_standard')]} /-`);
+    // const new_admission_data = JSON.parse(sessionStorage.getItem("new_admission_data"));
+    // console.log(new_admission_data.father_mobile_no);
+
+    output_student_name.val($.cookie("student_name"));
     dropdown_standard.val($.cookie('admission_standard'));
+    output_admission_fee.val(`${options_array.admission_fee[$.cookie('admission_standard')]}`);
 
 
     dropdown_standard.change(() => {
@@ -82,9 +94,26 @@ function documentReady() {
         if (val === null) {
             output_admission_fee.val("Select Standard");
         } else {
-            output_admission_fee.val(`Rs. ${options_array.admission_fee[val]} /-`);
+            output_admission_fee.val(`${options_array.admission_fee[val]}`);
         }
     });
+
+
+    button_output_bus_fee.click(function () {
+        console.log('click');
+        output_bus_fee.prop("disabled", false);
+    });
+
+    button_output_admission_fee.click(function () {
+        console.log('click');
+        output_admission_fee.prop("disabled", false);
+    });
+
+    button_output_mess_fee.click(function () {
+        console.log('click');
+        output_mess_fee.prop("disabled", false);
+    });
+
 
     button_complete_admission_process.click(sendJsonDataToServerUsingAjax);
 

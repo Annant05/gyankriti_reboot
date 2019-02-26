@@ -29,17 +29,22 @@
 
                     <div class="row mb-3">
 
-                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
+                        <div class="col-md-3 justify-content-center align-items-center d-flex flex-column">
                             <label for="output_student_name"><b>Student Name</b></label>
                             <output class="form-control text-bold text-center" id="output_student_name">Name</output>
                         </div>
 
-                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
+                        <div class="col-md-3 justify-content-center align-items-center d-flex flex-column">
                             <label for="input_gyankriti_enrollment"><b>Enrollment</b></label>
                             <input type="text" class="form-control" id="input_gyankriti_enrollment">
                         </div>
 
-                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
+                        <div class="col-md-3 justify-content-center align-items-center d-flex flex-column">
+                            <label for="input_gyankriti_email"><b>Student Email</b></label>
+                            <input type="text" class="form-control" id="input_gyankriti_email">
+                        </div>
+
+                        <div class="col-md-3 justify-content-center align-items-center d-flex flex-column">
                             <label for="input_gyankriti_username"><b>Username</b></label>
                             <input type="text" class="form-control" id="input_gyankriti_username">
                         </div>
@@ -48,11 +53,6 @@
 
 
                     <div class="row mb-3">
-
-                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
-                            <label for="input_gyankriti_email"><b>Student Email</b></label>
-                            <input type="text" class="form-control" id="input_gyankriti_email">
-                        </div>
 
                         <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
                             <label for="dropdown_standard"><b>Standard</b></label>
@@ -68,13 +68,20 @@
                             </select>
                         </div>
 
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
+                            <label for="dropdown_shift"><b>Shift</b></label>
+                            <select id="dropdown_shift" class="form-control d-block text-center">
+                                <option value="choose">Choose...</option>
+                            </select>
+                        </div>
+
                     </div>
 
                     <div class="row mb-3">
 
                         <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
-                            <label for="dropdown_shift"><b>Shift</b></label>
-                            <select id="dropdown_shift" class="form-control d-block text-center">
+                            <label for="dropdown_bus_facility"><b>Bus facility</b></label>
+                            <select id="dropdown_bus_facility" class="form-control d-block text-center">
                                 <option value="choose">Choose...</option>
                             </select>
                         </div>
@@ -86,22 +93,101 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4 justify-content-center align-items-center d-flex flex-column">
-                            <label for="output_admission_fee"><b>Admission Fee</b></label>
-                            <output class="form-control text-bold text-center" id="output_admission_fee">
-                            </output>
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-4">
+                            <label for="dropdown_mess_facility"><b>Mess facility</b></label>
+                            <select id="dropdown_mess_facility" class="form-control d-block text-center">
+                                <option value="choose">Choose...</option>
+                            </select>
                         </div>
-
 
                     </div>
 
+                    <div class="row mb-3">
+
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-3 ">
+                            <label for="output_bus_fee"><b>Bus Fee</b></label>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">&#x20b9</span>
+                                </div>
+                                <input type="number" class="form-control input-disabled text-bold text-center"
+                                       id="output_bus_fee" min="0" value="0">
+
+                                <div class="input-group-append">
+                                    <button type="button" id="button_output_bus_fee"
+                                            class="btn btn-outline-primary">
+                                        Edit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-3 ">
+                            <label for="output_admission_fee"><b>Admission Fee </b>
+                                <i class="fa fa-question-circle" title="One time charges for admission"
+                                   aria-hidden="true"></i>
+
+                            </label>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">&#x20b9</span>
+                                </div>
+                                <input type="number" class="form-control input-disabled text-bold text-center"
+                                       id="output_admission_fee" min="0" value="0">
+
+                                <div class="input-group-append">
+                                    <button type="button" id="button_output_admission_fee"
+                                            class="btn btn-outline-primary">
+                                        Edit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-3 ">
+                            <label for="output_mess_fee"><b>Mess Fee</b></label>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">&#x20b9</span>
+                                </div>
+                                <input type="number" class="form-control input-disabled text-bold text-center"
+                                       id="output_mess_fee" min="0" value="0">
+
+                                <div class="input-group-append">
+                                    <button type="button" id="button_output_mess_fee"
+                                            class="btn btn-outline-primary">
+                                        Edit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="justify-content-center align-items-center d-flex flex-column col-md-3 ">
+                            <label for="output_total_fee"><b>Total Amount</b></label>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">&#x20b9</span>
+                                </div>
+
+                                <input type="number" class="form-control input-disabled text-bold text-center"
+                                       id="output_total_fee" min="0" value="0">
+                            </div>
+                        </div>
+
+                    </div>
+
+
                 </form>
-
-
             </div>
+
 
         </div>
     </div>
+
     <hr>
 
     <div class="container">
@@ -113,7 +199,6 @@
             </div>
         </div>
     </div>
-
     <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
     <!--END main parent container-->
 </div>

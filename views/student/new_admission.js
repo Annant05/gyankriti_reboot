@@ -1,5 +1,5 @@
 //Section 1 - student_general
-let dropdown_academic_session = null;
+let dropdown_admission_year = null;
 let dropdown_admission_standard = null;
 let input_student_first_name = null;
 let input_student_last_name = null;
@@ -143,7 +143,7 @@ function initializeJquerySelectors() {
     console.log("initializing jquery selectors");
 
     //Section 1 - student_general
-    dropdown_academic_session = $("#dropdown_academic_session");
+    dropdown_admission_year = $("#dropdown_admission_year");
     dropdown_admission_standard = $("#dropdown_admission_standard");
     input_student_first_name = $("#input_student_first_name");
     input_student_last_name = $("#input_student_last_name");
@@ -274,26 +274,14 @@ function initializeJquerySelectors() {
 // Functions declaration and definition
 
 function disableInputField(selector, isDisabled) {
-    console.log("some field isDisabled :", isDisabled);
+    console.log(`disable/enable ${selector.attr('id')}`);
 
     if (isDisabled) {
-        selector.attr("disabled", "");
+        selector.prop("disabled", true);
     } else {
-        selector.removeAttr("disabled")
+        selector.prop("disabled", false);
     }
 
-}
-
-
-function getValFromDropdown(dropdown_selector) {
-    let valueDropdownOption = dropdown_selector.children("option").filter(":selected").val();
-    if (valueDropdownOption === 'choose') {
-        console.log(dropdown_selector.attr('id') + " is not selected");
-        return null;
-    } else {
-        console.log(dropdown_selector.attr('id') + " is :", valueDropdownOption);
-        return valueDropdownOption.trim();
-    }
 }
 
 
@@ -319,14 +307,7 @@ function generateTable(table_body_selector, noOfRows, id_prefix) {
 function initializeDropdown() {
     console.log("initializing dropdown and adding options");
 
-    function append_options_to_dropdown(dropdown_selector, options) {
-        options.forEach(function (option) {
-            dropdown_selector.append(
-                `<option value="${((option.toString()))}">${option}</option>`);
-        });
-    }
-
-    append_options_to_dropdown(dropdown_academic_session, options_array.academic_session);
+    append_options_to_dropdown(dropdown_admission_year, options_array.academic_session);
     append_options_to_dropdown(dropdown_admission_standard, options_array.admission_standard);
     append_options_to_dropdown(dropdown_gender, options_array.gender);
 
@@ -371,7 +352,7 @@ function documentReady() {
         $(this).next(':input').focus();
     });
 
-    // disableInputField(field_religion_other, true);
+    // disableDropdownField(field_religion_other, true);
 
 
     button_modal_save_and_print.click(saveAndPrint);
@@ -394,7 +375,7 @@ function documentReady() {
     });
 
     button_student_image.click(() => {
-        input_student_image.triggerc('click');
+        input_student_image.trigger('click');
     });
 
     button_father_image.click(() => {
@@ -505,11 +486,6 @@ function documentReady() {
 function getFormInputData() {
 
 
-    function getValFromTextBox(text_selector) {
-        return (text_selector.val()).trim();
-    }
-
-
     function getRadio_QnA(radio_boolean, selector_field_question) {
 
         if (radio_boolean) {
@@ -580,7 +556,7 @@ function getFormInputData() {
     // console.log(val_student_information);
     return {
 
-        academic_session: getValFromDropdown(dropdown_academic_session),
+        academic_session: getValFromDropdown(dropdown_admission_year),
         admission_standard: getValFromDropdown(dropdown_admission_standard),
 
         student_first_name: getValFromTextBox(input_student_first_name),
@@ -683,6 +659,10 @@ function uploadImagesAndDataToServer() {
                     $.cookie('student_name', globalVariableStudentJson.student_first_name + " " + globalVariableStudentJson.student_last_name, {expires: 1});
                     $.cookie('student_aadhar', globalVariableStudentJson.student_aadhar, {expires: 1});
                     $.cookie('admission_standard', globalVariableStudentJson.admission_standard, {expires: 1});
+
+
+                    // save to session storage
+                    sessionStorage.setItem("new_admission_data", JSON.stringify(newAdmissionJSON));
 
                     console.log("Information saved to the database.");
                 } else {

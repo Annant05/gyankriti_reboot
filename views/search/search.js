@@ -98,7 +98,7 @@ function initializeDropdown() {
 }
 
 
-function getValFromDropdown(dropdown_selector) {
+function getSearchValFromDropdown(dropdown_selector) {
     let valueDropdownOption = dropdown_selector.children("option").filter(":selected").val();
 
     console.log(dropdown_selector.attr('id') + " is :", valueDropdownOption);
@@ -109,17 +109,17 @@ function getValFromDropdown(dropdown_selector) {
 
 function getSearchConfigJSON() {
 
-    let query_val = getValFromDropdown(dropdown_query);
+    let query_val = getSearchValFromDropdown(dropdown_query);
 
     let searchConfig = {
         query: query_val,
-        route: getValFromDropdown(dropdown_route),
-        shift: getValFromDropdown(dropdown_shift)
+        route: getSearchValFromDropdown(dropdown_route),
+        shift: getSearchValFromDropdown(dropdown_shift)
     };
 
     if (query_val === options_array.query[0]) {
-        searchConfig['standard'] = getValFromDropdown(dropdown_standard);
-        searchConfig['section'] = getValFromDropdown(dropdown_section);
+        searchConfig['standard'] = getSearchValFromDropdown(dropdown_standard);
+        searchConfig['section'] = getSearchValFromDropdown(dropdown_section);
     }
 
     console.log(JSON.stringify(searchConfig));
@@ -164,7 +164,7 @@ function executeSearchOnServer() {
 }
 
 
-function disableInputField(selector, isDisabled) {
+function disableDropdownField(selector, isDisabled) {
     console.log("some field isDisabled :", isDisabled);
 
     if (isDisabled) { // if true it will be disabled;
@@ -310,15 +310,32 @@ function initializeDatatable() {
 }
 
 
-function asyncForEachLoop(array) {
+function addRowsToDataTable(results_array) {
+    console.log("\nexecuting datatable_functions();");
 
-    console.log(`Looping over ${array.length} rows asynchronously`);
+    // clear old results
+    datatable_results.clear().draw();
 
-    function doSomething() {
-        let count = array.length - 1;
+    // This will help when table is cleared but the button is deselect all;
+    button_select_all.val("select").text("Select All");
+
+
+    console.log(`Looping over ${results_array.length} rows asynchronously`);
+
+    if (results_array !== null) {
+        console.log("adding data to the table");
+        requestAnimationFrame(updateTable);
+    } else {
+        console.log("passed Array is empty/null.");
+    }
+
+
+    function updateTable() {
+        let count = results_array.length - 1;
 
         for (let i = 0; i < count; i++) {
-            let element = array[i];
+            let element = results_array[i];
+
             datatable_results.row.add([
                 element.gyankriti_enrollment,
                 `${element.first_name} ${element.last_name}`,
@@ -337,7 +354,7 @@ function asyncForEachLoop(array) {
             ])
         }
 
-        let element = array[count];
+        let element = results_array[count];
         datatable_results.row.add([
             element.gyankriti_enrollment,
             `${element.first_name} ${element.last_name}`,
@@ -354,63 +371,9 @@ function asyncForEachLoop(array) {
             element.father_email,
             element.mother_email
 
-
         ]).draw(true);
-
     }
 
-    // function asyncWhileLoop() {
-    //     if (count !== -1) {
-    //         doTheFollowingLoopStatementsOnEachElement(array[count--]);
-    //     }
-    //     requestAnimationFrame(asyncWhileLoop);
-    // }
-    //
-    // function doTheFollowingLoopStatementsOnEachElement(element) {
-    //
-    //     datatable_results.row.add([
-    //         element.gyankriti_enrollment,
-    //         `${element.first_name} ${element.last_name}`,
-    //         element.gyankriti_email,
-    //         element.standard,
-    //         element.section,
-    //         element.route,
-    //         element.shift,
-    //
-    //         //   this columns are hidden used only for mailing and sending sms to parents ,
-    //
-    //         element.father_mobile_no,
-    //         element.mother_mobile_no,
-    //         element.father_email,
-    //         element.mother_email
-    //
-    //
-    //     ]).draw(true);
-    //
-    // }
-
-    // load and add new results
-
-    if (array !== null) {
-        console.log("adding data to the table");
-        requestAnimationFrame(doSomething);
-    } else {
-        console.log("passed Array is empty/null.");
-    }
-}
-
-
-function addRowsToDataTable(results_array) {
-    console.log("\nexecuting datatable_functions();");
-
-    // clear old results
-    datatable_results.clear().draw();
-
-    // This will help when table is cleared but the button is deselect all;
-    button_select_all.val("select").text("Select All");
-
-    //
-    asyncForEachLoop(results_array);
 }
 
 
@@ -473,14 +436,14 @@ function documentReady() {
     button_search.click(executeSearchOnServer);
 
     dropdown_query.change(() => {
-        let option = getValFromDropdown(dropdown_query);
+        let option = getSearchValFromDropdown(dropdown_query);
 
         if (option === 'Students') {
-            disableInputField(dropdown_standard, false);
-            disableInputField(dropdown_section, false);
+            disableDropdownField(dropdown_standard, false);
+            disableDropdownField(dropdown_section, false);
         } else {
-            disableInputField(dropdown_standard, true);
-            disableInputField(dropdown_section, true);
+            disableDropdownField(dropdown_standard, true);
+            disableDropdownField(dropdown_section, true);
         }
 
     });
