@@ -32,6 +32,7 @@ const databaseFunctions = {
             TableName: TABLE_GYANKRITI_ADMISSIONS,
             Item: admissionDataObject
         };
+
         console.log("\nparams for function : put(params) : " + JSON.stringify(params));
 
         try {
@@ -192,13 +193,49 @@ const databaseFunctions = {
         }
         // console.log("\nisSaved before return ", isSaved);
 
-    }
-
+    },
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // New functions development
 
+
+    //* Function to get a admission information using enrollment as a key list of admissions from the database  */
+    getAdmissionUsingEnrollment: async function getAdmissionUsingEnrollmentFromAdmissionsTable(gyankriti_enrollment, sendDataInCallback) {
+
+        console.log("\nFile: support_files/dynamoStudent calling function 'getAdmissionUsingKey()'");
+
+        let params = {
+            TableName: TABLE_GYANKRITI_ADMISSIONS,
+            FilterExpression: 'gyankriti_enrollment = :val_enrollment',
+            // ExpressionAttributeNames: {
+            //     "#str_enrollment": "gyankriti",
+            // },
+            ExpressionAttributeValues: {
+                ':val_enrollment': gyankriti_enrollment,
+            },
+            // ProjectionExpression: "standard, first_name, gyankriti_enrollment"
+        };
+
+
+        console.log("\nparams for function : scan(params) : " + JSON.stringify(params));
+
+
+        try {
+            await docClientDynamo.scan(params, (err, data) => {
+                if (err) {
+                    console.log(err, err.stack); // an error occurred
+                    sendDataInCallback(err, false);
+                } else {
+                    console.log(JSON.stringify(data.Count));
+                    sendDataInCallback(data, true);
+                }
+            });
+        } catch (err) {
+            console.log("\nError :  " + err);
+        }
+
+    }
 
 };
 /* END: Declaration of database functions */
@@ -215,6 +252,17 @@ const databaseFunctions = {
 //         console.log("table updated");
 //     } else {
 //         console.log("there was some err");
+//     }
+//
+// });
+
+
+// databaseFunctions.getAdmissionUsingEnrollment(`GK01/002`, (data, isSaved) => {
+//
+//     if (isSaved) {
+//         console.log(JSON.stringify(data));
+//     } else {
+//         console.log("there was some err" + JSON.stringify(data));
 //     }
 //
 // });

@@ -182,11 +182,32 @@ router.post('/gyankriti-students', async (req, res) => {
 });
 
 // get method to display the full info of a student.
-router.get('/full-info/:rollNo/:suffix', (req, res) => {
+router.get('/full-info/:rollNo/:suffix', async (req, res) => {
+
     console.log(`\nGET: '/search/full-info/${req.params.rollNo}/${req.params.suffix}'  Web-Page`);
 
+    const gyankriti_enrollment = `${req.params.rollNo}/${req.params.suffix}`;
 
-    res.end(`${req.params.rollNo}/${req.params.suffix}`);
+    try {
+        await dynamoStudent.getAdmissionUsingEnrollment(gyankriti_enrollment, (admissionsObject, isSuccess) => {
+
+            console.log("isSuccess in receiving data from getAdmissionUsingEnrollment : ", isSuccess);
+
+            if (isSuccess) {
+                console.log(JSON.stringify(admissionsObject.Items[0]));
+                res.end(JSON.stringify(admissionsObject.Items[0]));
+                // res.end({body: {admissionsObject: admissionsObject, isSuccess: isSuccess}});
+            } else {
+                res.end("There is an error ");
+                // res.end({body: {admissionsObject: null, isSuccess: isSuccess}});
+            }
+        });
+
+    } catch (e) {
+        console.log("exception e : " + e);
+    }
+
+    // res.end(`${req.params.rollNo}/${req.params.suffix}`);
 });
 
 

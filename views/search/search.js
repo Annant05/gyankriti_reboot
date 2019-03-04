@@ -335,9 +335,32 @@ function addRowsToDataTable(results_array) {
     function updateTable() {
         let count = results_array.length - 1;
 
-        for (let i = 0; i < count; i++) {
-            let element = results_array[i];
+        console.log(`no of items in results_array : ${count + 1}`);
 
+        if (count >= 0) {
+            for (let i = 0; i < count; i++) {
+                let element = results_array[i];
+
+                datatable_results.row.add([
+                    element.gyankriti_enrollment,
+                    element.student_name,
+                    element.gyankriti_email,
+                    element.standard,
+                    element.section,
+                    element.route,
+                    element.shift,
+
+                    //   this columns are hidden used only for mailing and sending sms to parents ,
+
+                    element.father_mobile_no,
+                    element.mother_mobile_no,
+                    element.father_email,
+                    element.mother_email
+                ])
+            }
+
+
+            let element = results_array[count];
             datatable_results.row.add([
                 element.gyankriti_enrollment,
                 element.student_name,
@@ -353,29 +376,10 @@ function addRowsToDataTable(results_array) {
                 element.mother_mobile_no,
                 element.father_email,
                 element.mother_email
-            ])
+
+            ]).draw(true);
         }
-
-        let element = results_array[count];
-        datatable_results.row.add([
-            element.gyankriti_enrollment,
-            element.student_name,
-            element.gyankriti_email,
-            element.standard,
-            element.section,
-            element.route,
-            element.shift,
-
-            //   this columns are hidden used only for mailing and sending sms to parents ,
-
-            element.father_mobile_no,
-            element.mother_mobile_no,
-            element.father_email,
-            element.mother_email
-
-        ]).draw(true);
     }
-
 }
 
 
@@ -507,72 +511,6 @@ function documentReady() {
 
     });
 
-
-    // table_main_body.on('click', function (e) {
-    //     console.log('clicked', this);
-    // })
-
-
-    // $("#table_main_body ").contextMenu({
-    //     selector: 'tr',
-    //     callback: function (key, options) {
-    //         const m = "clicked: " + key;
-    //         console.log("here", m);
-    //         let $row = $(this).find("tr");    // Find the row
-    //
-    //         console.log("row " + $row + " roll no ");
-    //     },
-    //     items: {
-    //         "View Full Information": {
-    //             name: "View Full Information",
-    //             icon: "edit",
-    //             callback: () => {
-    //                 console.log("Clicked on view full name");
-    //                 console.log("this ", $(this));
-    //                 // console.log("this", a)
-    //             }
-    //         },
-    //         "cut": {name: "Cut", icon: "cut"},
-    //         copy: {name: "Copy", icon: "copy"},
-    //         "paste": {name: "Paste", icon: "paste"},
-    //         "delete": {name: "Delete", icon: "delete"},
-    //         "sep1": "---------",
-    //         "quit": {
-    //             name: "Quit", icon: function () {
-    //                 return 'context-menu-icon context-menu-icon-quit';
-    //             }
-    //         }
-    //     }
-    // });
-
-    // $.contextMenu({
-    //     selector: '#table_main_body tr',
-    //     // callback: function (key, options) {
-    //     //     const m = "clicked: " + key;
-    //     //     console.log("here", m);
-    //     // },
-    //     items: {
-    //         "View Full Information": {
-    //             name: "View Full Information",
-    //             icon: "edit",
-    //             callback: (q) => {
-    //                 console.log("Clicked on view full name");
-    //                 console.log("this ", q);
-    //
-    //             }
-    //         },
-    //         "cut": {name: "Cut", icon: "cut"},
-    //         copy: {name: "Copy", icon: "copy"},
-    //         "paste": {name: "Paste", icon: "paste"},
-    //         "delete": {name: "Delete", icon: "delete"},
-    //         "sep1": "---------",
-    //         "quit": {
-    //             name: "Quit", icon: function () {
-    //                 return 'context-menu-icon context-menu-icon-quit';
-    //             }
-    //         }
-    //     }
-    // });
 
 
     // $('#menu_button_custom_sms').on('click', function (e) {
