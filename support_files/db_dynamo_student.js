@@ -7,10 +7,10 @@ AWS.config.update(config.getAWS_JSONCredentials());
 const docClientDynamo = new AWS.DynamoDB.DocumentClient();
 
 // Table For storing all the bio data.
-const TABLE_STUDENTS = "students";
+const TABLE_GYANKRITI_ADMISSIONS = config.TABLE_GYANKRITI_ADMISSIONS;
 
 // Table to store academic data and fee data.
-const TABLE_GYANKRITI = "gyankriti";
+const TABLE_GYANKRITI_STUDENTS = config.TABLE_GYANKRITI_STUDENTS;
 
 // Object with all the database support functions.
 const databaseFunctions = {
@@ -18,19 +18,19 @@ const databaseFunctions = {
     //Finished Functions // Testing also done.
 
     //* Function to add new student into the database */
-    newAdmission: async function addNewStudentToStudentTable(studentDataObject, stateCallback) {
+    newAdmission: async function addNewStudentToAdmissionsTable(admissionDataObject, stateCallback) {
         console.log("\nFile: support_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : ");
 
 
         // add time of insertion to the data;
-        studentDataObject['time_of_admission'] = (Math.round((new Date()).getTime() / 1000)).toString();
+        admissionDataObject['time_of_admission'] = (Math.round((new Date()).getTime() / 1000)).toString();
 
         // add admission_status as pending because gynakriti details are not yet filled and it is possible that this student may leave school in future.
-        studentDataObject['admission_status'] = "pending";
+        admissionDataObject['admission_status'] = "pending";
 
         const params = {
-            TableName: TABLE_STUDENTS,
-            Item: studentDataObject
+            TableName: TABLE_GYANKRITI_ADMISSIONS,
+            Item: admissionDataObject
         };
         console.log("\nparams for function : put(params) : " + JSON.stringify(params));
 
@@ -57,12 +57,11 @@ const databaseFunctions = {
 
 
     //* Function to scan/retrieve list of students from the database  */
-    getCurrentStudents: async function getCurrentStudentsFromStudentTable(sendDataInCallback) {
-        console.log("\nFile: support_files/dynamoStudent calling function 'getCurrentStudents()'");
+    getCurrentAdmissions: async function getCurrentAdmissionsFromAdmissionsTable(sendDataInCallback) {
+        console.log("\nFile: support_files/dynamoStudent calling function 'getCurrentAdmissions()'");
 
         const params = {
-            Limit: 20,
-            TableName: TABLE_STUDENTS,
+            TableName: TABLE_GYANKRITI_ADMISSIONS,
         };
         console.log("\nparams for function : scan(params) : " + JSON.stringify(params));
 
@@ -82,14 +81,14 @@ const databaseFunctions = {
 
 
     //* Function to get a student information using aadhar card as a key list of students from the database  */
-    getStudentUsingKey: async function getStudentUsingPrimaryHashKeyFromStudentTable(aadhar_key, sendDataInCallback) {
+    getAdmissionUsingKey: async function getAdmissionUsingPrimaryHashKeyFromAdmissionsTable(identifier_key, sendDataInCallback) {
 
-        console.log("\nFile: support_files/dynamoStudent calling function 'getStudentUsingKey()'");
+        console.log("\nFile: support_files/dynamoStudent calling function 'getAdmissionUsingKey()'");
 
         const params = {
-            TableName: TABLE_STUDENTS,
+            TableName: TABLE_GYANKRITI_ADMISSIONS,
             Key: {
-                student_aadhar: aadhar_key
+                identifier_key: identifier_key
             }
 
             // Use ProjectionExpression to send specific keys only. // makes data transfer efficient and increases security
@@ -114,12 +113,12 @@ const databaseFunctions = {
 
 
     //* Function to update the student information using aadhar card as a key when a new record is added in gyankritiTable  */
-    updateAdmissionStatus: async function updateAdmissionStatusAttributeInStudentTable(identifier_key, gyankriti_enrollment, stateCallback) {
+    updateAdmissionStatus: async function updateAdmissionStatusAttributeInAdmissionsTable(identifier_key, gyankriti_enrollment, stateCallback) {
 
-        console.log("\nFile: support_files/dynamoStudent calling function 'updateRecord()'");
+        console.log("\nFile: support_files/dynamoStudent calling function 'updateAdmissionStatus()'");
 
         const params = {
-            TableName: TABLE_STUDENTS,
+            TableName: TABLE_GYANKRITI_ADMISSIONS,
             Key: {
                 identifier_key: identifier_key
             },
@@ -159,7 +158,7 @@ const databaseFunctions = {
 
     //END : Finished functions block
 
-    addGyankritiInformation: async function addGyankritiInformationToGyankritiTable(gyankritiDataObject, stateCallback) {
+    addGyankritiInformation: async function addGyankritiInformationToStudentsTable(gyankritiDataObject, stateCallback) {
         console.log("\nFile: support_files/dynamoStudent calling function 'newAdmission()'  Argument Passed : ");
 
 
@@ -169,7 +168,7 @@ const databaseFunctions = {
         // gyankritiDataObject['search_helper'] = `${gyankritiDataObject.standard}_${gyankritiDataObject.section}_${gyankritiDataObject.route}_${gyankritiDataObject.shift}`;
 
         const params = {
-            TableName: TABLE_GYANKRITI,
+            TableName: TABLE_GYANKRITI_STUDENTS,
             Item: gyankritiDataObject
         };
 
@@ -207,7 +206,7 @@ const databaseFunctions = {
 
 // some test code function calls
 
-// databaseFunctions.getCurrentStudents((err, data) => {
+// databaseFunctions.getCurrentAdmissions((err, data) => {
 //     console.log(data);
 // });
 

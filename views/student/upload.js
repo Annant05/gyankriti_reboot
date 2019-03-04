@@ -8,12 +8,12 @@ function documentReady() {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                aadhar_key: ($("#input_aadhar").val()).trim()
+                identifier_key: ($("#input_aadhar").val()).trim()
             }),
             success: (response) => {
                 console.log("\n isSuccess receiving data from server : ", JSON.stringify(response.body.isSuccess));
                 if (response.body.isSuccess) {
-                    const JsonObj = response.body.studentObject;
+                    const JsonObj = response.body.admissionObject;
 
                     console.log(JSON.stringify(JsonObj));
 

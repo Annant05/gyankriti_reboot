@@ -20,7 +20,7 @@ function documentReady() {
         success: (response) => {
             console.log("\n isSuccess receiving data from server : ", JSON.stringify(response.body.isSuccess));
             if (response.body.isSuccess) {
-                const arrayOfStudnetsInfo = response.body.studentsObject.Items;
+                const arrayOfStudnetsInfo = response.body.admissionsObject.Items;
                 // console.log(JSON.stringify(arrayOfStudnetsInfo));
                 datatable_functions(arrayOfStudnetsInfo);
             }

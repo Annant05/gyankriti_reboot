@@ -14,11 +14,15 @@ const awsCredentialConfig = {
 };
 
 const msg91_config = {
-    MSG91_API_KEY: '262954AXfHV7Gd5c67b754',
+    MSG91_API_KEY: '262954AXfHV7Gd5c67b754', /* Make sure it is valid and active */
     SENDER_ID: 'GYNKRT'  /*  Must be six characters only  */
 };
 
 module.exports = {
+    TABLE_GYANKRITI_ADMISSIONS: "gyankriti_admissions",
+    TABLE_GYANKRITI_STUDENTS: "gyankriti_students",
+    BUCKET_NAME: "gyankriti2019",
+
     getAWS_JSONCredentials: () => {
         return awsCredentialConfig;
     },

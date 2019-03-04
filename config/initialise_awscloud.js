@@ -33,7 +33,7 @@ async function startOfflineDynamoDB() {
 
 
 const studentTable = {
-    TABLE_NAME: "students",
+    TABLE_NAME: config.TABLE_GYANKRITI_ADMISSIONS,
     createStudentTable: async function () {
         const params = {
             TableName: this.TABLE_NAME,
@@ -68,20 +68,20 @@ const studentTable = {
 };
 
 const gyankritiTable = {
-    TABLE_NAME: "gyankriti",
+    TABLE_NAME: config.TABLE_GYANKRITI_STUDENTS,
     createGyankritiTable: async function () {
         const params = {
             TableName: this.TABLE_NAME,
             AttributeDefinitions: [
                 {
-                    AttributeName: "identifier_key",  // Primary key
+                    AttributeName: "gyankriti_enrollment",  // Primary key
                     AttributeType: "S"
                 },
 
             ],
             KeySchema: [
                 {
-                    AttributeName: "identifier_key",
+                    AttributeName: "gyankriti_enrollment",
                     KeyType: "HASH"
                 },
 
@@ -104,10 +104,10 @@ const gyankritiTable = {
 
 
 const s3Storage = {
-    BUCKET_NAME: "gyankriti2019",
+    BUCKET_NAME: config.BUCKET_NAME,
     createS3Bucket: async function createS3BucketToStoreImages() {
         let params = {
-            Bucket: s3Storage.BUCKET_NAME,
+            Bucket: this.BUCKET_NAME,
             ACL: "public-read"
         };
 
@@ -130,8 +130,8 @@ const s3Storage = {
 
 //
 
-// gyankritiTable.createGyankritiTable();
-// studentTable.createStudentTable();
+gyankritiTable.createGyankritiTable();
+studentTable.createStudentTable();
 // s3Storage.createS3Bucket();
 
 // startOfflineDynamoDB().then(basicDynamoTableFunctions.listTables()); // start dynamodb offline

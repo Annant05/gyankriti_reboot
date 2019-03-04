@@ -7,10 +7,10 @@ AWS.config.update(config.getAWS_JSONCredentials());
 const docClientDynamo = new AWS.DynamoDB.DocumentClient();
 
 // Table For storing all the bio data.
-const TABLE_STUDENTS = "students";
+const TABLE_GYANKRITI_ADMISSIONS = config.TABLE_GYANKRITI_ADMISSIONS;
 
 // Table to store academic data and fee data.
-const TABLE_GYANKRITI = "gyankriti";
+const TABLE_GYANKRITI_STUDENTS = config.TABLE_GYANKRITI_STUDENTS;
 
 // Object with all the database support functions.
 const searchFunctions = {
@@ -29,7 +29,7 @@ const searchFunctions = {
             console.log("\nFile: support_files/searchFunction calling function 'getSearchResults()'");
 
             let params = {
-                TableName: TABLE_GYANKRITI
+                TableName: TABLE_GYANKRITI_STUDENTS
                 // FilterExpression: '#str_section = :val_section and #str_standard = :val_standard',
                 // ExpressionAttributeNames: {
                 //     "#str_search_helper": "section",

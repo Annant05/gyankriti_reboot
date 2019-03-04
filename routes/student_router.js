@@ -42,17 +42,17 @@ router.get('/upload-test', (req, res) => {
 router.post('/student-info', async (req, res) => {
     console.log("\nPOST: 'student/student-info' = Send a student information using  key.");
 
-    console.log("get information for aadhar no : ", req.body.aadhar_key);
+    console.log("get information using identifier_key : ", req.body.identifier_key);
 
     try {
-        await dynamoStudent.getStudentUsingKey(req.body.aadhar_key, (studentObject, isSuccess) => {
+        await dynamoStudent.getAdmissionUsingKey(req.body.identifier_key, (admissionObject, isSuccess) => {
 
-            console.log("isSuccess in receiving data from getStudentUsingKey : ", isSuccess);
+            console.log("isSuccess in receiving data from getAdmissionUsingKey : ", isSuccess);
 
             if (isSuccess) {
-                res.send({body: {studentObject: studentObject, isSuccess: isSuccess}});
+                res.send({body: {admissionObject: admissionObject, isSuccess: isSuccess}});
             } else {
-                res.send({body: {studentObject: null, isSuccess: isSuccess}});
+                res.send({body: {admissionObject: null, isSuccess: isSuccess}});
             }
         });
 
@@ -81,13 +81,13 @@ router.get('/new-admission', (req, res) => {
 router.post('/new-admission', async (req, res) => {
     console.log("\nPOST: 'student/new_admission' = Received  New Admission data from AJAX call.");
 
-    const studentJsonObject = req.body.new_admission_data;
+    const admissionJsonObject = req.body.new_admission_data;
     try {
         // console.log(JSON.stringify(req.body.new_admission_data));
-        await dynamoStudent.newAdmission(studentJsonObject, (isSaved) => {
-            console.log("is Data Saved to the dynamodb 'student' table:  " + isSaved);
+        await dynamoStudent.newAdmission(admissionJsonObject, (isSaved) => {
+            console.log("is Data Saved to the dynamodb 'admissions' table:  " + isSaved);
             res.send({success: isSaved});
-            // res.cookie('student_name', studentJsonObject.student_first_name + " " + studentJsonObject.student_last_name,
+            // res.cookie('student_name', admissionJsonObject.student_first_name + " " + admissionJsonObject.student_last_name,
             //     {
             //         maxAge: 900000,
             //         httpOnly: true
@@ -131,16 +131,16 @@ router.get('/gyankriti-information', (req, res) => {
 
 
 router.post('/gyankriti-information', async (req, res) => {
-    console.log("\nPOST: 'student/gyankriti-information' = Add data to gyankriti table and /update admission status to complete using  key.");
+    console.log("\nPOST: 'student/gyankriti-information' = Add data to gyankriti_students table and /update admission status to complete using  key.");
 
-    const gyankritiJsonObject = req.body.gyankriti_student_data;
+    const studentJsonObject = req.body.gyankriti_student_data;
     try {
         // console.log(JSON.stringify(req.body.new_admission_data));
-        await dynamoStudent.addGyankritiInformation(gyankritiJsonObject, (isSaved) => {
-            console.log("is Data Saved to the dynamodb 'gyankriti' table:  " + isSaved);
+        await dynamoStudent.addGyankritiInformation(studentJsonObject, (isSaved) => {
+            console.log("is Data Saved to the dynamodb 'gyankriti_students' table:  " + isSaved);
 
             if (isSaved) {
-                dynamoStudent.updateAdmissionStatus(gyankritiJsonObject.identifier_key, gyankritiJsonObject.gyankriti_enrollment, (isSaved) => {
+                dynamoStudent.updateAdmissionStatus(studentJsonObject.identifier_key, studentJsonObject.gyankriti_enrollment, (isSaved) => {
                     res.send({success: isSaved});
                 })
             }
@@ -165,14 +165,14 @@ router.post('/gyankriti-students', async (req, res) => {
     console.log("\nPOST: 'student/gyankriti-students' = Send students information.");
 
     try {
-        await dynamoStudent.getCurrentStudents((studentsObject, isSuccess) => {
+        await dynamoStudent.getCurrentAdmissions((admissionsObject, isSuccess) => {
 
-            console.log("isSuccess in receiving data from getCurrentStudents : ", isSuccess);
+            console.log("isSuccess in receiving data from getCurrentAdmissions : ", isSuccess);
 
             if (isSuccess) {
-                res.send({body: {studentsObject: studentsObject, isSuccess: isSuccess}});
+                res.send({body: {admissionsObject: admissionsObject, isSuccess: isSuccess}});
             } else {
-                res.send({body: {studentsObject: null, isSuccess: isSuccess}});
+                res.send({body: {admissionsObject: null, isSuccess: isSuccess}});
             }
         });
 
