@@ -187,8 +187,9 @@ function getFormInputData() {
         father_mobile_no: $.cookie('father_mobile_no'),
         mother_mobile_no: $.cookie('mother_mobile_no'),
         father_email: $.cookie('father_email'),
-        mother_email: $.cookie('mother_email')
+        mother_email: $.cookie('mother_email'),
 
+        identifier_key: $.cookie('identifier_key')
     };
 }
 
@@ -220,8 +221,8 @@ function sendJsonDataToServerUsingAjax() {
     });
 }
 
-
-function redirectToGyankritiAdmissionPage(newAdmissionJSON) {
+function removeCookies() {
+    $.removeCookie('identifier_key');
 
     $.removeCookie('student_name');
     $.removeCookie('student_aadhar');
@@ -231,6 +232,10 @@ function redirectToGyankritiAdmissionPage(newAdmissionJSON) {
     $.removeCookie('mother_mobile_no');
     $.removeCookie('father_email');
     $.removeCookie('mother_email');
+}
+
+function redirectToGyankritiAdmissionPage() {
+    removeCookies();
 
     window.location.replace("/search");
 }

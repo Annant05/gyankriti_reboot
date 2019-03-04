@@ -625,16 +625,18 @@ function getFormInputData() {
 function setCookies() {
 
     console.log("setting cookies");
-    const expiresTIme = {expires: 1};
+    const expiresTime = {expires: 1};
 
-    $.cookie('student_name', globalVariableStudentJson.student_first_name + " " + globalVariableStudentJson.student_last_name, expiresTIme);
-    $.cookie('student_aadhar', globalVariableStudentJson.student_aadhar, expiresTIme);
-    $.cookie('admission_standard', globalVariableStudentJson.admission_standard, expiresTIme);
+    $.cookie('identifier_key', globalVariableStudentJson.identifier_key, expiresTime);
 
-    $.cookie('father_mobile_no', globalVariableStudentJson.father_mobile_no, expiresTIme);
-    $.cookie('mother_mobile_no', globalVariableStudentJson.mother_mobile_no, expiresTIme);
-    $.cookie('father_email', globalVariableStudentJson.father_email, expiresTIme);
-    $.cookie('mother_email', globalVariableStudentJson.mother_email, expiresTIme);
+    $.cookie('student_name', globalVariableStudentJson.student_first_name + " " + globalVariableStudentJson.student_last_name, expiresTime);
+    $.cookie('student_aadhar', globalVariableStudentJson.student_aadhar, expiresTime);
+    $.cookie('admission_standard', globalVariableStudentJson.admission_standard, expiresTime);
+
+    $.cookie('father_mobile_no', globalVariableStudentJson.father_mobile_no, expiresTime);
+    $.cookie('mother_mobile_no', globalVariableStudentJson.mother_mobile_no, expiresTime);
+    $.cookie('father_email', globalVariableStudentJson.father_email, expiresTime);
+    $.cookie('mother_email', globalVariableStudentJson.mother_email, expiresTime);
 
 }
 
@@ -647,36 +649,6 @@ function uploadImagesAndDataToServer() {
 
         console.log("generating url  : ", AWS_options.S3_URL + AWS_options.BUCKET_NAME + AWS_options.S3_DIRECTORY_PREFIX + file_name);
         return (AWS_options.S3_URL + AWS_options.BUCKET_NAME + AWS_options.S3_DIRECTORY_PREFIX + file_name);
-    }
-
-
-    function sendJsonDataToServerUsingAjax(newAdmissionJSON) {
-
-        // function definition ended
-
-
-        console.log("Click on submit detected");
-        console.log("Logging form Values : \n" + JSON.stringify(newAdmissionJSON));
-
-        globalVariableStudentJson = newAdmissionJSON;
-
-        $.ajax({
-            url: '/student/new-admission',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({new_admission_data: newAdmissionJSON}),
-            success: function (response) {
-                console.log(response.success);
-                if (response.success) {
-
-                    setCookies();
-                    console.log("Information saved to the database.");
-                } else {
-                    alert("There was some error in saving the information.")
-                }
-            }
-        });
-
     }
 
 
@@ -725,6 +697,7 @@ function uploadImagesAndDataToServer() {
         success: function (response) {
             if (response.success) {
                 console.log("Image upload success");
+
                 sendJsonDataToServerUsingAjax(modified_new_admission_data);
             } else {
                 alert('file not uploaded');
@@ -732,13 +705,46 @@ function uploadImagesAndDataToServer() {
         }
     });
 
+
+    function sendJsonDataToServerUsingAjax(newAdmissionJSON) {
+
+        console.log("Click on submit detected");
+        // add identifier_key to the table for easy data retrieval
+        newAdmissionJSON['identifier_key'] = (newAdmissionJSON.student_aadhar).slice(-4) + "_" + (newAdmissionJSON.student_date_of_birth).slice(0, 4);
+
+
+        console.log("Logging form Values : \n" + JSON.stringify(newAdmissionJSON));
+
+
+        globalVariableStudentJson = newAdmissionJSON;
+
+        $.ajax({
+            url: '/student/new-admission',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({new_admission_data: newAdmissionJSON}),
+            success: function (response) {
+                console.log(response.success);
+                if (response.success) {
+                    setCookies();
+                    redirectToGyankritiAdmissionPage();
+                    console.log("Information saved to the database.");
+                } else {
+                    alert("There was some error in saving the information.")
+                }
+            }
+        });
+
+    }
+
+
 }
 
 
 async function saveAndPrint() {
 
 
-    function print() {
+    async function print() {
         // print The form
         // noinspection JSUnusedLocalSymbols
         window.onafterprint = function (e) {
@@ -746,28 +752,29 @@ async function saveAndPrint() {
             console.log('Print Dialog Closed..');
         };
 
-        window.print();
+        await window.print();
 
-        setTimeout(function () {
+        await setTimeout(function () {
             $(window).one('mousemove', window.onafterprint);
-        }, 5000);
+        }, 1000);
 
     }
 
 
     // save data to server
     await uploadImagesAndDataToServer();
+
     await requestAnimationFrame(print);
 
 
     // redirect to next page
-    redirectToGyankritiAdmissionPage();
+    // redirectToGyankritiAdmissionPage();
 
 }
 
-function saveOnly() {
-    uploadImagesAndDataToServer();
-    redirectToGyankritiAdmissionPage()
+async function saveOnly() {
+    await uploadImagesAndDataToServer();
+    // redirectToGyankritiAdmissionPage()
 }
 
 

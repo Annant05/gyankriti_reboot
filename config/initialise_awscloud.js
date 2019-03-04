@@ -36,17 +36,17 @@ const studentTable = {
     TABLE_NAME: "students",
     createStudentTable: async function () {
         const params = {
-            TableName: studentTable.TABLE_NAME,
+            TableName: this.TABLE_NAME,
             AttributeDefinitions: [
                 {
-                    AttributeName: "student_aadhar",  // Primary key
+                    AttributeName: "identifier_key",  // Primary key
                     AttributeType: "S"
                 },
 
             ],
             KeySchema: [
                 {
-                    AttributeName: "student_aadhar",
+                    AttributeName: "identifier_key",
                     KeyType: "HASH"
                 },
 
@@ -71,17 +71,17 @@ const gyankritiTable = {
     TABLE_NAME: "gyankriti",
     createGyankritiTable: async function () {
         const params = {
-            TableName: gyankritiTable.TABLE_NAME,
+            TableName: this.TABLE_NAME,
             AttributeDefinitions: [
                 {
-                    AttributeName: "gyankriti_enrollment",  // Primary key
+                    AttributeName: "identifier_key",  // Primary key
                     AttributeType: "S"
                 },
 
             ],
             KeySchema: [
                 {
-                    AttributeName: "gyankriti_enrollment",
+                    AttributeName: "identifier_key",
                     KeyType: "HASH"
                 },
 
@@ -129,9 +129,12 @@ const s3Storage = {
 
 
 //
+
 // gyankritiTable.createGyankritiTable();
+// studentTable.createStudentTable();
 // s3Storage.createS3Bucket();
 
 // startOfflineDynamoDB().then(basicDynamoTableFunctions.listTables()); // start dynamodb offline
 // studentTable.createStudentTable().then(basicDynamoTableFunctions.listTables());
+
 

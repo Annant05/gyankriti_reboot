@@ -114,20 +114,21 @@ const databaseFunctions = {
 
 
     //* Function to update the student information using aadhar card as a key when a new record is added in gyankritiTable  */
-    updateAdmissionStatus: async function updateAdmissionStatusAttributeInStudentTable(aadhar_key, stateCallback) {
+    updateAdmissionStatus: async function updateAdmissionStatusAttributeInStudentTable(identifier_key, gyankriti_enrollment, stateCallback) {
 
         console.log("\nFile: support_files/dynamoStudent calling function 'updateRecord()'");
 
         const params = {
             TableName: TABLE_STUDENTS,
             Key: {
-                student_aadhar: aadhar_key
+                identifier_key: identifier_key
             },
-            UpdateExpression: "set admission_status = :new_admission_status",
+            UpdateExpression: "set admission_status = :new_admission_status, gyankriti_enrollment = :enrollment",
             ConditionExpression: "admission_status = :pending",
             ExpressionAttributeValues: {
                 ":new_admission_status": "completed",
-                ":pending": "pending"
+                ":pending": "pending",
+                ":enrollment": gyankriti_enrollment
             },
 
             ReturnValues: "UPDATED_NEW"
@@ -165,7 +166,7 @@ const databaseFunctions = {
         // add time of insertion to the data;
         gyankritiDataObject['time_of_insertion'] = (Math.round((new Date()).getTime() / 1000)).toString();
 
-        gyankritiDataObject['search_helper'] = `${gyankritiDataObject.standard}_${gyankritiDataObject.section}_${gyankritiDataObject.route}_${gyankritiDataObject.shift}`;
+        // gyankritiDataObject['search_helper'] = `${gyankritiDataObject.standard}_${gyankritiDataObject.section}_${gyankritiDataObject.route}_${gyankritiDataObject.shift}`;
 
         const params = {
             TableName: TABLE_GYANKRITI,

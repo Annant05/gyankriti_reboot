@@ -9,6 +9,7 @@ let button_select_all = null;
 
 let table_results = null;
 let body_table_results = null;
+let table_main_body = null;
 
 let datatable_results = null;
 
@@ -48,6 +49,7 @@ function initializeJquerySelectors() {
 
     table_results = $('#table_results');
     body_table_results = $('#table_results tbody');
+    table_main_body = $('#table_main_body');
 
     menu_button_send_sms = $('#menu_button_send_sms');
 
@@ -338,7 +340,7 @@ function addRowsToDataTable(results_array) {
 
             datatable_results.row.add([
                 element.gyankriti_enrollment,
-                `${element.first_name} ${element.last_name}`,
+                element.student_name,
                 element.gyankriti_email,
                 element.standard,
                 element.section,
@@ -357,7 +359,7 @@ function addRowsToDataTable(results_array) {
         let element = results_array[count];
         datatable_results.row.add([
             element.gyankriti_enrollment,
-            `${element.first_name} ${element.last_name}`,
+            element.student_name,
             element.gyankriti_email,
             element.standard,
             element.section,
@@ -428,10 +430,67 @@ function showsnackbar(notify_message, state) {
 }
 
 
+function initializeContextMenu() {
+
+
+    const contextMenuFunctions = {
+        viewFullInfo: function (rollNo) {
+            console.log(`/student/full-info/${rollNo}`);
+            window.open(`/student/full-info/${rollNo}`);
+        },
+
+        updateInfo: function (rollNo) {
+
+        },
+
+        assignFeeStructure: function (rollNo) {
+
+        }
+
+    };
+
+
+    table_main_body.contextMenu({
+        selector: 'tr',
+        callback: function (key, options) {
+
+            let rollNo = $(this).find('td:nth-child(1)').text();//.replace("/", "-");
+
+            console.log(`You clicked on:  ${rollNo}  :  ${key} :`);
+
+            switch (key) {
+                case 'full_info':
+                    contextMenuFunctions.viewFullInfo(rollNo);
+                    break;
+
+                case 'update_info':
+                    contextMenuFunctions.updateInfo(rollNo);
+                    break;
+
+                case 'assign_fee':
+                    contextMenuFunctions.assignFeeStructure(rollNo);
+                    break;
+
+                default:
+                    console.log("No options selected  or maybe error ");
+
+            }
+
+        },
+        items: {
+            full_info: {name: "View Full Information", icon: "fas fa-address-card"},
+            update_info: {name: "Update Information", icon: "fas fa-user-edit"},
+            assign_fee: {name: "Assign Fee-Structure", icon: "fas fa-money-check-alt"}
+        }
+    });
+}
+
+
 function documentReady() {
     initializeJquerySelectors();
     initializeDropdown();
     initializeDatatable();
+    initializeContextMenu();
 
     button_search.click(executeSearchOnServer);
 
@@ -447,6 +506,78 @@ function documentReady() {
         }
 
     });
+
+
+    // table_main_body.on('click', function (e) {
+    //     console.log('clicked', this);
+    // })
+
+
+    // $("#table_main_body ").contextMenu({
+    //     selector: 'tr',
+    //     callback: function (key, options) {
+    //         const m = "clicked: " + key;
+    //         console.log("here", m);
+    //         let $row = $(this).find("tr");    // Find the row
+    //
+    //         console.log("row " + $row + " roll no ");
+    //     },
+    //     items: {
+    //         "View Full Information": {
+    //             name: "View Full Information",
+    //             icon: "edit",
+    //             callback: () => {
+    //                 console.log("Clicked on view full name");
+    //                 console.log("this ", $(this));
+    //                 // console.log("this", a)
+    //             }
+    //         },
+    //         "cut": {name: "Cut", icon: "cut"},
+    //         copy: {name: "Copy", icon: "copy"},
+    //         "paste": {name: "Paste", icon: "paste"},
+    //         "delete": {name: "Delete", icon: "delete"},
+    //         "sep1": "---------",
+    //         "quit": {
+    //             name: "Quit", icon: function () {
+    //                 return 'context-menu-icon context-menu-icon-quit';
+    //             }
+    //         }
+    //     }
+    // });
+
+    // $.contextMenu({
+    //     selector: '#table_main_body tr',
+    //     // callback: function (key, options) {
+    //     //     const m = "clicked: " + key;
+    //     //     console.log("here", m);
+    //     // },
+    //     items: {
+    //         "View Full Information": {
+    //             name: "View Full Information",
+    //             icon: "edit",
+    //             callback: (q) => {
+    //                 console.log("Clicked on view full name");
+    //                 console.log("this ", q);
+    //
+    //             }
+    //         },
+    //         "cut": {name: "Cut", icon: "cut"},
+    //         copy: {name: "Copy", icon: "copy"},
+    //         "paste": {name: "Paste", icon: "paste"},
+    //         "delete": {name: "Delete", icon: "delete"},
+    //         "sep1": "---------",
+    //         "quit": {
+    //             name: "Quit", icon: function () {
+    //                 return 'context-menu-icon context-menu-icon-quit';
+    //             }
+    //         }
+    //     }
+    // });
+
+
+    // $('#menu_button_custom_sms').on('click', function (e) {
+    //     console.log('clicked', this);
+    // })
 
 
     // append_options_to_dropdown(temp_selector, options_array.search_by);

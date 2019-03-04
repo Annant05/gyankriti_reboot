@@ -105,6 +105,7 @@ router.post('/upload-images', async (req, res) => {
     console.log("\nPOST: 'student/upload-images' = Received  image files from AJAX call.");
     try {
         await s3storageStudent.uploadImagesToS3(req, res, (isSaved) => {
+            console.log(`student/upload-images response : ${isSaved}`);
             res.send({success: isSaved})
         });
     } catch (e) {
@@ -139,7 +140,7 @@ router.post('/gyankriti-information', async (req, res) => {
             console.log("is Data Saved to the dynamodb 'gyankriti' table:  " + isSaved);
 
             if (isSaved) {
-                dynamoStudent.updateAdmissionStatus(gyankritiJsonObject.student_aadhar, (isSaved) => {
+                dynamoStudent.updateAdmissionStatus(gyankritiJsonObject.identifier_key, gyankritiJsonObject.gyankriti_enrollment, (isSaved) => {
                     res.send({success: isSaved});
                 })
             }
@@ -179,6 +180,15 @@ router.post('/gyankriti-students', async (req, res) => {
         console.log("exception e : " + e);
     }
 });
+
+// get method to display the full info of a student.
+router.get('/full-info/:rollNo/:suffix', (req, res) => {
+    console.log(`\nGET: '/search/full-info/${req.params.rollNo}/${req.params.suffix}'  Web-Page`);
+
+
+    res.end(`${req.params.rollNo}/${req.params.suffix}`);
+});
+
 
 /* END: Production section / Finalized function definitions */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
