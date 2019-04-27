@@ -1,48 +1,52 @@
+import start from './server'
+
+start()
+
 // all requires and declarations
-const express = require("express"), app = express(); // creating express server
-const path = require('path');
-const request = require("request");
-const bodyParser = require("body-parser");  // used bodyParser to get data from all the field in form
-const cookieParser = require("cookie-parser");
-require('log-timestamp');
+// const express = require("express"), app = express(); // creating express server
+// const path = require('path');
+// const request = require("request");
+// const bodyParser = require("body-parser");  // used bodyParser to get data from all the field in form
+// const cookieParser = require("cookie-parser");
+// require('log-timestamp');
 
-// Declaration related to servers
-const PORT = process.env.PORT || 80;
+// // Declaration related to servers
+// const PORT = process.env.PORT || 80;
 
-request('http://169.254.169.254/latest/meta-data/public-ipv4', async function (error, response, body) {
-    if (body !== undefined) console.log('\nserver started on ip:port : http://' + body + ":" + PORT);
-    else console.log('\nserver started on ip:port : ' + 'http://localhost' + ":" + PORT);
-});
+// request('http://169.254.169.254/latest/meta-data/public-ipv4', async function (error, response, body) {
+//     if (body !== undefined) console.log('\nserver started on ip:port : http://' + body + ":" + PORT);
+//     else console.log('\nserver started on ip:port : ' + 'http://localhost' + ":" + PORT);
+// });
 
-app.listen(PORT, async function (err) {
-    if (err) console.log("There was some problem in starting the server  : " + JSON.stringify(err, undefined, 2));
-    else console.log('\nserver started on the port : ' + PORT);
-});
+// app.listen(PORT, async function (err) {
+//     if (err) console.log("There was some problem in starting the server  : " + JSON.stringify(err, undefined, 2));
+//     else console.log('\nserver started on the port : ' + PORT);
+// });
 
-//Main body of the js file
-app.use(bodyParser.urlencoded({  // this is important
-    extended: true
-}));
+// //Main body of the js file
+// app.use(bodyParser.urlencoded({  // this is important
+//     extended: true
+// }));
 
-app.use(bodyParser.json());  // this is important caused a lot of time waste.
-app.use(cookieParser());
+// app.use(bodyParser.json());  // this is important caused a lot of time waste.
+// app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'views')));
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'views')));
+// app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
 
 
 // url routing
-app.use('/', require('./routes/index_router'));
-app.use('/student', require('./routes/student_router'));
-app.use('/search', require('./routes/search_router'));
+// app.use('/', require('./routes/index_router'));
+// app.use('/student', require('./routes/student_router'));
+// app.use('/search', require('./routes/search_router'));
 
 
-// app.use('/transport', require('./routes/transport'));
-// db_server.startDB();
-console.log('\nServer-side code running');
+// // app.use('/transport', require('./routes/transport'));
+// // db_server.startDB();
+// console.log('\nServer-side code running');
 
-app.get('/basetemplate', function (req, res) {
-    res.render("basetemplate", {TITLE: "BASIC TEMPLATE"});
-});
+// app.get('/basetemplate', function (req, res) {
+//     res.render("basetemplate", {TITLE: "BASIC TEMPLATE"});
+// });
