@@ -1,6 +1,6 @@
 import start from './server'
 
-start()
+start();
 
 // all requires and declarations
 // const express = require("express"), app = express(); // creating express server

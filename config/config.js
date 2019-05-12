@@ -19,6 +19,7 @@ const msg91_config = {
 };
 
 module.exports = {
+    SERVER_PORT: 80,
     TABLE_GYANKRITI_ADMISSIONS: "gyankriti_admissions",
     TABLE_GYANKRITI_STUDENTS: "gyankriti_students",
     BUCKET_NAME: "gyankriti2019",
@@ -32,5 +33,4 @@ module.exports = {
     }
 
 };
-
 
