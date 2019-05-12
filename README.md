@@ -15,8 +15,8 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them.
 * [node.js](https://nodejs.org/en/) - back-end server scripting framework.
 * [aws-cli](https://aws.amazon.com/cli/) - AWS CLI for accessing dynamodb online.
-* [phpstorm](https://www.jetbrains.com/phpstorm/?fromMenu) - Recommended IDE for web development. 
-* [java](https://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html) - JDK to run dynamodb offline.
+* Any good IDE for web development. 
+
 ### Installing
 
 Go to project directory 
